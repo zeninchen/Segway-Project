@@ -1,0 +1,284 @@
+# Compile of UART_tx.sv was successful.
+# Compile of UART_tx_tb.sv was successful.
+# 2 compiles, 0 failed with no errors.
+vsim -gui work.UART_tx_tb
+# vsim -gui work.UART_tx_tb 
+# Start time: 10:27:43 on Oct 06,2025
+# Loading sv_std.std
+# Loading work.UART_tx_tb
+# Loading work.UART_tx
+add wave -position insertpoint sim:/UART_tx_tb/dut/*
+run -all
+# Time: 0 | rst_n: 0 | trmt: 0 | tx_data: a5 | TX: x | tx_done: 1
+# Time: 15 | rst_n: 1 | trmt: 1 | tx_data: a5 | TX: x | tx_done: 1
+# Time: 25 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: x | tx_done: 0
+# ** Note: $stop    : C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv(48)
+#    Time: 225 ps  Iteration: 0  Instance: /UART_tx_tb
+# Break in Module UART_tx_tb at C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv line 48
+# Compile of UART_tx_tb.sv was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.UART_tx_tb
+run -all
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Time: 0 | rst_n: 0 | trmt: 0 | tx_data: a5 | TX: x | tx_done: 1
+# Time: 15 | rst_n: 1 | trmt: 1 | tx_data: a5 | TX: x | tx_done: 1
+# Time: 25 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: x | tx_done: 0
+# Time: 81945 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 163865 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 245785 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 327705 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 409625 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# ** Note: $stop    : C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv(46)
+#    Time: 521015 ps  Iteration: 0  Instance: /UART_tx_tb
+# Break in Module UART_tx_tb at C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv line 46
+# Compile of UART_tx_tb.sv was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.UART_tx_tb
+run -all
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Time: 0 | rst_n: 0 | trmt: 0 | tx_data: a5 | TX: x | tx_done: 1
+# Time: 15 | rst_n: 1 | trmt: 1 | tx_data: a5 | TX: x | tx_done: 1
+# Time: 25 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: x | tx_done: 0
+# Time: 81945 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 163865 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 245785 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 327705 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 409625 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 573465 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 655385 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 737305 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 819235 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 1
+# ** Note: $stop    : C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv(46)
+#    Time: 1041815 ps  Iteration: 0  Instance: /UART_tx_tb
+# Break in Module UART_tx_tb at C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv line 46
+# Compile of UART_tx_tb.sv was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.UART_tx_tb
+run -all
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Time: 0 | rst_n: 0 | trmt: 0 | tx_data: a5 | TX: x | tx_done: 1
+# Time: 15 | rst_n: 1 | trmt: 1 | tx_data: a5 | TX: x | tx_done: 1
+# Time: 25 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: x | tx_done: 0
+# Time: 81945 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 163865 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 245785 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 327705 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 409625 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 573465 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 655385 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 737305 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 819235 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 1
+# Time: 1041815 | rst_n: 0 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 1
+# Time: 1041830 | rst_n: 1 | trmt: 1 | tx_data: 3c | TX: 1 | tx_done: 1
+# Time: 1041835 | rst_n: 1 | trmt: 1 | tx_data: 3c | TX: 1 | tx_done: 0
+# Time: 1041840 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 0
+# Time: 1123755 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 0 | tx_done: 0
+# Time: 1369515 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 0
+# Time: 1697195 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 0 | tx_done: 0
+# Time: 1861035 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 0
+# Time: 1861045 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 1
+# ** Note: $stop    : C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv(60)
+#    Time: 2083635 ps  Iteration: 0  Instance: /UART_tx_tb
+# Break in Module UART_tx_tb at C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv line 60
+# Compile of UART_tx.sv was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.UART_tx
+run -all
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Time: 0 | rst_n: 0 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 1
+# Time: 15 | rst_n: 1 | trmt: 1 | tx_data: a5 | TX: 1 | tx_done: 1
+# Time: 25 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 81945 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 163865 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 245785 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 327705 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 491545 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 573465 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 655385 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 819235 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 1
+# Time: 1041815 | rst_n: 0 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 1
+# Time: 1041830 | rst_n: 1 | trmt: 1 | tx_data: 3c | TX: 1 | tx_done: 1
+# Time: 1041835 | rst_n: 1 | trmt: 1 | tx_data: 3c | TX: 0 | tx_done: 0
+# Time: 1041840 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 0 | tx_done: 0
+# Time: 1287595 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 0
+# Time: 1615275 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 0 | tx_done: 0
+# Time: 1779115 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 0
+# Time: 1861045 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 1
+# ** Note: $stop    : C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv(60)
+#    Time: 2083635 ps  Iteration: 0  Instance: /UART_tx_tb
+# Break in Module UART_tx_tb at C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv line 60
+# Compile of UART_tx_tb.sv was successful.
+# Compile of UART_tx.sv was successful.
+# Compile of UART_tx_tb.sv was successful.
+# 2 compiles, 0 failed with no errors.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (C:/Users/User/OneDrive/Documents/ECE 551/EX13/ex13.mpf).  File can not be renamed.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.UART_tx_tb
+# Loading work.UART_tx
+run -all
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Time: 0 | rst_n: 0 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 1
+# Time: 15 | rst_n: 1 | trmt: 1 | tx_data: a5 | TX: 1 | tx_done: 1
+# Time: 25 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 52115 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 104205 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 156295 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 208385 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 312565 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 364655 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 416745 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 520935 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 1
+# Time: 521015 | rst_n: 0 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 1
+# Time: 521030 | rst_n: 1 | trmt: 1 | tx_data: 3c | TX: 1 | tx_done: 1
+# Time: 521035 | rst_n: 1 | trmt: 1 | tx_data: 3c | TX: 0 | tx_done: 0
+# Time: 521040 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 0 | tx_done: 0
+# Time: 677305 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 0
+# Time: 885665 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 0 | tx_done: 0
+# Time: 989845 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 0
+# Time: 1041945 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 1
+# ** Note: $stop    : C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv(60)
+#    Time: 1042035 ps  Iteration: 0  Instance: /UART_tx_tb
+# Break in Module UART_tx_tb at C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv line 60
+# Compile of UART_tx.sv was successful.
+# Compile of UART_tx_tb.sv was successful.
+# 2 compiles, 0 failed with no errors.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.UART_tx_tb
+# Loading work.UART_tx
+# Break key hit
+run -all
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Time: 0 | rst_n: 0 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 1
+# Time: 15 | rst_n: 1 | trmt: 1 | tx_data: a5 | TX: 1 | tx_done: 1
+# Time: 25 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 52115 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 104205 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 156295 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 208385 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 312565 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 364655 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 416745 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 520935 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 1
+# Time: 522815 | rst_n: 0 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 1
+# Time: 522830 | rst_n: 1 | trmt: 1 | tx_data: 3c | TX: 1 | tx_done: 1
+# Time: 522835 | rst_n: 1 | trmt: 1 | tx_data: 3c | TX: 0 | tx_done: 0
+# Time: 522840 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 0 | tx_done: 0
+# Time: 679105 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 0
+# Time: 887465 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 0 | tx_done: 0
+# Time: 991645 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 0
+# Time: 1043745 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 1
+# ** Note: $stop    : C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv(60)
+#    Time: 1043835 ps  Iteration: 0  Instance: /UART_tx_tb
+# Break in Module UART_tx_tb at C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv line 60
+# Compile of UART_tx_tb.sv was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.UART_tx_tb
+run -all
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Time: 0 | rst_n: 0 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 1
+# Time: 15 | rst_n: 1 | trmt: 1 | tx_data: a5 | TX: 1 | tx_done: 1
+# Time: 25 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 52115 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 104205 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 156295 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 208385 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 312565 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 364655 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 416745 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 520935 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 1
+# Time: 526023 | rst_n: 0 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 1
+# Time: 526038 | rst_n: 1 | trmt: 1 | tx_data: 3c | TX: 1 | tx_done: 1
+# Time: 526045 | rst_n: 1 | trmt: 1 | tx_data: 3c | TX: 0 | tx_done: 0
+# Time: 526048 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 0 | tx_done: 0
+# Time: 682315 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 0
+# Time: 890675 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 0 | tx_done: 0
+# Time: 994855 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 0
+# Time: 1046955 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 1
+# ** Note: $stop    : C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv(60)
+#    Time: 1047045 ps  Iteration: 0  Instance: /UART_tx_tb
+# Break in Module UART_tx_tb at C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv line 60
+# Compile of UART_tx_tb.sv was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.UART_tx_tb
+run -all
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Time: 0 | rst_n: 0 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 1
+# Time: 15 | rst_n: 1 | trmt: 1 | tx_data: a5 | TX: 1 | tx_done: 1
+# Time: 25 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 52115 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 104205 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 156295 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 208385 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 312565 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 364655 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 416745 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 520935 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 1
+# Time: 1041615 | rst_n: 0 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 1
+# Time: 1041630 | rst_n: 1 | trmt: 1 | tx_data: 3c | TX: 1 | tx_done: 1
+# Time: 1041635 | rst_n: 1 | trmt: 1 | tx_data: 3c | TX: 0 | tx_done: 0
+# Time: 1041640 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 0 | tx_done: 0
+# Time: 1197905 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 0
+# Time: 1406265 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 0 | tx_done: 0
+# Time: 1510445 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 0
+# Time: 1562545 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 1
+# ** Note: $stop    : C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv(59)
+#    Time: 1562635 ps  Iteration: 0  Instance: /UART_tx_tb
+# Break in Module UART_tx_tb at C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv line 59
+# Compile of UART_tx.sv was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.UART_tx
+run -all
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Time: 0 | rst_n: 0 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 15 | rst_n: 1 | trmt: 1 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 25 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 52115 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 104205 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 156295 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 208385 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 312565 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 364655 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 0 | tx_done: 0
+# Time: 416745 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 0
+# Time: 520935 | rst_n: 1 | trmt: 0 | tx_data: a5 | TX: 1 | tx_done: 1
+# Time: 1041615 | rst_n: 0 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 0
+# Time: 1041630 | rst_n: 1 | trmt: 1 | tx_data: 3c | TX: 1 | tx_done: 0
+# Time: 1041635 | rst_n: 1 | trmt: 1 | tx_data: 3c | TX: 0 | tx_done: 0
+# Time: 1041640 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 0 | tx_done: 0
+# Time: 1197905 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 0
+# Time: 1406265 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 0 | tx_done: 0
+# Time: 1510445 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 0
+# Time: 1562545 | rst_n: 1 | trmt: 0 | tx_data: 3c | TX: 1 | tx_done: 1
+# ** Note: $stop    : C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv(59)
+#    Time: 1562635 ps  Iteration: 0  Instance: /UART_tx_tb
+# Break in Module UART_tx_tb at C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv line 59
+# End time: 11:08:14 on Oct 06,2025, Elapsed time: 0:40:31
+# Errors: 0, Warnings: 1

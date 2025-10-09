@@ -1,0 +1,63 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/User/OneDrive/Documents/ECE 551/EX06
+vPWM11
+Z0 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+!s110 1759260891
+!i10b 1
+!s100 BKO7PPm2K^PTN7UzUF`[G2
+Z1 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IQ;`U>OLA7ifBWX]WXhX1X1
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+S1
+Z3 dC:/Users/User/OneDrive/Documents/ECE 551/EX10
+w1759161620
+8C:/Users/User/OneDrive/Documents/ECE 551/EX10/PWM11.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX10/PWM11.sv
+!i122 16
+L0 1 60
+Z4 OV;L;2020.1;71
+r1
+!s85 0
+31
+!s108 1759260891.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX10/PWM11.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX10/PWM11.sv|
+!i113 1
+Z5 o-work work -sv
+Z6 tCvgOpt 0
+n@p@w@m11
+vPWM11_tb
+R0
+!s110 1759161210
+!i10b 1
+!s100 Hhf``kT`1f8_6aJhVCM>Y2
+R1
+IUk^1loR2h96ZW@[L:U`nR3
+R2
+S1
+R3
+w1759161205
+8C:/Users/User/OneDrive/Documents/ECE 551/EX10/PWM11_tb.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX10/PWM11_tb.sv
+!i122 14
+L0 2 60
+R4
+r1
+!s85 0
+31
+!s108 1759161210.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX10/PWM11_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX10/PWM11_tb.sv|
+!i113 1
+R5
+R6
+n@p@w@m11_tb

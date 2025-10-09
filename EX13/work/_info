@@ -1,0 +1,63 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/User/OneDrive/Documents/ECE 551/EX12
+vUART_tx
+Z0 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+!s110 1759766641
+!i10b 1
+!s100 A2H=PHAIT5aXI<_gCoAHc1
+Z1 !s11b Dg1SIo80bB@j0V0VzS_@n1
+I2^OW2UDZ[CS09fCT1D<Jm0
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+S1
+Z3 dC:/Users/User/OneDrive/Documents/ECE 551/EX13
+w1759766638
+8C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx.sv
+!i122 13
+L0 1 104
+Z4 OV;L;2020.1;71
+r1
+!s85 0
+31
+!s108 1759766641.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx.sv|
+!i113 1
+Z5 o-work work -sv
+Z6 tCvgOpt 0
+n@u@a@r@t_tx
+vUART_tx_tb
+R0
+!s110 1759766321
+!i10b 1
+!s100 O50j33mak:@_=YAcgzflI0
+R1
+I8<KafC:5R9MY3L:Kh@X]G0
+R2
+S1
+R3
+w1759766318
+8C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv
+!i122 12
+L0 1 62
+R4
+r1
+!s85 0
+31
+!s108 1759766321.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx_tb.sv|
+!i113 1
+R5
+R6
+n@u@a@r@t_tx_tb

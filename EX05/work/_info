@@ -1,0 +1,61 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/User/OneDrive/Documents/ECE 551/EX04
+varith
+Z0 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+!s110 1757950715
+!i10b 1
+!s100 GWLC<Zz@jCHCkCCe1RG:X0
+Z1 !s11b Dg1SIo80bB@j0V0VzS_@n1
+I`O56^IWWK?AS4Ezb>J5m91
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+S1
+Z3 dC:/Users/User/OneDrive/Documents/ECE 551/EX05
+w1757950620
+8C:/Users/User/OneDrive/Documents/ECE 551/EX05/arith.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX05/arith.sv
+!i122 7
+L0 1 28
+Z4 OV;L;2020.1;71
+r1
+!s85 0
+31
+!s108 1757950715.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX05/arith.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX05/arith.sv|
+!i113 1
+Z5 o-work work -sv
+Z6 tCvgOpt 0
+varith_tb
+R0
+!s110 1757950330
+!i10b 1
+!s100 eI@0^K>Z0VJ=4<deYG`ho0
+R1
+IPko67;MWD6JkAkIg8_DCD3
+R2
+S1
+R3
+w1757949329
+8C:/Users/User/OneDrive/Documents/ECE 551/EX05/arith_tb.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX05/arith_tb.sv
+!i122 6
+L0 4 66
+R4
+r1
+!s85 0
+31
+!s108 1757950330.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX05/arith_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX05/arith_tb.sv|
+!i113 1
+R5
+R6

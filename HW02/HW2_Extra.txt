@@ -1,0 +1,9 @@
+a) angular rate
+b) It supports, in the G_ODR, it supports Angular rate output data rate is 416hz and 206hz, 
+    meaning that it can produce 1 data per 1/416s or per 1/206s. 
+    That also means it can have around 416 or 206 readings per seconds.
+c) FIFO stores  the data of gyroscope, accelerometer, and more. And it 
+    can produce accelerometer/gyroscope data-ready signal; in which case the ODR 
+    must be lower than or equal to both the accelerometer and gyroscope ODRs. 
+    With that, we can use verilog to read the internal register with in the FIFO.
+    

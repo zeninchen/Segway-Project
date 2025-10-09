@@ -1,0 +1,163 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/User/OneDrive/Documents/ECE 551/EX06
+vabs
+Z0 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+Z1 !s110 1759263081
+!i10b 1
+!s100 9V6MQRSmdIO1P`RYIIEh40
+Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IXhVgAA]SJZJ2DNPhRnY4U0
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+S1
+Z4 dC:/Users/User/OneDrive/Documents/ECE 551/EX08
+Z5 w1759263066
+Z6 8C:/Users/User/OneDrive/Documents/ECE 551/EX08/SegwayMath.sv
+Z7 FC:/Users/User/OneDrive/Documents/ECE 551/EX08/SegwayMath.sv
+!i122 28
+L0 167 6
+Z8 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z9 !s108 1759263081.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX08/SegwayMath.sv|
+Z10 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX08/SegwayMath.sv|
+!i113 1
+Z11 o-work work -sv
+Z12 tCvgOpt 0
+vdeadzone_shaping
+R0
+R1
+!i10b 1
+!s100 e7]kV76OQH?ISngW`VbkR3
+R2
+I^kATBgJ@foV6?OPNif4n60
+R3
+S1
+R4
+R5
+R6
+R7
+!i122 28
+L0 121 43
+R8
+r1
+!s85 0
+31
+R9
+Z13 !s107 C:/Users/User/OneDrive/Documents/ECE 551/EX08/SegwayMath.sv|
+R10
+!i113 1
+R11
+R12
+vsaturate_12bit_signed
+R0
+R1
+!i10b 1
+!s100 CGM_A7d0?jhKM[75Fl_G_0
+R2
+I>062UJ0eTYS8SmFHFIFM12
+R3
+S1
+R4
+R5
+R6
+R7
+!i122 28
+L0 103 15
+R8
+r1
+!s85 0
+31
+R9
+R13
+R10
+!i113 1
+R11
+R12
+vSegwayMath
+R0
+R1
+!i10b 1
+!s100 <2[G^PjbSK2Zkbm^]d>Hm1
+R2
+I<L9V78ZP6L;j9P6^O:hQ82
+R3
+S1
+R4
+R5
+R6
+R7
+!i122 28
+L0 1 71
+R8
+r1
+!s85 0
+31
+R9
+R13
+R10
+!i113 1
+R11
+R12
+n@segway@math
+vSegwayMath_tb
+R0
+!s110 1759261052
+!i10b 1
+!s100 T?@Xag2obN88oT>`^A7HE1
+R2
+IC[N0BkgzR;_J@nUgNJb?^1
+R3
+S1
+R4
+w1758738911
+8C:/Users/User/OneDrive/Documents/ECE 551/EX08/SegwayMath_tb.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX08/SegwayMath_tb.sv
+!i122 26
+L0 1 81
+R8
+r1
+!s85 0
+31
+!s108 1759261052.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX08/SegwayMath_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX08/SegwayMath_tb.sv|
+!i113 1
+R11
+R12
+n@segway@math_tb
+vsteering_logic
+R0
+R1
+!i10b 1
+!s100 G?j;MD^bA`l18L3SRIj5c0
+R2
+IVmT3Bznn9gCS>Y9FG3eR73
+R3
+S1
+R4
+R5
+R6
+R7
+!i122 28
+L0 75 26
+R8
+r1
+!s85 0
+31
+R9
+R13
+R10
+!i113 1
+R11
+R12

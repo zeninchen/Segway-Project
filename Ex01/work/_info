@@ -1,0 +1,184 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/intelFPGA/20.1
+vcounter
+Z0 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+Z1 !s110 1757086107
+!i10b 1
+!s100 ea^GkZo`2lO_o`3JI3Tm82
+Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IABKTEH<>dKf7]Y4F@GCM52
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+S1
+Z4 dC:/Users/User/OneDrive/Documents/ECE 551/Ex01
+w1757086102
+8C:/Users/User/OneDrive/Documents/ECE 551/Ex01/counter.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/Ex01/counter.sv
+!i122 3
+L0 1 20
+Z5 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z6 !s108 1757086107.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/Ex01/counter.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/Ex01/counter.sv|
+!i113 1
+Z7 o-work work -sv
+Z8 tCvgOpt 0
+vdff
+Z9 !s110 1757518472
+!i10b 1
+!s100 dM>GE3J[R01dhgBNF8kn43
+R2
+I9Rki6SkEO]V:1?N@joGlR3
+R3
+R4
+w1757457003
+8C:/Users/User/OneDrive/Documents/ECE 551/EX03/dff.v
+FC:/Users/User/OneDrive/Documents/ECE 551/EX03/dff.v
+!i122 30
+L0 1 18
+R5
+r1
+!s85 0
+31
+Z10 !s108 1757518472.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX03/dff.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX03/dff.v|
+!i113 1
+o-work work
+R8
+vring_osc
+R0
+Z11 !s110 1757348964
+!i10b 1
+!s100 JTFma6IQdcG?e5JNFUK?@3
+R2
+IXRV[aah;]boF>_5fd<OQ13
+R3
+S1
+R4
+Z12 w1757348954
+Z13 8C:/Users/User/OneDrive/Documents/ECE 551/EX02/ring_osc_tb.sv
+Z14 FC:/Users/User/OneDrive/Documents/ECE 551/EX02/ring_osc_tb.sv
+!i122 14
+L0 1 15
+R5
+r1
+!s85 0
+31
+Z15 !s108 1757348964.000000
+Z16 !s107 C:/Users/User/OneDrive/Documents/ECE 551/EX02/ring_osc_tb.sv|
+Z17 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX02/ring_osc_tb.sv|
+!i113 1
+R7
+R8
+vring_osc_tb
+R0
+R11
+!i10b 1
+!s100 ]EiY9EYBd2DnFYco`26o@1
+R2
+Iedebz]A6>TjzGWzRQB2IS1
+R3
+S1
+R4
+R12
+R13
+R14
+!i122 14
+L0 17 40
+R5
+r1
+!s85 0
+31
+R15
+R16
+R17
+!i113 1
+R7
+R8
+vsynch_detect
+R0
+R9
+!i10b 1
+!s100 1N8[jkC1d_PedT2D^MSSU3
+R2
+I62oz5zJ<MXomY2RWA9ZI10
+R3
+S1
+R4
+w1757518464
+8C:/Users/User/OneDrive/Documents/ECE 551/EX03/synch_detect.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX03/synch_detect.sv
+!i122 31
+L0 1 42
+R5
+r1
+!s85 0
+31
+R10
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX03/synch_detect.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX03/synch_detect.sv|
+!i113 1
+R7
+R8
+vsynch_detect_tb
+R0
+!s110 1757518473
+!i10b 1
+!s100 k96Y=]gKCMkPNW^:<i<`C2
+R2
+I^H_;91be>D7eJEejRVi`Q3
+R3
+S1
+R4
+w1757457011
+8C:/Users/User/OneDrive/Documents/ECE 551/EX03/synch_detect_tb.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX03/synch_detect_tb.sv
+!i122 32
+L0 1 59
+R5
+r1
+!s85 0
+31
+!s108 1757518473.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX03/synch_detect_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX03/synch_detect_tb.sv|
+!i113 1
+R7
+R8
+vup_dwn_tb
+R0
+R1
+!i10b 1
+!s100 U>>FcVQM9VI2_@P8Yk@hc3
+R2
+I3WEk@GGMFJ<K`hld6<2n52
+R3
+S1
+R4
+w1757084956
+8C:/Users/User/OneDrive/Documents/ECE 551/Ex01/counter_tb.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/Ex01/counter_tb.sv
+!i122 4
+L0 1 46
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/Ex01/counter_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/Ex01/counter_tb.sv|
+!i113 1
+R7
+R8

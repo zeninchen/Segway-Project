@@ -1,0 +1,80 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/User/OneDrive/Documents/ECE 551/EX08
+vadder
+Z0 !s110 1759009401
+!i10b 1
+!s100 L@[Mk_dNgGd3BFhJb;F123
+Z1 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IGSB7RiS;F6TXUT[l]6]5e3
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z3 dC:/Users/User/OneDrive/Documents/ECE 551/HW02
+w1759009298
+8C:/Users/User/OneDrive/Documents/ECE 551/HW02/adder.v
+FC:/Users/User/OneDrive/Documents/ECE 551/HW02/adder.v
+!i122 17
+L0 1 10
+Z4 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z5 !s108 1759009401.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/HW02/adder.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/HW02/adder.v|
+!i113 1
+Z6 o-work work
+Z7 tCvgOpt 0
+vadder_tb
+R0
+!i10b 1
+!s100 GRVl1R7J=]kFRT1;2IE:31
+R1
+IS0BYNQoL3QHYAWOTX2^Bk2
+R2
+R3
+w1759009380
+Z8 8C:/Users/User/OneDrive/Documents/ECE 551/HW02/adder_tb.v
+Z9 FC:/Users/User/OneDrive/Documents/ECE 551/HW02/adder_tb.v
+!i122 18
+L0 1 52
+R4
+r1
+!s85 0
+31
+R5
+Z10 !s107 C:/Users/User/OneDrive/Documents/ECE 551/HW02/adder_tb.v|
+Z11 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/HW02/adder_tb.v|
+!i113 1
+R6
+R7
+vfull_adder_tb
+!s110 1759008174
+!i10b 1
+!s100 C<nXmzh7ak<7MnQQ`k:6W1
+R1
+I0LFA7Q7oUeY:8cEE;WJh_1
+R2
+R3
+w1759008158
+R8
+R9
+!i122 1
+L0 1 45
+R4
+r1
+!s85 0
+31
+!s108 1759008174.000000
+R10
+R11
+!i113 1
+R6
+R7

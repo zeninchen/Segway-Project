@@ -1,0 +1,46 @@
+# Compile of MSFF.sv was successful.
+# Compile of MSFF_tb.sv was successful.
+# 2 compiles, 0 failed with no errors.
+vsim -gui work.MSFF_tb
+# vsim -gui work.MSFF_tb 
+# Start time: 21:02:51 on Sep 15,2025
+# Loading sv_std.std
+# Loading work.MSFF_tb
+# Loading work.MSFF
+add wave -position insertpoint sim:/MSFF_tb/dut/*
+run -all
+# Time=0 | clk=0 | d=0 | q=x
+# Time=5 | clk=1 | d=0 | q=x
+# Time=6 | clk=1 | d=0 | q=0
+# Time=10 | clk=0 | d=0 | q=0
+# Time=15 | clk=1 | d=0 | q=0
+# Time=20 | clk=0 | d=0 | q=0
+# Time=25 | clk=1 | d=0 | q=0
+# Time=30 | clk=0 | d=0 | q=0
+# Time=35 | clk=1 | d=0 | q=0
+# Time=40 | clk=0 | d=0 | q=0
+# Time=45 | clk=1 | d=1 | q=0
+# Time=50 | clk=0 | d=1 | q=0
+# Time=55 | clk=1 | d=0 | q=0
+# Time=56 | clk=1 | d=0 | q=1
+# Time=60 | clk=0 | d=0 | q=1
+# Time=65 | clk=1 | d=0 | q=1
+# Time=66 | clk=1 | d=0 | q=0
+# Time=70 | clk=0 | d=0 | q=0
+# Time=75 | clk=1 | d=0 | q=0
+# Time=80 | clk=0 | d=0 | q=0
+# Time=85 | clk=1 | d=0 | q=0
+# Time=90 | clk=0 | d=0 | q=0
+# Time=95 | clk=1 | d=1 | q=0
+# Time=100 | clk=0 | d=1 | q=0
+# q did NOT follow d after 10 clock cycles.
+# Time=105 | clk=1 | d=1 | q=0
+# Time=106 | clk=1 | d=1 | q=1
+# Time=110 | clk=0 | d=1 | q=1
+# Time=115 | clk=1 | d=1 | q=1
+# Time=120 | clk=0 | d=1 | q=1
+# ** Note: $stop    : C:/Users/User/OneDrive/Documents/ECE 551/EX04/MSFF_tb.sv(47)
+#    Time: 125 ps  Iteration: 0  Instance: /MSFF_tb
+# Break in Module MSFF_tb at C:/Users/User/OneDrive/Documents/ECE 551/EX04/MSFF_tb.sv line 47
+# End time: 21:07:13 on Sep 15,2025, Elapsed time: 0:04:22
+# Errors: 0, Warnings: 5
