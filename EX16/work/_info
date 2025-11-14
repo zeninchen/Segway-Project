@@ -1,0 +1,89 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/User/OneDrive/Documents/ECE 551/EX15
+vSPI_iNEMO1
+Z0 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+Z1 !s110 1761584563
+!i10b 1
+!s100 J>LV[WfcNQQOPSHMJLeJM3
+Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IbG6?POa^A5kX=m_VnKe;z2
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+S1
+Z4 dC:/Users/User/OneDrive/Documents/ECE 551/EX16
+w1761330094
+8C:/Users/User/OneDrive/Documents/ECE 551/EX16/SPI_iNEMO1.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX16/SPI_iNEMO1.sv
+!i122 64
+L0 1 223
+Z5 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z6 !s108 1761584563.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX16/SPI_iNEMO1.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX16/SPI_iNEMO1.sv|
+!i113 1
+Z7 o-work work -sv
+Z8 tCvgOpt 0
+n@s@p@i_i@n@e@m@o1
+vSPI_mnrch
+R0
+R1
+!i10b 1
+!s100 L>e5:69oajgl2OHk5oYza0
+R2
+IgZz]3J<Za9`IT1HRmlG7@3
+R3
+S1
+R4
+w1761329466
+8C:/Users/User/OneDrive/Documents/ECE 551/EX16/SPI_mnrch.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX16/SPI_mnrch.sv
+!i122 65
+L0 1 148
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX16/SPI_mnrch.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX16/SPI_mnrch.sv|
+!i113 1
+R7
+R8
+n@s@p@i_mnrch
+vSPI_mnrch_tb
+R0
+R1
+!i10b 1
+!s100 DzAAo=HPgfL@gCV3H8oRa1
+R2
+ILYkR^DAB0gQ7iHDk41e9H0
+R3
+S1
+R4
+w1761584544
+8C:/Users/User/OneDrive/Documents/ECE 551/EX16/SPI_mnrch_tb.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX16/SPI_mnrch_tb.sv
+!i122 66
+L0 1 149
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX16/SPI_mnrch_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX16/SPI_mnrch_tb.sv|
+!i113 1
+R7
+R8
+n@s@p@i_mnrch_tb

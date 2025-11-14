@@ -1,0 +1,61 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/User/OneDrive/Documents/ECE 551/EX14
+vsteer_en_SM
+DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+!s110 1760377410
+!i10b 1
+!s100 L^>6QOC2lOR[EjgTNz^202
+Z0 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IB?B:m4=7ffA2V^c>V;Cz41
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+S1
+Z2 dC:/Users/User/OneDrive/Documents/ECE 551/HW03
+w1760377397
+8C:/Users/User/OneDrive/Documents/ECE 551/HW03/steer_en_SM_shell.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/HW03/steer_en_SM_shell.sv
+!i122 21
+L0 1 90
+Z3 OV;L;2020.1;71
+r1
+!s85 0
+31
+!s108 1760377410.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/HW03/steer_en_SM_shell.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/HW03/steer_en_SM_shell.sv|
+!i113 1
+o-work work -sv
+Z4 tCvgOpt 0
+nsteer_en_@s@m
+vsteer_en_SM_tb
+!s110 1760377007
+!i10b 1
+!s100 7E5HJMazh6`o`@2KSPUei2
+R0
+IRD781>dSbCe5z5B[X9jPZ0
+R1
+R2
+w1760218647
+8C:/Users/User/OneDrive/Documents/ECE 551/HW03/steer_en_SM_tb.v
+FC:/Users/User/OneDrive/Documents/ECE 551/HW03/steer_en_SM_tb.v
+!i122 19
+L0 1 204
+R3
+r1
+!s85 0
+31
+!s108 1760377007.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/HW03/steer_en_SM_tb.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/HW03/steer_en_SM_tb.v|
+!i113 1
+o-work work
+R4
+nsteer_en_@s@m_tb

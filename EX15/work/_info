@@ -1,0 +1,214 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/User/OneDrive/Documents/ECE 551/HW03
+vabs
+Z0 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+Z1 !s110 1760980080
+!i10b 1
+!s100 9V6MQRSmdIO1P`RYIIEh40
+Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IL@2dL8^0z<joA6IhKGz[n3
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+S1
+Z4 dC:/Users/User/OneDrive/Documents/ECE 551/EX15
+Z5 w1759263092
+Z6 8C:/Users/User/OneDrive/Documents/ECE 551/EX15/SegwayMath.sv
+Z7 FC:/Users/User/OneDrive/Documents/ECE 551/EX15/SegwayMath.sv
+!i122 11
+L0 167 6
+Z8 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z9 !s108 1760980080.000000
+Z10 !s107 C:/Users/User/OneDrive/Documents/ECE 551/EX15/SegwayMath.sv|
+Z11 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX15/SegwayMath.sv|
+!i113 1
+Z12 o-work work -sv
+Z13 tCvgOpt 0
+vbalance_cntrl
+R0
+!s110 1760980079
+!i10b 1
+!s100 B6:ZbR@DP9>>U2Y2Z1U5L0
+R2
+I>^Td7^8eNRJFaNW7ZP1To3
+R3
+S1
+R4
+w1760717285
+8C:/Users/User/OneDrive/Documents/ECE 551/EX15/balance_cntrl.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX15/balance_cntrl.sv
+!i122 8
+L0 1 50
+R8
+r1
+!s85 0
+31
+!s108 1760980079.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX15/balance_cntrl.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX15/balance_cntrl.sv|
+!i113 1
+R12
+R13
+vdeadzone_shaping
+R0
+R1
+!i10b 1
+!s100 e7]kV76OQH?ISngW`VbkR3
+R2
+Ikjn>3:z=AE=G7KXSID^i23
+R3
+S1
+R4
+R5
+R6
+R7
+!i122 11
+L0 121 43
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 1
+R12
+R13
+vPID
+R0
+!s110 1760981051
+!i10b 1
+!s100 XklcK5K8SeZf5H2BXQRQi2
+R2
+Im0Sm2f=ANP>OhVkXDY`9N3
+R3
+S1
+R4
+w1760981044
+8C:/Users/User/OneDrive/Documents/ECE 551/EX15/PID.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX15/PID.sv
+!i122 13
+L0 1 143
+R8
+r1
+!s85 0
+31
+!s108 1760981051.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX15/PID.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX15/PID.sv|
+!i113 1
+R12
+R13
+n@p@i@d
+vPID_dbg_tb
+R0
+R1
+!i10b 1
+!s100 gYEg[EV5b9fNUR[jZY:j23
+R2
+Ijc`jRiz8>X09F_f@j1IGC1
+R3
+S1
+R4
+w1760716991
+8C:/Users/User/OneDrive/Documents/ECE 551/EX15/PID_fastsim_tb.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX15/PID_fastsim_tb.sv
+!i122 10
+L0 1 213
+R8
+r1
+!s85 0
+31
+R9
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX15/PID_fastsim_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX15/PID_fastsim_tb.sv|
+!i113 1
+R12
+R13
+n@p@i@d_dbg_tb
+vsaturate_12bit_signed
+R0
+R1
+!i10b 1
+!s100 CGM_A7d0?jhKM[75Fl_G_0
+R2
+I<WRXgCZZDF38K5eG@TUz;1
+R3
+S1
+R4
+R5
+R6
+R7
+!i122 11
+L0 103 15
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 1
+R12
+R13
+vSegwayMath
+R0
+R1
+!i10b 1
+!s100 <2[G^PjbSK2Zkbm^]d>Hm1
+R2
+I6kc604Hg6DK0O:@4Aabl>2
+R3
+S1
+R4
+R5
+R6
+R7
+!i122 11
+L0 1 71
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 1
+R12
+R13
+n@segway@math
+vsteering_logic
+R0
+R1
+!i10b 1
+!s100 G?j;MD^bA`l18L3SRIj5c0
+R2
+IHf=A;Uzi@j3D2^Y]:`10G1
+R3
+S1
+R4
+R5
+R6
+R7
+!i122 11
+L0 75 26
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 1
+R12
+R13

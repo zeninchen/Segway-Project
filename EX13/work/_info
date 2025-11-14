@@ -11,24 +11,24 @@ cModel Technology
 dC:/Users/User/OneDrive/Documents/ECE 551/EX12
 vUART_tx
 Z0 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
-!s110 1759766641
+!s110 1760110985
 !i10b 1
-!s100 A2H=PHAIT5aXI<_gCoAHc1
+!s100 ]nJ>Z=TW2hod?JXG^hPb71
 Z1 !s11b Dg1SIo80bB@j0V0VzS_@n1
-I2^OW2UDZ[CS09fCT1D<Jm0
+ICQ8cWb4jYJU33Pec<oXz73
 Z2 VDg1SIo80bB@j0V0VzS_@n1
 S1
 Z3 dC:/Users/User/OneDrive/Documents/ECE 551/EX13
-w1759766638
+w1760110885
 8C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx.sv
 FC:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx.sv
-!i122 13
-L0 1 104
+!i122 14
+L0 1 98
 Z4 OV;L;2020.1;71
 r1
 !s85 0
 31
-!s108 1759766641.000000
+!s108 1760110985.000000
 !s107 C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx.sv|
 !i113 1

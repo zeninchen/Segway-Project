@@ -48,52 +48,6 @@ module PID (
     assign P_term = ptch_err_sat*P_COFF ;
 
     //integrator logic
-    integrate integrate_1 (
-        .clk(clk),
-        .rst_n(rst_n),
-        .vld(vld),
-        .rider_off(rider_off),
-        .ptch_err_sat(ptch_err_sat),
-        .integrator(integrator)
-    );
-    /*I_term will be a 15-bit signed quantity and is simply integrator/64. One might question why I_term needs to be 15-bits. An 18-bit value divided by 64 should be able to fit in a 12-bit value. This is true, but later we will see we
-have to modify some of the math to speed up simulations. For this reason we
-will keep I_term at 15-bits.*/
-    assign I_term={{3{integrator[17]}},integrator[17:6]};
-
-    //D_term = -(ptch_rt/64)
-    assign D_term = -{{3{ptch_rt[15]}},ptch_rt[15:6]};
-
-    //PID_cntrl = P_term + I_term + D_term
-    //sign extend each term to 16-bits before adding
-    assign P_extend = { {1{P_term[14]}}, P_term};
-    assign I_extend = { {1{I_term[14]}}, I_term};
-    assign D_extend = { {3{D_term[12]}}, D_term};
-    //add the three extended terms together and assign the lower 12-bits to PID_cn
-    //and saturate to 12-bits signed
-    logic signed [15:0] PID_sum;
-    assign PID_sum = P_extend + I_extend + D_extend;
-    //assign PID_cntrl = (PID_sum[15])? (~(&PID_sum[15:11]) ? -12'sh0800 : PID_sum[11:0]) : (|PID_sum[15:12] ? 12'sh07FF : PID_sum[11:0]);
-    //more concise way to write the same saturation logic
-    assign PID_cntrl = (PID_sum > 16'sh07FF) ? 12'sh7FF : (PID_sum < -16'sh0800) ? -12'sh800 : PID_sum[11:0];
-    
-    //soft start timer instance
-    soft_start_timer soft_start_timer_1 (
-        .clk(clk),
-        .rst_n(rst_n),
-        .pwr_up(pwr_up),
-        .ss_tmr(ss_tmr)
-    );
-endmodule
-
-module integrate(
-    input logic clk,
-    input logic rst_n,
-    input logic vld,
-    input logic rider_off,
-    input logic signed [9:0] ptch_err_sat,
-    output logic signed [17:0] integrator
-);
     logic ov; //overflow flag for integrator
     logic signed [17:0] integrator_plus_ptch;
     logic signed [17:0] ptch_err_ext;
@@ -122,33 +76,45 @@ module integrate(
         else//just propagate the value from mux2 to integrator
             integrator <= mux2_out;
     end
-endmodule
+    /*I_term will be a 15-bit signed quantity and is simply integrator/64. One might question why I_term needs to be 15-bits. An 18-bit value divided by 64 should be able to fit in a 12-bit value. This is true, but later we will see we
+have to modify some of the math to speed up simulations. For this reason we
+will keep I_term at 15-bits.*/
+    assign I_term={{3{integrator[17]}},integrator[17:6]};
 
-//Soft Start Timer
-module soft_start_timer(
-    input logic clk,
-    input logic rst_n,
-    input logic pwr_up,
-    output logic [7:0] ss_tmr
-);
+    //D_term = -(ptch_rt/64)
+    assign D_term = -{{3{ptch_rt[15]}},ptch_rt[15:6]};
+
+    //PID_cntrl = P_term + I_term + D_term
+    //sign extend each term to 16-bits before adding
+    assign P_extend = { {1{P_term[14]}}, P_term};
+    assign I_extend = { {1{I_term[14]}}, I_term};
+    assign D_extend = { {3{D_term[12]}}, D_term};
+    //add the three extended terms together and assign the lower 12-bits to PID_cn
+    //and saturate to 12-bits signed
+    logic signed [15:0] PID_sum;
+    assign PID_sum = P_extend + I_extend + D_extend;
+    //assign PID_cntrl = (PID_sum[15])? (~(&PID_sum[15:11]) ? -12'sh0800 : PID_sum[11:0]) : (|PID_sum[15:12] ? 12'sh07FF : PID_sum[11:0]);
+    //more concise way to write the same saturation logic
+    assign PID_cntrl = (PID_sum > 16'sh07FF) ? 12'sh7FF : (PID_sum < -16'sh0800) ? -12'sh800 : PID_sum[11:0];
+    
+    //soft start timer logic
     logic [26:0] cnt; //27-bit counter to count to 50 million
-    logic mux1_en;
-    logic [26:0] mux1_out;
-    logic [26:0] mux2_out;
+    logic mux1_en_ss;
+    logic [26:0] mux1_out_ss;
+    logic [26:0] mux2_out_ss;
     //It is a one shot timer. Once it starts counting and gets near full (bits [26:19]
     //set) it freezes.
     assign ss_tmr = cnt[26:19]; //upper 8 bits of the counter
-    assign mux1_en = &ss_tmr; //if all bits of ss_tmr are 1, freeze the counter
-    assign mux1_out = mux1_en ? cnt : cnt + 1'b1;
+    assign mux1_en_ss = &ss_tmr; //if all bits of ss_tmr are 1, freeze the counter
+    assign mux1_out_ss = mux1_en_ss ? cnt : cnt + 1'b1;
     //if pwr_up is high, load  mux1_out else load 0
-    assign mux2_out = pwr_up ?  mux1_out : 27'b0;
+    assign mux2_out_ss = pwr_up ?  mux1_out_ss : 27'b0;
 
     //counter register
     always_ff @(posedge clk or negedge rst_n) begin
         if(!rst_n)
             cnt <= 27'b0;
         else
-            cnt <= mux2_out;
+            cnt <= mux2_out_ss;
     end
-
 endmodule

@@ -27,7 +27,7 @@ module PWM11(
     
     //set is high when the condition is met and reset is low
     assign PWM1_set = (counter >= NONOVERLAP)&&!PWM1_reset;
-    assign PWM1_reset = (counter >= duty); //reset at max count, reset is active low
+    assign PWM1_reset = (counter >= duty);
     //clock for PWM1
     //PWM1 set and reset are both posedge triggered
     always_ff @(posedge clk or negedge rst_n) begin
@@ -41,7 +41,7 @@ module PWM11(
     end
 
     assign PWM2_set = (counter>=duty + NONOVERLAP)&&!PWM2_reset;
-    assign PWM2_reset = (&counter);
+    assign PWM2_reset = (&counter); //reset at max count
     //clock for PWM2
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n)

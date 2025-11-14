@@ -1,0 +1,20 @@
+# Compile of A2D_Intf.sv was successful.
+# Compile of A2D_tb.sv was successful.
+# Compile of ADC128S.sv was successful.
+# Compile of SPI_ADC128S.sv was successful.
+# Compile of SPI_mnrch.sv was successful.
+# 5 compiles, 0 failed with no errors.
+vsim -gui work.A2D_tb
+# vsim -gui work.A2D_tb 
+# Start time: 10:37:24 on Nov 14,2025
+# Loading sv_std.std
+# Loading work.A2D_tb
+# Loading work.A2D_intf
+# Loading work.SPI_mnrch
+# Loading work.ADC128S
+# Loading work.SPI_ADC128S
+add wave -position insertpoint sim:/A2D_tb/iDUT/*
+run -all
+# ** Note: $stop    : C:/Users/User/OneDrive/Documents/ECE 551/EX21/A2D_tb.sv(37)
+#    Time: 63345 ps  Iteration: 1  Instance: /A2D_tb
+# Break in Module A2D_tb at C:/Users/User/OneDrive/Documents/ECE 551/EX21/A2D_tb.sv line 37

@@ -35,23 +35,17 @@ module PWM11_tb;
         duty_cycle = 11'h3FF;
 
         // Apply reset
-        #15;
+        @(posedge clk);
         rst_n = 1;
-        repeat (32) begin
-            //duty_cycle = duty_cycle + 11'd128; // Increment duty cycle by 128
-            #1280; // Wait for 128 clock cycles (128 * 10 time units)
-        end
+        repeat (2050) @(posedge clk) 
         //change to 75% duty cycle
         duty_cycle = 11'h5FF;
         //let each duty cycle run for 128 clock cycles
-        repeat (32) begin
-            #1280; // Wait for 128 clock cycles (128 * 10 time units)
-        end
+        repeat (2050) @(posedge clk);
         //change to 25% duty cycle
         duty_cycle = 11'h1FF;
         //let each duty cycle run for 128 clock cycles
-        repeat (32) begin
-            #1280; // Wait for 128 clock cycles (128 * 10 time units)
+        repeat (2050) @(posedge clk);
         end
 
 

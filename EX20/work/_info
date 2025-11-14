@@ -1,0 +1,86 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/User/OneDrive/Documents/ECE 551/HW04
+vpiezo_drv
+Z0 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+Z1 !s110 1762541667
+!i10b 1
+!s100 =jTKli^dJ1C04bNUJaYEP3
+Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
+I<eJCfognBL4^P[Fm2XaA02
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+S1
+Z4 dC:/Users/User/OneDrive/Documents/ECE 551/EX20
+w1762541360
+8C:/Users/User/OneDrive/Documents/ECE 551/EX20/piezo_drv.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX20/piezo_drv.sv
+!i122 70
+L0 1 282
+Z5 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z6 !s108 1762541667.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX20/piezo_drv.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX20/piezo_drv.sv|
+!i113 1
+Z7 o-work work -sv
+Z8 tCvgOpt 0
+vpiezo_drv_tb
+R0
+R1
+!i10b 1
+!s100 biaL3mMh5QT0[4@IjlU3X1
+R2
+I@Yih0MeH`=GPQ29Q@KPJP3
+R3
+S1
+R4
+w1762540302
+8C:/Users/User/OneDrive/Documents/ECE 551/EX20/piezo_drv_tb.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX20/piezo_drv_tb.sv
+!i122 71
+L0 1 81
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX20/piezo_drv_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX20/piezo_drv_tb.sv|
+!i113 1
+R7
+R8
+vpiezo_opt
+R0
+R1
+!i10b 1
+!s100 3ILOTik^WBoUIKWZLl96R2
+R2
+I]AhAFQ0=aZ?NWOiOVLf>J3
+R3
+S1
+R4
+w1762541596
+8C:/Users/User/OneDrive/Documents/ECE 551/EX20/piezo_opt.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX20/piezo_opt.sv
+!i122 72
+L0 1 281
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX20/piezo_opt.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX20/piezo_opt.sv|
+!i113 1
+R7
+R8

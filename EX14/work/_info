@@ -1,0 +1,115 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/User/OneDrive/Documents/ECE 551/EX13
+vUART_rx
+Z0 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+Z1 !s110 1760219270
+!i10b 1
+!s100 JkNNBzPaNhH1n;Uf<Lhbi2
+Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
+I`>2`C;W7ezmXMSl^>[fJl3
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+S1
+Z4 dC:/Users/User/OneDrive/Documents/ECE 551/EX14
+w1760117064
+8C:/Users/User/OneDrive/Documents/ECE 551/EX14/UART_rx.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX14/UART_rx.sv
+!i122 19
+L0 2 119
+Z5 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z6 !s108 1760219270.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX14/UART_rx.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX14/UART_rx.sv|
+!i113 1
+Z7 o-work work -sv
+Z8 tCvgOpt 0
+n@u@a@r@t_rx
+vUART_rx_tb
+R0
+R1
+!i10b 1
+!s100 _:^b@?oJA0^?IYFX05:A]0
+R2
+I;E>>bN;@IbX?hbodm>PSc2
+R3
+S1
+R4
+w1760219167
+Z9 8C:/Users/User/OneDrive/Documents/ECE 551/EX14/UART_tb.sv
+Z10 FC:/Users/User/OneDrive/Documents/ECE 551/EX14/UART_tb.sv
+!i122 20
+L0 1 102
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX14/UART_tb.sv|
+Z11 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX14/UART_tb.sv|
+!i113 1
+R7
+R8
+n@u@a@r@t_rx_tb
+vUART_tb
+R0
+!s110 1760219801
+!i10b 1
+!s100 DGIA6FVmWOM]Dd`Lc7l3V1
+R2
+Ik^T5A4]XfY8J?_SkYRlP_0
+R3
+S1
+R4
+w1760219782
+R9
+R10
+!i122 25
+L0 1 116
+R5
+r1
+!s85 0
+31
+!s108 1760219801.000000
+Z12 !s107 C:/Users/User/OneDrive/Documents/ECE 551/EX14/UART_tb.sv|
+R11
+!i113 1
+R7
+R8
+n@u@a@r@t_tb
+vUART_tx
+R0
+R1
+!i10b 1
+!s100 ]nJ>Z=TW2hod?JXG^hPb71
+R2
+ICQ8cWb4jYJU33Pec<oXz73
+R3
+S1
+R4
+w1760117208
+8C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx.sv
+!i122 21
+L0 1 98
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX13/UART_tx.sv|
+!i113 1
+R7
+R8
+n@u@a@r@t_tx

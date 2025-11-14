@@ -5,7 +5,7 @@ module saturate (
     input  logic [9:0] signed_D_diff,
     output logic [9:0] unsigned_err_sat,
     output logic [9:0] signed_err_sat,
-    output logic  [6:0] signed_D_diff_sat
+    output logic [6:0] signed_D_diff_sat
 );
     logic is_negative;
     logic is_negative_D;

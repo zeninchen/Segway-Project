@@ -1,0 +1,167 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/User/OneDrive/Documents/ECE 551/EX20
+vA2D_intf
+Z0 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+Z1 !s110 1763138231
+!i10b 1
+!s100 YiYf1?bFX_kfEjADK6T]@2
+Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
+ILd>@blKTdm`ZXY[BK7dc;2
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+S1
+Z4 dC:/Users/User/OneDrive/Documents/ECE 551/EX21
+w1762964651
+8C:/Users/User/OneDrive/Documents/ECE 551/EX21/A2D_intf.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX21/A2D_intf.sv
+!i122 48
+L0 1 145
+Z5 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z6 !s108 1763138231.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX21/A2D_intf.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX21/A2D_intf.sv|
+!i113 1
+Z7 o-work work -sv
+Z8 tCvgOpt 0
+n@a2@d_intf
+vA2D_Intf
+R0
+!s110 1762894451
+!i10b 1
+!s100 o`ghdG`22L5i@HCcdl:0N1
+R2
+IgK?245z9m57_NljX;JER>1
+R3
+S1
+R4
+w1762894436
+8C:/Users/User/OneDrive/Documents/ECE 551/EX21/A2D_Intf.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX21/A2D_Intf.sv
+!i122 46
+L0 1 146
+R5
+r1
+!s85 0
+31
+!s108 1762894451.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX21/A2D_Intf.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX21/A2D_Intf.sv|
+!i113 1
+R7
+R8
+n@a2@d_@intf
+vA2D_tb
+R0
+R1
+!i10b 1
+!s100 YcC_gXg[j@fe@ea<BZ2G:0
+R2
+I>XHk6V4i3KBA<VX>aJP[^3
+R3
+S1
+R4
+w1762964635
+8C:/Users/User/OneDrive/Documents/ECE 551/EX21/A2D_tb.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX21/A2D_tb.sv
+!i122 49
+L0 1 65
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX21/A2D_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX21/A2D_tb.sv|
+!i113 1
+R7
+R8
+n@a2@d_tb
+vADC128S
+R0
+Z9 !s110 1763138232
+!i10b 1
+!s100 hV@oH;TfRWhAm<]b5:l8k2
+R2
+IbkZSC3>XeIdmF5ioWn6i[0
+R3
+S1
+R4
+w1762796234
+8C:/Users/User/OneDrive/Documents/ECE 551/EX21/ADC128S.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX21/ADC128S.sv
+!i122 50
+L0 1 111
+R5
+r1
+!s85 0
+31
+Z10 !s108 1763138232.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX21/ADC128S.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX21/ADC128S.sv|
+!i113 1
+R7
+R8
+n@a@d@c128@s
+vSPI_ADC128S
+R0
+R9
+!i10b 1
+!s100 93oj0i;UV@::cHMPGHMJ>1
+R2
+I_0_m3]oNIOO<BmHLm1<nZ1
+R3
+S1
+R4
+w1762730896
+8C:/Users/User/OneDrive/Documents/ECE 551/EX21/SPI_ADC128S.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX21/SPI_ADC128S.sv
+!i122 51
+L0 1 140
+R5
+r1
+!s85 0
+31
+R10
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX21/SPI_ADC128S.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX21/SPI_ADC128S.sv|
+!i113 1
+R7
+R8
+n@s@p@i_@a@d@c128@s
+vSPI_mnrch
+R0
+R9
+!i10b 1
+!s100 L>e5:69oajgl2OHk5oYza0
+R2
+IE=fIJ4T5ja:i1aj:Xo;3_2
+R3
+S1
+R4
+w1761329466
+8C:/Users/User/OneDrive/Documents/ECE 551/EX21/SPI_mnrch.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/EX21/SPI_mnrch.sv
+!i122 52
+L0 1 148
+R5
+r1
+!s85 0
+31
+R10
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/EX21/SPI_mnrch.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/EX21/SPI_mnrch.sv|
+!i113 1
+R7
+R8
+n@s@p@i_mnrch

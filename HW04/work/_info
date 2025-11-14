@@ -1,0 +1,169 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/User/OneDrive/Documents/ECE 551/EX17
+vAuth_blk
+Z0 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+Z1 !s110 1761940439
+!i10b 1
+!s100 ZOlUA=V@[hh:_><[Xi?c72
+Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
+I?KCRzo<f9Q6PAg[b_kB;X0
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+S1
+Z4 dC:/Users/User/OneDrive/Documents/ECE 551/HW04
+w1761766939
+8C:/Users/User/OneDrive/Documents/ECE 551/HW04/Auth_blk.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/HW04/Auth_blk.sv
+!i122 67
+L0 1 73
+Z5 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z6 !s108 1761940439.000000
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/HW04/Auth_blk.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/HW04/Auth_blk.sv|
+!i113 1
+Z7 o-work work -sv
+Z8 tCvgOpt 0
+n@auth_blk
+vAuth_blk_tb
+R0
+R1
+!i10b 1
+!s100 gUFVdZO2oI9BhZE<Oo_D_2
+R2
+ISCMk`^XgKJ;L7zjH_^9TY0
+R3
+S1
+R4
+w1761940435
+Z9 8C:/Users/User/OneDrive/Documents/ECE 551/HW04/Auth_blk_tb.sv
+Z10 FC:/Users/User/OneDrive/Documents/ECE 551/HW04/Auth_blk_tb.sv
+!i122 68
+L0 1 131
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/HW04/Auth_blk_tb.sv|
+Z11 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/HW04/Auth_blk_tb.sv|
+!i113 1
+R7
+R8
+n@auth_blk_tb
+XAuth_blk_tb_pkg
+R0
+R1
+!i10b 1
+!s100 cNaWlTYGhQXG94?Z?oo:10
+R2
+IkcDHV[<6GdjTedHZn6I@02
+VkcDHV[<6GdjTedHZn6I@02
+S1
+R4
+w1761939825
+8C:/Users/User/OneDrive/Documents/ECE 551/HW04/Auth_blk_tb_pkg.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/HW04/Auth_blk_tb_pkg.sv
+!i122 69
+L0 1 0
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/HW04/Auth_blk_tb_pkg.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/HW04/Auth_blk_tb_pkg.sv|
+!i113 1
+R7
+R8
+n@auth_blk_tb_pkg
+XAuth_blk_tb_sv_unit
+R0
+DXx4 work 15 Auth_blk_tb_pkg 0 22 VMkbHH:IHAo^n6FlGHjjH1
+!s110 1761940344
+VC:dofPSX_l0K[fS]gA[=a1
+r1
+!s85 0
+!i10b 1
+!s100 K8kbceCUhc0aDY:]?<SP`3
+IC:dofPSX_l0K[fS]gA[=a1
+!i103 1
+S1
+R4
+w1761940339
+R9
+R10
+FAuth_blk_tb_pkg.sv
+!i122 63
+L0 135 0
+R5
+31
+!s108 1761940344.000000
+!s107 Auth_blk_tb_pkg.sv|C:/Users/User/OneDrive/Documents/ECE 551/HW04/Auth_blk_tb.sv|
+R11
+!i113 1
+R7
+R8
+n@auth_blk_tb_sv_unit
+vUART_rx
+R0
+R1
+!i10b 1
+!s100 V]Kj4RWgnVfX5AVjLi57k0
+R2
+IU2ZQ7?4ZifomFdb;fhB2M0
+R3
+S1
+R4
+w1760721619
+8C:/Users/User/OneDrive/Documents/ECE 551/HW04/UART_rx.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/HW04/UART_rx.sv
+!i122 70
+L0 2 117
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/HW04/UART_rx.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/HW04/UART_rx.sv|
+!i113 1
+R7
+R8
+n@u@a@r@t_rx
+vUART_tx
+R0
+R1
+!i10b 1
+!s100 =k5fJKk[Ig2BA6C8YVKNl1
+R2
+INBHJ9:bdBkAX9J@X3PTGa1
+R3
+S1
+R4
+w1760497200
+8C:/Users/User/OneDrive/Documents/ECE 551/HW04/UART_tx.sv
+FC:/Users/User/OneDrive/Documents/ECE 551/HW04/UART_tx.sv
+!i122 71
+L0 1 98
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/User/OneDrive/Documents/ECE 551/HW04/UART_tx.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/User/OneDrive/Documents/ECE 551/HW04/UART_tx.sv|
+!i113 1
+R7
+R8
+n@u@a@r@t_tx
