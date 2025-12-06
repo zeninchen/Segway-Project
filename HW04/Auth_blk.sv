@@ -38,7 +38,6 @@ module Auth_blk(
             IDLE: begin
                 if (rx_rdy && (rx_data == letter_G)) begin
                     next_state = POWER_ON;
-                    pwr_up = 1'b1;
                     clr_rx_rdy = 1'b1;
                 end
             end
@@ -58,15 +57,18 @@ module Auth_blk(
                 pwr_up = 1'b1;
                 if (rider_off) begin
                     next_state = IDLE;
-                    pwr_up = 1'b0;
                 end
                 else if(rx_rdy && (rx_data == letter_G)) begin
                     next_state = POWER_ON;
-                    pwr_up = 1'b1;
                     clr_rx_rdy = 1'b1;
                 end
             end
-            default: next_state = IDLE;
+            default: begin
+                clr_rx_rdy = 1'bx;
+                pwr_up = 1'bx;
+                next_state = IDLE;
+            end
+            
         endcase
     end
 

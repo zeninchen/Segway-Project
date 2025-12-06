@@ -1,4 +1,4 @@
-module piezo_opt(
+module piezo_drv_old(
     input logic clk,
     input logic rst_n,
     input logic en_steer,
@@ -14,7 +14,7 @@ module piezo_opt(
     localparam int unsigned E7 = 9480;//2637 Hz 2637/2 = 1318 
     localparam int unsigned G7 = 7972;//3136 Hz 3136/2 = 1568
     //counter timer for piezo duration
-    logic[3:0] clk_counter;
+    logic[25:0] clk_counter;
     logic [13:0] freq_counter;
     //the half frequency of the current note being played
     logic [13:0] current_frequency;
@@ -26,24 +26,25 @@ module piezo_opt(
     //generate a signal after we reset it 
     logic[27:0] repeat_counter;
     logic three_sec;
-
-    // edge detect on repeat_counter[22] in the clk domain
-    logic rep22_q;
-
-    always_ff @(posedge clk or negedge rst_n) begin
-        if (!rst_n) rep22_q <= 1'b0;
-        else        rep22_q <= repeat_counter[22];
-    end
-    wire rep22_rise = repeat_counter[22] & ~rep22_q;  // 1-cycle pulse
-    wire rep22_fall = ~repeat_counter[22] & rep22_q; // 1-cycle pulse
-    // use next_note as sync clear and rep22_rise as enable
-    always_ff @(posedge clk) begin
-        if (next_note) clk_counter <= '0;             // sync clear
-        //we need to account for both rising edge and falling edge of bit 22
-        else if (rep22_rise||rep22_fall) clk_counter <= clk_counter + 1;
-        //else hold
-    end
-    /
+    
+    generate
+        if (fast_sim)
+            always_ff @(posedge clk) begin
+                if(next_note)
+                    clk_counter <= 0;
+                else 
+                    //if fast_sim is enabled, increment by a value of 64
+                    clk_counter <= clk_counter + 64;
+            end
+        else
+            always_ff @(posedge clk) begin
+                if(next_note)
+                    clk_counter <= 0;
+                else
+                    clk_counter <= clk_counter + 1;
+            end
+    endgenerate
+    //logic [24:0] counter_duration;
     //no need for reset, just reset when we move to next note
     
     //each state represents a note to be played
@@ -63,11 +64,11 @@ module piezo_opt(
         else
             state <= next_state;
     end
-    wire clk_23, clk_22, clk_25;
+    logic clk_23, clk_22, clk_25;
     //combinational logic for next state and outputs
-    assign clk_23 = clk_counter[1]; //when bit 23 is set, we have counted 2^23 cycles
-    assign clk_22 = clk_counter[0]; //when bit 22 is set, we have counted 2^22 cycles
-    assign clk_25 = clk_counter[3]; //when bit 25 is set, we have counted 2^25 cycles
+    assign clk_23 = clk_counter[23]; //when bit 23 is set, we have counted 2^23 cycles
+    assign clk_22 = clk_counter[22]; //when bit 22 is set, we have counted 2^22 cycles
+    assign clk_25 = clk_counter[25]; //when bit 25 is set, we have counted 2^25 cycles
     logic idle;
     always_comb begin
         next_state = state;

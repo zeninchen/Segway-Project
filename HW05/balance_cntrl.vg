@@ -1,0 +1,2297 @@
+/////////////////////////////////////////////////////////////
+// Created by: Synopsys DC Expert(TM) in wire load mode
+// Version   : X-2025.06
+// Date      : Wed Oct 29 10:45:03 2025
+/////////////////////////////////////////////////////////////
+
+`timescale 1ns/10ps
+module balance_cntrl ( ptch, ptch_rt, clk, rst_n, vld, pwr_up, rider_off, 
+        steer_pot, en_steer, lft_spd, rght_spd, too_fast );
+  input [15:0] ptch;
+  input [15:0] ptch_rt;
+  input [11:0] steer_pot;
+  output [11:0] lft_spd;
+  output [11:0] rght_spd;
+  input clk, rst_n, vld, pwr_up, rider_off, en_steer;
+  output too_fast;
+  wire   \PID_inst/n25 , \PID_inst/n21 , \PID_inst/n20 , \PID_inst/n19 ,
+         \PID_inst/n16 , \PID_inst/n15 , \PID_inst/n14 , \PID_inst/n13 ,
+         \PID_inst/n12 , \PID_inst/n11 , \PID_inst/P_term[14] , \PID_inst/n69 ,
+         \PID_inst/n68 , \PID_inst/n67 , \PID_inst/n66 , \PID_inst/n65 ,
+         \PID_inst/n64 , \PID_inst/n63 , \PID_inst/n62 , \PID_inst/n61 ,
+         \PID_inst/n60 , \PID_inst/n59 , \PID_inst/n58 , \PID_inst/n57 ,
+         \PID_inst/n56 , \PID_inst/n55 , \PID_inst/n54 , \PID_inst/n53 ,
+         \PID_inst/n52 , \PID_inst/n51 , \PID_inst/cnt[8] ,
+         \PID_inst/D_term[12] , \PID_inst/ptch_err_sat[1] ,
+         \PID_inst/ptch_err_sat[2] , \PID_inst/ptch_err_sat[3] ,
+         \PID_inst/ptch_err_sat[4] , \PID_inst/ptch_err_sat[5] ,
+         \PID_inst/ptch_err_sat[6] , \PID_inst/ptch_err_sat[7] ,
+         \PID_inst/ptch_err_sat[8] , \PID_inst/n96 ,
+         \PID_inst/mult_51/CARRYB[8][0] , \segway_math_inst/n40 ,
+         \segway_math_inst/mult_40/CARRYB[10][0] ,
+         \segway_math_inst/mult_40/CARRYB[3][0] ,
+         \segway_math_inst/mult_40/CARRYB[2][0] ,
+         \segway_math_inst/mult_40/CARRYB[1][0] ,
+         \segway_math_inst/steer_offset[0] ,
+         \segway_math_inst/steer_offset[1] ,
+         \segway_math_inst/steer_offset[2] ,
+         \segway_math_inst/steer_offset[3] ,
+         \segway_math_inst/steer_offset[4] ,
+         \segway_math_inst/steer_offset[5] ,
+         \segway_math_inst/steer_offset[6] , \segway_math_inst/N50 ,
+         \segway_math_inst/N48 , \segway_math_inst/N47 ,
+         \segway_math_inst/N46 , \segway_math_inst/N45 ,
+         \segway_math_inst/N44 , \segway_math_inst/N43 ,
+         \segway_math_inst/N42 , \segway_math_inst/N40 ,
+         \segway_math_inst/N39 , \segway_math_inst/N27 ,
+         \segway_math_inst/N26 , \segway_math_inst/mult_29/A1[7] ,
+         \segway_math_inst/mult_29/SUMB[1][1] ,
+         \segway_math_inst/mult_29/SUMB[1][2] ,
+         \segway_math_inst/mult_29/SUMB[1][7] ,
+         \segway_math_inst/mult_29/SUMB[1][8] ,
+         \segway_math_inst/mult_29/SUMB[1][10] ,
+         \segway_math_inst/mult_29/SUMB[2][1] ,
+         \segway_math_inst/mult_29/SUMB[2][2] ,
+         \segway_math_inst/mult_29/SUMB[2][6] ,
+         \segway_math_inst/mult_29/SUMB[2][7] ,
+         \segway_math_inst/mult_29/SUMB[2][9] ,
+         \segway_math_inst/mult_29/SUMB[2][10] ,
+         \segway_math_inst/mult_29/SUMB[3][1] ,
+         \segway_math_inst/mult_29/SUMB[3][2] ,
+         \segway_math_inst/mult_29/SUMB[3][5] ,
+         \segway_math_inst/mult_29/SUMB[3][8] ,
+         \segway_math_inst/mult_29/SUMB[3][9] ,
+         \segway_math_inst/mult_29/SUMB[3][10] ,
+         \segway_math_inst/mult_29/SUMB[4][1] ,
+         \segway_math_inst/mult_29/SUMB[4][2] ,
+         \segway_math_inst/mult_29/SUMB[4][8] ,
+         \segway_math_inst/mult_29/SUMB[4][9] ,
+         \segway_math_inst/mult_29/SUMB[4][10] ,
+         \segway_math_inst/mult_29/SUMB[5][1] ,
+         \segway_math_inst/mult_29/SUMB[5][2] ,
+         \segway_math_inst/mult_29/SUMB[5][7] ,
+         \segway_math_inst/mult_29/SUMB[5][8] ,
+         \segway_math_inst/mult_29/SUMB[5][9] ,
+         \segway_math_inst/mult_29/SUMB[5][10] ,
+         \segway_math_inst/mult_29/SUMB[6][1] ,
+         \segway_math_inst/mult_29/SUMB[6][2] ,
+         \segway_math_inst/mult_29/SUMB[6][6] ,
+         \segway_math_inst/mult_29/SUMB[6][7] ,
+         \segway_math_inst/mult_29/SUMB[6][8] ,
+         \segway_math_inst/mult_29/SUMB[6][9] ,
+         \segway_math_inst/mult_29/SUMB[6][10] ,
+         \segway_math_inst/mult_29/SUMB[7][1] ,
+         \segway_math_inst/mult_29/SUMB[7][2] ,
+         \segway_math_inst/mult_29/SUMB[7][5] ,
+         \segway_math_inst/mult_29/SUMB[7][6] ,
+         \segway_math_inst/mult_29/SUMB[7][7] ,
+         \segway_math_inst/mult_29/SUMB[7][8] ,
+         \segway_math_inst/mult_29/SUMB[7][9] ,
+         \segway_math_inst/mult_29/SUMB[7][10] ,
+         \segway_math_inst/mult_29/CARRYB[1][0] ,
+         \segway_math_inst/mult_29/CARRYB[1][1] ,
+         \segway_math_inst/mult_29/CARRYB[1][6] ,
+         \segway_math_inst/mult_29/CARRYB[1][7] ,
+         \segway_math_inst/mult_29/CARRYB[1][9] ,
+         \segway_math_inst/mult_29/CARRYB[1][10] ,
+         \segway_math_inst/mult_29/CARRYB[2][0] ,
+         \segway_math_inst/mult_29/CARRYB[2][1] ,
+         \segway_math_inst/mult_29/CARRYB[2][5] ,
+         \segway_math_inst/mult_29/CARRYB[2][6] ,
+         \segway_math_inst/mult_29/CARRYB[2][8] ,
+         \segway_math_inst/mult_29/CARRYB[2][9] ,
+         \segway_math_inst/mult_29/CARRYB[2][10] ,
+         \segway_math_inst/mult_29/CARRYB[3][0] ,
+         \segway_math_inst/mult_29/CARRYB[3][1] ,
+         \segway_math_inst/mult_29/CARRYB[3][8] ,
+         \segway_math_inst/mult_29/CARRYB[3][9] ,
+         \segway_math_inst/mult_29/CARRYB[3][10] ,
+         \segway_math_inst/mult_29/CARRYB[4][0] ,
+         \segway_math_inst/mult_29/CARRYB[4][1] ,
+         \segway_math_inst/mult_29/CARRYB[4][7] ,
+         \segway_math_inst/mult_29/CARRYB[4][8] ,
+         \segway_math_inst/mult_29/CARRYB[4][9] ,
+         \segway_math_inst/mult_29/CARRYB[4][10] ,
+         \segway_math_inst/mult_29/CARRYB[5][0] ,
+         \segway_math_inst/mult_29/CARRYB[5][1] ,
+         \segway_math_inst/mult_29/CARRYB[5][6] ,
+         \segway_math_inst/mult_29/CARRYB[5][7] ,
+         \segway_math_inst/mult_29/CARRYB[5][8] ,
+         \segway_math_inst/mult_29/CARRYB[5][9] ,
+         \segway_math_inst/mult_29/CARRYB[5][10] ,
+         \segway_math_inst/mult_29/CARRYB[6][0] ,
+         \segway_math_inst/mult_29/CARRYB[6][1] ,
+         \segway_math_inst/mult_29/CARRYB[6][5] ,
+         \segway_math_inst/mult_29/CARRYB[6][6] ,
+         \segway_math_inst/mult_29/CARRYB[6][7] ,
+         \segway_math_inst/mult_29/CARRYB[6][8] ,
+         \segway_math_inst/mult_29/CARRYB[6][9] ,
+         \segway_math_inst/mult_29/CARRYB[6][10] ,
+         \segway_math_inst/mult_29/CARRYB[7][0] ,
+         \segway_math_inst/mult_29/CARRYB[7][1] ,
+         \segway_math_inst/mult_29/CARRYB[7][5] ,
+         \segway_math_inst/mult_29/CARRYB[7][6] ,
+         \segway_math_inst/mult_29/CARRYB[7][7] ,
+         \segway_math_inst/mult_29/CARRYB[7][8] ,
+         \segway_math_inst/mult_29/CARRYB[7][9] ,
+         \segway_math_inst/mult_29/CARRYB[7][10] ,
+         \segway_math_inst/mult_29/CARRYB[8][1] ,
+         \segway_math_inst/mult_29/ab[1][11] ,
+         \segway_math_inst/mult_29/ab[2][0] ,
+         \segway_math_inst/mult_29/ab[2][1] ,
+         \segway_math_inst/mult_29/ab[2][6] ,
+         \segway_math_inst/mult_29/ab[2][7] ,
+         \segway_math_inst/mult_29/ab[2][9] ,
+         \segway_math_inst/mult_29/ab[2][10] ,
+         \segway_math_inst/mult_29/ab[2][11] ,
+         \segway_math_inst/mult_29/ab[3][0] ,
+         \segway_math_inst/mult_29/ab[3][1] ,
+         \segway_math_inst/mult_29/ab[3][6] ,
+         \segway_math_inst/mult_29/ab[3][8] ,
+         \segway_math_inst/mult_29/ab[3][9] ,
+         \segway_math_inst/mult_29/ab[3][10] ,
+         \segway_math_inst/mult_29/ab[3][11] ,
+         \segway_math_inst/mult_29/ab[4][0] ,
+         \segway_math_inst/mult_29/ab[4][1] ,
+         \segway_math_inst/mult_29/ab[4][4] ,
+         \segway_math_inst/mult_29/ab[4][8] ,
+         \segway_math_inst/mult_29/ab[4][9] ,
+         \segway_math_inst/mult_29/ab[4][10] ,
+         \segway_math_inst/mult_29/ab[4][11] ,
+         \segway_math_inst/mult_29/ab[5][0] ,
+         \segway_math_inst/mult_29/ab[5][1] ,
+         \segway_math_inst/mult_29/ab[5][6] ,
+         \segway_math_inst/mult_29/ab[5][7] ,
+         \segway_math_inst/mult_29/ab[5][8] ,
+         \segway_math_inst/mult_29/ab[5][9] ,
+         \segway_math_inst/mult_29/ab[5][10] ,
+         \segway_math_inst/mult_29/ab[5][11] ,
+         \segway_math_inst/mult_29/ab[6][0] ,
+         \segway_math_inst/mult_29/ab[6][1] ,
+         \segway_math_inst/mult_29/ab[6][5] ,
+         \segway_math_inst/mult_29/ab[6][6] ,
+         \segway_math_inst/mult_29/ab[6][7] ,
+         \segway_math_inst/mult_29/ab[6][8] ,
+         \segway_math_inst/mult_29/ab[6][9] ,
+         \segway_math_inst/mult_29/ab[6][10] ,
+         \segway_math_inst/mult_29/ab[6][11] ,
+         \segway_math_inst/mult_29/ab[7][0] ,
+         \segway_math_inst/mult_29/ab[7][1] ,
+         \segway_math_inst/mult_29/ab[7][5] ,
+         \segway_math_inst/mult_29/ab[7][6] ,
+         \segway_math_inst/mult_29/ab[7][7] ,
+         \segway_math_inst/mult_29/ab[7][8] ,
+         \segway_math_inst/mult_29/ab[7][9] ,
+         \segway_math_inst/mult_29/ab[7][10] , n4, n5, n6, n8, n12, n13, n14,
+         n18, n21, n22, n23, n24, n25, n26, n27, n28, n29, n30, n31, n32, n33,
+         n34, n35, n36, n37, n38, n39, n40, n41, n43, n44, n45, n46, n47, n48,
+         n49, n50, n51, n52, n53, n54, n55, n56, n57, n58, n59, n62, n63, n65,
+         n66, n67, n70, n71, n72, n73, n75, n76, n77, n78, n79, n80, n81, n82,
+         n83, n84, n86, n102, n103, n104, n105, n106, n107, n108, n109, n110,
+         n111, n112, n113, n114, n115, n116, n117, n118, n119, n120, n124,
+         n128, n131, n132, n133, n134, n135, n136, n137, n138, n139, n140,
+         n141, n142, n143, n144, n145, n146, n147, n148, n149, n150, n152,
+         n153, n154, n156, n157, n158, n159, n160, n163, n164, n166, n168,
+         n169, n170, n171, n179, n180, n181, n182, n183, n184, n186, n187,
+         n188, n189, n190, n192, n193, n194, n195, n196, n197, n198, n199,
+         n200, n201, n202, n203, n204, n205, n206, n207, n208, n209, n210,
+         n211, n212, n213, n214, n215, n216, n217, n218, n219, n220, n221,
+         n222, n223, n224, n225, n226, n227, n228, n229, n230, n231, n232,
+         n233, n234, n235, n236, n237, n238, n239, n240, n241, n242, n243,
+         n244, n245, n246, n247, n248, n249, n250, n251, n252, n253, n254,
+         n255, n256, n257, n258, n259, n260, n261, n262, n263, n264, n265,
+         n266, n267, n268, n269, n270, n271, n272, n273, n274, n275, n276,
+         n277, n278, n279, n280, n281, n283, n284, n285, n286, n287, n288,
+         n289, n290, n291, n292, n293, n294, n295, n300, n301, n302, n303,
+         n304, n305, n306, n307, n308, n309, n310, n311, n312, n313, n314,
+         n315, n316, n317, n318, n319, n320, n321, n322, n323, n325, n327,
+         n333, n334, n335, n336, n337, n348, n349, n350, n351, n352, n353,
+         n354, n355, n356, n357, n358, n359, n360, n361, n362, n363, n364,
+         n365, n366, n367, n368, n369, n370, n375, n376, n377, n378, n379,
+         n381, n382, n383, n387, n388, n389, n390, n391, n393, n394, n395,
+         n396, n397, n398, n399, n400, n401, n402, n403, n404, n405, n406,
+         n407, n408, n409, n410, n411, n412, n413, n417, n418, n420, n422,
+         n423, n424, n425, n426, n427, n428, n429, n430, n431, n432, n433,
+         n434, n435, n436, n437, n438, n439, n440, n441, n442, n443, n444,
+         n445, n446, n447, n448, n449, n450, n451, n452, n453, n454, n455,
+         n456, n457, n458, n459, n460, n461, n462, n463, n464, n465, n466,
+         n467, n468, n469, n470, n471, n472, n473, n474, n475, n476, n477,
+         n480, n481, n486, n493, n494, n495, n496, n498, n521, n522, n523,
+         n524, net8179, net8177, net8175, net8209, net8221, net8391, net8406,
+         net8457, net8488, net8487, net8491, net8496, net8511, net8546,
+         net8603, net8601, net8612, net8611, net8622, net8623, net8670,
+         net8686, net8690, net8689, net8810, net8823, net8894, n9, n42, n386,
+         n385, n384, n374, n373, n372, n371, n347, n346, n345, n344, n343,
+         n342, n341, n340, n339, n338, n332, n331, n330, n329, n328, n326,
+         n324, n3, n299, n298, n297, n296, n282, n20, n19, n130, n129, n127,
+         n126, n125, n123, n122, n121, n11, n10,
+         \segway_math_inst/mult_40/CARRYB[9][0] ,
+         \segway_math_inst/mult_40/CARRYB[8][0] ,
+         \segway_math_inst/mult_40/CARRYB[7][0] ,
+         \segway_math_inst/mult_40/CARRYB[6][0] ,
+         \segway_math_inst/mult_40/CARRYB[5][0] ,
+         \segway_math_inst/mult_40/CARRYB[4][0] ,
+         \segway_math_inst/mult_29/ab[7][3] ,
+         \segway_math_inst/mult_29/ab[7][2] ,
+         \segway_math_inst/mult_29/ab[6][4] ,
+         \segway_math_inst/mult_29/ab[6][3] ,
+         \segway_math_inst/mult_29/ab[6][2] ,
+         \segway_math_inst/mult_29/ab[5][5] ,
+         \segway_math_inst/mult_29/ab[5][4] ,
+         \segway_math_inst/mult_29/ab[5][3] ,
+         \segway_math_inst/mult_29/ab[5][2] ,
+         \segway_math_inst/mult_29/ab[4][6] ,
+         \segway_math_inst/mult_29/ab[4][5] ,
+         \segway_math_inst/mult_29/ab[4][3] ,
+         \segway_math_inst/mult_29/ab[4][2] ,
+         \segway_math_inst/mult_29/ab[3][7] ,
+         \segway_math_inst/mult_29/ab[3][4] ,
+         \segway_math_inst/mult_29/ab[3][3] ,
+         \segway_math_inst/mult_29/ab[3][2] ,
+         \segway_math_inst/mult_29/ab[2][5] ,
+         \segway_math_inst/mult_29/ab[2][4] ,
+         \segway_math_inst/mult_29/ab[2][3] ,
+         \segway_math_inst/mult_29/ab[2][2] ,
+         \segway_math_inst/mult_29/SUMB[8][3] ,
+         \segway_math_inst/mult_29/SUMB[8][2] ,
+         \segway_math_inst/mult_29/SUMB[7][4] ,
+         \segway_math_inst/mult_29/SUMB[7][3] ,
+         \segway_math_inst/mult_29/SUMB[6][5] ,
+         \segway_math_inst/mult_29/SUMB[6][4] ,
+         \segway_math_inst/mult_29/SUMB[6][3] ,
+         \segway_math_inst/mult_29/SUMB[5][6] ,
+         \segway_math_inst/mult_29/SUMB[5][5] ,
+         \segway_math_inst/mult_29/SUMB[5][4] ,
+         \segway_math_inst/mult_29/SUMB[5][3] ,
+         \segway_math_inst/mult_29/SUMB[4][7] ,
+         \segway_math_inst/mult_29/SUMB[4][6] ,
+         \segway_math_inst/mult_29/SUMB[4][5] ,
+         \segway_math_inst/mult_29/SUMB[4][4] ,
+         \segway_math_inst/mult_29/SUMB[4][3] ,
+         \segway_math_inst/mult_29/SUMB[3][7] ,
+         \segway_math_inst/mult_29/SUMB[3][6] ,
+         \segway_math_inst/mult_29/SUMB[3][4] ,
+         \segway_math_inst/mult_29/SUMB[3][3] ,
+         \segway_math_inst/mult_29/SUMB[2][5] ,
+         \segway_math_inst/mult_29/SUMB[2][4] ,
+         \segway_math_inst/mult_29/SUMB[2][3] ,
+         \segway_math_inst/mult_29/SUMB[1][6] ,
+         \segway_math_inst/mult_29/SUMB[1][5] ,
+         \segway_math_inst/mult_29/SUMB[1][4] ,
+         \segway_math_inst/mult_29/SUMB[1][3] ,
+         \segway_math_inst/mult_29/CARRYB[8][3] ,
+         \segway_math_inst/mult_29/CARRYB[8][2] ,
+         \segway_math_inst/mult_29/CARRYB[7][3] ,
+         \segway_math_inst/mult_29/CARRYB[7][2] ,
+         \segway_math_inst/mult_29/CARRYB[6][4] ,
+         \segway_math_inst/mult_29/CARRYB[6][3] ,
+         \segway_math_inst/mult_29/CARRYB[6][2] ,
+         \segway_math_inst/mult_29/CARRYB[5][5] ,
+         \segway_math_inst/mult_29/CARRYB[5][4] ,
+         \segway_math_inst/mult_29/CARRYB[5][3] ,
+         \segway_math_inst/mult_29/CARRYB[5][2] ,
+         \segway_math_inst/mult_29/CARRYB[4][6] ,
+         \segway_math_inst/mult_29/CARRYB[4][5] ,
+         \segway_math_inst/mult_29/CARRYB[4][4] ,
+         \segway_math_inst/mult_29/CARRYB[4][3] ,
+         \segway_math_inst/mult_29/CARRYB[4][2] ,
+         \segway_math_inst/mult_29/CARRYB[3][7] ,
+         \segway_math_inst/mult_29/CARRYB[3][6] ,
+         \segway_math_inst/mult_29/CARRYB[3][5] ,
+         \segway_math_inst/mult_29/CARRYB[3][4] ,
+         \segway_math_inst/mult_29/CARRYB[3][3] ,
+         \segway_math_inst/mult_29/CARRYB[3][2] ,
+         \segway_math_inst/mult_29/CARRYB[2][7] ,
+         \segway_math_inst/mult_29/CARRYB[2][4] ,
+         \segway_math_inst/mult_29/CARRYB[2][3] ,
+         \segway_math_inst/mult_29/CARRYB[2][2] ,
+         \segway_math_inst/mult_29/CARRYB[1][5] ,
+         \segway_math_inst/mult_29/CARRYB[1][4] ,
+         \segway_math_inst/mult_29/CARRYB[1][3] ,
+         \segway_math_inst/mult_29/CARRYB[1][2] ,
+         \segway_math_inst/mult_29/A2[9] , \segway_math_inst/mult_29/A2[10] ,
+         \segway_math_inst/mult_29/A1[9] , \segway_math_inst/mult_29/A1[8] ,
+         \segway_math_inst/add_45/carry[9] ,
+         \segway_math_inst/add_45/carry[8] ,
+         \segway_math_inst/add_45/carry[7] ,
+         \segway_math_inst/add_45/carry[6] ,
+         \segway_math_inst/add_45/carry[5] ,
+         \segway_math_inst/add_45/carry[4] ,
+         \segway_math_inst/add_45/carry[3] ,
+         \segway_math_inst/add_45/carry[2] ,
+         \segway_math_inst/add_45/carry[1] ,
+         \segway_math_inst/add_45/carry[12] ,
+         \segway_math_inst/add_45/carry[11] ,
+         \segway_math_inst/add_45/carry[10] ,
+         \segway_math_inst/PID_cntrl_ext[11] , \segway_math_inst/N41 ,
+         \segway_math_inst/N37 , \segway_math_inst/N35 ,
+         \segway_math_inst/N34 , \segway_math_inst/N33 ,
+         \segway_math_inst/N32 , \segway_math_inst/N31 ,
+         \segway_math_inst/N30 , \segway_math_inst/N29 ,
+         \segway_math_inst/N28 , n74, n419, n415, n414, n185, n178, n177, n176,
+         n175, n174, n173, n172, n155, \segway_math_inst/mult_29/SUMB[2][8] ,
+         n492, n491, n490, n489, n488, n485, n484, n483, n482, n421, n191,
+         n167, n165, \PID_inst/add_1_root_add_0_root_add_108_2/carry[15] ,
+         \PID_inst/add_1_root_add_0_root_add_108_2/carry[14] ,
+         \PID_inst/add_1_root_add_0_root_add_108_2/carry[13] ,
+         \PID_inst/add_1_root_add_0_root_add_108_2/carry[10] ,
+         \PID_inst/add_0_root_add_0_root_add_108_2/carry[15] ,
+         \PID_inst/add_0_root_add_0_root_add_108_2/carry[14] ,
+         \PID_inst/add_0_root_add_0_root_add_108_2/carry[13] ,
+         \PID_inst/add_0_root_add_0_root_add_108_2/carry[12] ,
+         \PID_inst/add_0_root_add_0_root_add_108_2/carry[11] ,
+         \PID_inst/P_term[12] , \PID_inst/P_term[11] , \PID_inst/P_term[10] ,
+         \PID_inst/PID_sum[14] , \PID_inst/PID_sum[13] ,
+         \PID_inst/PID_sum[12] , \PID_inst/PID_sum[11] ,
+         \PID_inst/PID_sum[10] , \PID_inst/N72 , \PID_inst/N71 ,
+         \PID_inst/N70 , \PID_inst/N69 , \PID_inst/N68 , \PID_inst/N67 ,
+         \PID_inst/I_term[13] , n69, n506, n505, n504, n503, n502, n501, n500,
+         n499, n479, n478, \PID_inst/mult_51/CARRYB[7][0] ,
+         \PID_inst/mult_51/CARRYB[6][0] , \PID_inst/mult_51/CARRYB[5][0] ,
+         \PID_inst/mult_51/CARRYB[4][0] , \PID_inst/mult_51/CARRYB[3][0] ,
+         \PID_inst/add_1_root_add_0_root_add_108_2/carry[9] ,
+         \PID_inst/add_1_root_add_0_root_add_108_2/carry[8] ,
+         \PID_inst/add_1_root_add_0_root_add_108_2/carry[7] ,
+         \PID_inst/add_1_root_add_0_root_add_108_2/carry[6] ,
+         \PID_inst/add_1_root_add_0_root_add_108_2/carry[5] ,
+         \PID_inst/add_1_root_add_0_root_add_108_2/carry[4] ,
+         \PID_inst/add_1_root_add_0_root_add_108_2/carry[3] ,
+         \PID_inst/add_1_root_add_0_root_add_108_2/carry[2] ,
+         \PID_inst/add_0_root_add_0_root_add_108_2/carry[9] ,
+         \PID_inst/add_0_root_add_0_root_add_108_2/carry[8] ,
+         \PID_inst/add_0_root_add_0_root_add_108_2/carry[7] ,
+         \PID_inst/add_0_root_add_0_root_add_108_2/carry[6] ,
+         \PID_inst/add_0_root_add_0_root_add_108_2/carry[5] ,
+         \PID_inst/add_0_root_add_0_root_add_108_2/carry[4] ,
+         \PID_inst/add_0_root_add_0_root_add_108_2/carry[3] ,
+         \PID_inst/add_0_root_add_0_root_add_108_2/carry[2] ,
+         \PID_inst/add_0_root_add_0_root_add_108_2/carry[1] ,
+         \PID_inst/add_0_root_add_0_root_add_108_2/carry[10] ,
+         \PID_inst/P_term[9] , \PID_inst/P_term[8] , \PID_inst/P_term[7] ,
+         \PID_inst/P_term[6] , \PID_inst/P_term[5] , \PID_inst/P_term[4] ,
+         \PID_inst/P_term[3] , \PID_inst/PID_sum[9] , \PID_inst/PID_sum[8] ,
+         \PID_inst/PID_sum[7] , \PID_inst/PID_sum[6] , \PID_inst/PID_sum[5] ,
+         \PID_inst/PID_sum[4] , \PID_inst/PID_sum[3] , \PID_inst/PID_sum[2] ,
+         \PID_inst/PID_sum[1] , \PID_inst/N66 , \PID_inst/N65 , \PID_inst/N64 ,
+         \PID_inst/N63 , \PID_inst/N62 , \PID_inst/N61 , \PID_inst/N60 ,
+         \PID_inst/N59 , \PID_inst/N58 , \PID_inst/I_term[9] ,
+         \PID_inst/I_term[8] , \PID_inst/I_term[7] , \PID_inst/I_term[6] ,
+         \PID_inst/I_term[5] , \PID_inst/I_term[4] , \PID_inst/I_term[3] ,
+         \PID_inst/I_term[2] , \PID_inst/I_term[1] , \PID_inst/D_term[9] ,
+         \PID_inst/D_term[8] , \PID_inst/D_term[7] , \PID_inst/D_term[6] ,
+         \PID_inst/D_term[5] , \PID_inst/D_term[4] , \PID_inst/D_term[3] ,
+         \PID_inst/D_term[2] , \PID_inst/D_term[1] , n525, n526, n527, n528,
+         n529, n530, n531, n532, n533, n534, n535, n536, n537, n538, n539,
+         n540, n541, n542, n543, n544, n545, n546, n547, n548, n549, n550,
+         n551, n552, n553, n554, n555, n556, n557, n558, n559, n560, n561,
+         n562, n563, n564, n565, n566, n567, n568, n569, n570, n571, n572;
+  wire   [7:0] ss_tmr;
+  wire   [14:0] \PID_inst/I_term ;
+  wire   [17:0] \PID_inst/mux2_out ;
+  wire   [17:0] \PID_inst/integrator_plus_ptch ;
+  wire   [17:0] \PID_inst/integrator ;
+  wire   [17:1] \PID_inst/add_64/carry ;
+  wire   [15:1] \PID_inst/add_1_root_add_0_root_add_108_2/carry ;
+  wire   [11:0] \segway_math_inst/steer_difference ;
+  wire   [19:8] \segway_math_inst/PID_cntrl_ext ;
+  wire   [13:0] \segway_math_inst/sub_49/carry ;
+  assign \PID_inst/P_term[14]  = ptch[15];
+
+  DFFARX1_RVT \PID_inst/integrator_reg[0]  ( .D(\PID_inst/mux2_out [0]), .CLK(
+        clk), .RSTB(rst_n), .Q(n86), .QN(n522) );
+  DFFARX1_RVT \PID_inst/cnt_reg[9]  ( .D(\PID_inst/n52 ), .CLK(clk), .RSTB(
+        n571), .Q(n107), .QN(\PID_inst/n16 ) );
+  DFFARX1_RVT \PID_inst/cnt_reg[10]  ( .D(\PID_inst/n53 ), .CLK(clk), .RSTB(
+        n572), .Q(n108), .QN(\PID_inst/n19 ) );
+  DFFARX1_RVT \PID_inst/cnt_reg[11]  ( .D(\PID_inst/n54 ), .CLK(clk), .RSTB(
+        n572), .Q(n109), .QN(\PID_inst/n20 ) );
+  DFFARX1_RVT \PID_inst/cnt_reg[12]  ( .D(\PID_inst/n55 ), .CLK(clk), .RSTB(
+        n572), .Q(n110), .QN(\PID_inst/n21 ) );
+  DFFARX1_RVT \PID_inst/cnt_reg[13]  ( .D(\PID_inst/n56 ), .CLK(clk), .RSTB(
+        n572), .Q(n111), .QN(\PID_inst/n25 ) );
+  DFFARX1_RVT \PID_inst/cnt_reg[14]  ( .D(\PID_inst/n57 ), .CLK(clk), .RSTB(
+        n572), .Q(n112), .QN(\PID_inst/n15 ) );
+  DFFARX1_RVT \PID_inst/cnt_reg[15]  ( .D(\PID_inst/n58 ), .CLK(clk), .RSTB(
+        n572), .Q(n113), .QN(\PID_inst/n14 ) );
+  DFFARX1_RVT \PID_inst/cnt_reg[16]  ( .D(\PID_inst/n59 ), .CLK(clk), .RSTB(
+        n572), .Q(n114), .QN(\PID_inst/n13 ) );
+  DFFARX1_RVT \PID_inst/cnt_reg[17]  ( .D(\PID_inst/n60 ), .CLK(clk), .RSTB(
+        n572), .Q(n115), .QN(\PID_inst/n12 ) );
+  DFFARX1_RVT \PID_inst/cnt_reg[18]  ( .D(\PID_inst/n61 ), .CLK(clk), .RSTB(
+        n572), .Q(n116), .QN(\PID_inst/n11 ) );
+  FADDX1_RVT \PID_inst/add_64/U1_1  ( .A(\PID_inst/integrator [1]), .B(
+        \PID_inst/ptch_err_sat[1] ), .CI(\PID_inst/add_64/carry [1]), .CO(
+        \PID_inst/add_64/carry [2]), .S(\PID_inst/integrator_plus_ptch [1]) );
+  FADDX1_RVT \PID_inst/add_64/U1_3  ( .A(\PID_inst/integrator [3]), .B(
+        \PID_inst/ptch_err_sat[3] ), .CI(\PID_inst/add_64/carry [3]), .CO(
+        \PID_inst/add_64/carry [4]), .S(\PID_inst/integrator_plus_ptch [3]) );
+  FADDX1_RVT \PID_inst/add_64/U1_2  ( .A(\PID_inst/integrator [2]), .B(
+        \PID_inst/ptch_err_sat[2] ), .CI(\PID_inst/add_64/carry [2]), .CO(
+        \PID_inst/add_64/carry [3]), .S(\PID_inst/integrator_plus_ptch [2]) );
+  FADDX1_RVT \PID_inst/add_64/U1_4  ( .A(\PID_inst/integrator [4]), .B(
+        \PID_inst/ptch_err_sat[4] ), .CI(\PID_inst/add_64/carry [4]), .CO(
+        \PID_inst/add_64/carry [5]), .S(\PID_inst/integrator_plus_ptch [4]) );
+  FADDX1_RVT \PID_inst/add_64/U1_5  ( .A(\PID_inst/integrator [5]), .B(
+        \PID_inst/ptch_err_sat[5] ), .CI(\PID_inst/add_64/carry [5]), .CO(
+        \PID_inst/add_64/carry [6]), .S(\PID_inst/integrator_plus_ptch [5]) );
+  FADDX1_RVT \PID_inst/add_64/U1_6  ( .A(\PID_inst/integrator [6]), .B(
+        \PID_inst/ptch_err_sat[6] ), .CI(\PID_inst/add_64/carry [6]), .CO(
+        \PID_inst/add_64/carry [7]), .S(\PID_inst/integrator_plus_ptch [6]) );
+  FADDX1_RVT \PID_inst/add_64/U1_7  ( .A(\PID_inst/integrator [7]), .B(
+        \PID_inst/ptch_err_sat[7] ), .CI(\PID_inst/add_64/carry [7]), .CO(
+        \PID_inst/add_64/carry [8]), .S(\PID_inst/integrator_plus_ptch [7]) );
+  FADDX1_RVT \PID_inst/add_64/U1_8  ( .A(\PID_inst/integrator [8]), .B(
+        \PID_inst/ptch_err_sat[8] ), .CI(\PID_inst/add_64/carry [8]), .CO(
+        \PID_inst/add_64/carry [9]), .S(\PID_inst/integrator_plus_ptch [8]) );
+  FADDX1_RVT \PID_inst/add_64/U1_9  ( .A(\PID_inst/integrator [9]), .B(net8221), .CI(\PID_inst/add_64/carry [9]), .CO(\PID_inst/add_64/carry [10]), .S(
+        \PID_inst/integrator_plus_ptch [9]) );
+  FADDX1_RVT \PID_inst/add_64/U1_10  ( .A(\PID_inst/integrator [10]), .B(
+        net8221), .CI(\PID_inst/add_64/carry [10]), .CO(
+        \PID_inst/add_64/carry [11]), .S(\PID_inst/integrator_plus_ptch [10])
+         );
+  FADDX1_RVT \PID_inst/add_64/U1_11  ( .A(\PID_inst/integrator [11]), .B(
+        net8221), .CI(\PID_inst/add_64/carry [11]), .CO(
+        \PID_inst/add_64/carry [12]), .S(\PID_inst/integrator_plus_ptch [11])
+         );
+  FADDX1_RVT \PID_inst/add_64/U1_12  ( .A(\PID_inst/integrator [12]), .B(
+        net8221), .CI(\PID_inst/add_64/carry [12]), .CO(
+        \PID_inst/add_64/carry [13]), .S(\PID_inst/integrator_plus_ptch [12])
+         );
+  FADDX1_RVT \PID_inst/add_64/U1_13  ( .A(\PID_inst/integrator [13]), .B(
+        net8221), .CI(\PID_inst/add_64/carry [13]), .CO(
+        \PID_inst/add_64/carry [14]), .S(\PID_inst/integrator_plus_ptch [13])
+         );
+  FADDX1_RVT \PID_inst/add_64/U1_14  ( .A(\PID_inst/integrator [14]), .B(
+        net8221), .CI(\PID_inst/add_64/carry [14]), .CO(
+        \PID_inst/add_64/carry [15]), .S(\PID_inst/integrator_plus_ptch [14])
+         );
+  FADDX1_RVT \PID_inst/add_64/U1_15  ( .A(n119), .B(net8221), .CI(
+        \PID_inst/add_64/carry [15]), .CO(\PID_inst/add_64/carry [16]), .S(
+        \PID_inst/integrator_plus_ptch [15]) );
+  FADDX1_RVT \PID_inst/add_64/U1_16  ( .A(n120), .B(net8221), .CI(
+        \PID_inst/add_64/carry [16]), .CO(\PID_inst/add_64/carry [17]), .S(
+        \PID_inst/integrator_plus_ptch [16]) );
+  FADDX1_RVT \segway_math_inst/mult_40/S1_3_0  ( .A(
+        \segway_math_inst/steer_difference [3]), .B(
+        \segway_math_inst/mult_40/CARRYB[2][0] ), .CI(
+        \segway_math_inst/steer_difference [2]), .CO(
+        \segway_math_inst/mult_40/CARRYB[3][0] ) );
+  FADDX1_RVT \segway_math_inst/mult_40/S1_2_0  ( .A(
+        \segway_math_inst/steer_difference [2]), .B(
+        \segway_math_inst/mult_40/CARRYB[1][0] ), .CI(
+        \segway_math_inst/steer_difference [1]), .CO(
+        \segway_math_inst/mult_40/CARRYB[2][0] ) );
+  FADDX1_RVT \segway_math_inst/sub_49/U2_1  ( .A(
+        \segway_math_inst/mult_29/A1[7] ), .B(n81), .CI(
+        \segway_math_inst/sub_49/carry [1]), .CO(
+        \segway_math_inst/sub_49/carry [2]), .S(\segway_math_inst/N39 ) );
+  FADDX1_RVT \segway_math_inst/sub_49/U2_2  ( .A(
+        \segway_math_inst/sub_49/carry [2]), .B(n80), .CI(
+        \segway_math_inst/PID_cntrl_ext [10]), .CO(
+        \segway_math_inst/sub_49/carry [3]), .S(\segway_math_inst/N40 ) );
+  FADDX1_RVT \segway_math_inst/sub_49/U2_4  ( .A(
+        \segway_math_inst/PID_cntrl_ext [12]), .B(n78), .CI(
+        \segway_math_inst/sub_49/carry [4]), .CO(
+        \segway_math_inst/sub_49/carry [5]), .S(\segway_math_inst/N42 ) );
+  FADDX1_RVT \segway_math_inst/sub_49/U2_5  ( .A(
+        \segway_math_inst/PID_cntrl_ext [13]), .B(n77), .CI(
+        \segway_math_inst/sub_49/carry [5]), .CO(
+        \segway_math_inst/sub_49/carry [6]), .S(\segway_math_inst/N43 ) );
+  FADDX1_RVT \segway_math_inst/sub_49/U2_6  ( .A(
+        \segway_math_inst/PID_cntrl_ext [14]), .B(n76), .CI(
+        \segway_math_inst/sub_49/carry [6]), .CO(
+        \segway_math_inst/sub_49/carry [7]), .S(\segway_math_inst/N44 ) );
+  FADDX1_RVT \segway_math_inst/sub_49/U2_7  ( .A(
+        \segway_math_inst/PID_cntrl_ext [15]), .B(n523), .CI(
+        \segway_math_inst/sub_49/carry [7]), .CO(
+        \segway_math_inst/sub_49/carry [8]), .S(\segway_math_inst/N45 ) );
+  FADDX1_RVT \segway_math_inst/sub_49/U2_8  ( .A(
+        \segway_math_inst/PID_cntrl_ext [16]), .B(n72), .CI(
+        \segway_math_inst/sub_49/carry [8]), .CO(
+        \segway_math_inst/sub_49/carry [9]), .S(\segway_math_inst/N46 ) );
+  FADDX1_RVT \segway_math_inst/sub_49/U2_9  ( .A(
+        \segway_math_inst/PID_cntrl_ext [17]), .B(n524), .CI(
+        \segway_math_inst/sub_49/carry [9]), .CO(
+        \segway_math_inst/sub_49/carry [10]), .S(\segway_math_inst/N47 ) );
+  FADDX1_RVT \segway_math_inst/sub_49/U2_11  ( .A(
+        \segway_math_inst/PID_cntrl_ext [19]), .B(n524), .CI(
+        \segway_math_inst/sub_49/carry [11]), .CO(
+        \segway_math_inst/sub_49/carry [12]) );
+  FADDX1_RVT \segway_math_inst/mult_29/S3_2_10  ( .A(
+        \segway_math_inst/mult_29/ab[2][10] ), .B(
+        \segway_math_inst/mult_29/CARRYB[1][10] ), .CI(
+        \segway_math_inst/mult_29/ab[1][11] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[2][10] ), .S(
+        \segway_math_inst/mult_29/SUMB[2][10] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_2_9  ( .A(
+        \segway_math_inst/mult_29/ab[2][9] ), .B(
+        \segway_math_inst/mult_29/CARRYB[1][9] ), .CI(
+        \segway_math_inst/mult_29/SUMB[1][10] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[2][9] ), .S(
+        \segway_math_inst/mult_29/SUMB[2][9] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_2_1  ( .A(
+        \segway_math_inst/mult_29/ab[2][1] ), .B(
+        \segway_math_inst/mult_29/CARRYB[1][1] ), .CI(
+        \segway_math_inst/mult_29/SUMB[1][2] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[2][1] ), .S(
+        \segway_math_inst/mult_29/SUMB[2][1] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S1_2_0  ( .A(
+        \segway_math_inst/mult_29/ab[2][0] ), .B(
+        \segway_math_inst/mult_29/CARRYB[1][0] ), .CI(
+        \segway_math_inst/mult_29/SUMB[1][1] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[2][0] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S3_3_10  ( .A(
+        \segway_math_inst/mult_29/ab[3][10] ), .B(
+        \segway_math_inst/mult_29/CARRYB[2][10] ), .CI(
+        \segway_math_inst/mult_29/ab[2][11] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[3][10] ), .S(
+        \segway_math_inst/mult_29/SUMB[3][10] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_3_9  ( .A(
+        \segway_math_inst/mult_29/ab[3][9] ), .B(
+        \segway_math_inst/mult_29/CARRYB[2][9] ), .CI(
+        \segway_math_inst/mult_29/SUMB[2][10] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[3][9] ), .S(
+        \segway_math_inst/mult_29/SUMB[3][9] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_3_8  ( .A(
+        \segway_math_inst/mult_29/ab[3][8] ), .B(
+        \segway_math_inst/mult_29/CARRYB[2][8] ), .CI(
+        \segway_math_inst/mult_29/SUMB[2][9] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[3][8] ), .S(
+        \segway_math_inst/mult_29/SUMB[3][8] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_3_1  ( .A(
+        \segway_math_inst/mult_29/ab[3][1] ), .B(
+        \segway_math_inst/mult_29/CARRYB[2][1] ), .CI(
+        \segway_math_inst/mult_29/SUMB[2][2] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[3][1] ), .S(
+        \segway_math_inst/mult_29/SUMB[3][1] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S1_3_0  ( .A(
+        \segway_math_inst/mult_29/ab[3][0] ), .B(
+        \segway_math_inst/mult_29/CARRYB[2][0] ), .CI(
+        \segway_math_inst/mult_29/SUMB[2][1] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[3][0] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S3_4_10  ( .A(
+        \segway_math_inst/mult_29/ab[4][10] ), .B(
+        \segway_math_inst/mult_29/CARRYB[3][10] ), .CI(
+        \segway_math_inst/mult_29/ab[3][11] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[4][10] ), .S(
+        \segway_math_inst/mult_29/SUMB[4][10] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_4_9  ( .A(
+        \segway_math_inst/mult_29/ab[4][9] ), .B(
+        \segway_math_inst/mult_29/CARRYB[3][9] ), .CI(
+        \segway_math_inst/mult_29/SUMB[3][10] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[4][9] ), .S(
+        \segway_math_inst/mult_29/SUMB[4][9] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_4_8  ( .A(
+        \segway_math_inst/mult_29/ab[4][8] ), .B(
+        \segway_math_inst/mult_29/CARRYB[3][8] ), .CI(
+        \segway_math_inst/mult_29/SUMB[3][9] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[4][8] ), .S(
+        \segway_math_inst/mult_29/SUMB[4][8] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_4_1  ( .A(
+        \segway_math_inst/mult_29/ab[4][1] ), .B(
+        \segway_math_inst/mult_29/CARRYB[3][1] ), .CI(
+        \segway_math_inst/mult_29/SUMB[3][2] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[4][1] ), .S(
+        \segway_math_inst/mult_29/SUMB[4][1] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S1_4_0  ( .A(
+        \segway_math_inst/mult_29/ab[4][0] ), .B(
+        \segway_math_inst/mult_29/CARRYB[3][0] ), .CI(
+        \segway_math_inst/mult_29/SUMB[3][1] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[4][0] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S3_5_10  ( .A(
+        \segway_math_inst/mult_29/ab[5][10] ), .B(
+        \segway_math_inst/mult_29/CARRYB[4][10] ), .CI(
+        \segway_math_inst/mult_29/ab[4][11] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[5][10] ), .S(
+        \segway_math_inst/mult_29/SUMB[5][10] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_5_9  ( .A(
+        \segway_math_inst/mult_29/ab[5][9] ), .B(
+        \segway_math_inst/mult_29/CARRYB[4][9] ), .CI(
+        \segway_math_inst/mult_29/SUMB[4][10] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[5][9] ), .S(
+        \segway_math_inst/mult_29/SUMB[5][9] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_5_8  ( .A(
+        \segway_math_inst/mult_29/ab[5][8] ), .B(
+        \segway_math_inst/mult_29/CARRYB[4][8] ), .CI(
+        \segway_math_inst/mult_29/SUMB[4][9] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[5][8] ), .S(
+        \segway_math_inst/mult_29/SUMB[5][8] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_5_7  ( .A(
+        \segway_math_inst/mult_29/ab[5][7] ), .B(
+        \segway_math_inst/mult_29/CARRYB[4][7] ), .CI(
+        \segway_math_inst/mult_29/SUMB[4][8] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[5][7] ), .S(
+        \segway_math_inst/mult_29/SUMB[5][7] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_5_1  ( .A(
+        \segway_math_inst/mult_29/ab[5][1] ), .B(
+        \segway_math_inst/mult_29/CARRYB[4][1] ), .CI(
+        \segway_math_inst/mult_29/SUMB[4][2] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[5][1] ), .S(
+        \segway_math_inst/mult_29/SUMB[5][1] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S1_5_0  ( .A(
+        \segway_math_inst/mult_29/ab[5][0] ), .B(
+        \segway_math_inst/mult_29/CARRYB[4][0] ), .CI(
+        \segway_math_inst/mult_29/SUMB[4][1] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[5][0] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S3_6_10  ( .A(
+        \segway_math_inst/mult_29/ab[6][10] ), .B(
+        \segway_math_inst/mult_29/CARRYB[5][10] ), .CI(
+        \segway_math_inst/mult_29/ab[5][11] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[6][10] ), .S(
+        \segway_math_inst/mult_29/SUMB[6][10] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_6_9  ( .A(
+        \segway_math_inst/mult_29/ab[6][9] ), .B(
+        \segway_math_inst/mult_29/CARRYB[5][9] ), .CI(
+        \segway_math_inst/mult_29/SUMB[5][10] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[6][9] ), .S(
+        \segway_math_inst/mult_29/SUMB[6][9] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_6_8  ( .A(
+        \segway_math_inst/mult_29/ab[6][8] ), .B(
+        \segway_math_inst/mult_29/CARRYB[5][8] ), .CI(
+        \segway_math_inst/mult_29/SUMB[5][9] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[6][8] ), .S(
+        \segway_math_inst/mult_29/SUMB[6][8] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_6_7  ( .A(
+        \segway_math_inst/mult_29/ab[6][7] ), .B(
+        \segway_math_inst/mult_29/CARRYB[5][7] ), .CI(
+        \segway_math_inst/mult_29/SUMB[5][8] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[6][7] ), .S(
+        \segway_math_inst/mult_29/SUMB[6][7] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_6_6  ( .A(
+        \segway_math_inst/mult_29/ab[6][6] ), .B(
+        \segway_math_inst/mult_29/CARRYB[5][6] ), .CI(
+        \segway_math_inst/mult_29/SUMB[5][7] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[6][6] ), .S(
+        \segway_math_inst/mult_29/SUMB[6][6] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_6_1  ( .A(
+        \segway_math_inst/mult_29/ab[6][1] ), .B(
+        \segway_math_inst/mult_29/CARRYB[5][1] ), .CI(
+        \segway_math_inst/mult_29/SUMB[5][2] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[6][1] ), .S(
+        \segway_math_inst/mult_29/SUMB[6][1] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S1_6_0  ( .A(
+        \segway_math_inst/mult_29/ab[6][0] ), .B(
+        \segway_math_inst/mult_29/CARRYB[5][0] ), .CI(
+        \segway_math_inst/mult_29/SUMB[5][1] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[6][0] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S3_7_10  ( .A(
+        \segway_math_inst/mult_29/ab[7][10] ), .B(
+        \segway_math_inst/mult_29/CARRYB[6][10] ), .CI(
+        \segway_math_inst/mult_29/ab[6][11] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[7][10] ), .S(
+        \segway_math_inst/mult_29/SUMB[7][10] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_7_9  ( .A(
+        \segway_math_inst/mult_29/ab[7][9] ), .B(
+        \segway_math_inst/mult_29/CARRYB[6][9] ), .CI(
+        \segway_math_inst/mult_29/SUMB[6][10] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[7][9] ), .S(
+        \segway_math_inst/mult_29/SUMB[7][9] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_7_8  ( .A(
+        \segway_math_inst/mult_29/ab[7][8] ), .B(
+        \segway_math_inst/mult_29/CARRYB[6][8] ), .CI(
+        \segway_math_inst/mult_29/SUMB[6][9] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[7][8] ), .S(
+        \segway_math_inst/mult_29/SUMB[7][8] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_7_7  ( .A(
+        \segway_math_inst/mult_29/ab[7][7] ), .B(
+        \segway_math_inst/mult_29/CARRYB[6][7] ), .CI(
+        \segway_math_inst/mult_29/SUMB[6][8] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[7][7] ), .S(
+        \segway_math_inst/mult_29/SUMB[7][7] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_7_6  ( .A(
+        \segway_math_inst/mult_29/ab[7][6] ), .B(
+        \segway_math_inst/mult_29/CARRYB[6][6] ), .CI(
+        \segway_math_inst/mult_29/SUMB[6][7] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[7][6] ), .S(
+        \segway_math_inst/mult_29/SUMB[7][6] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_7_5  ( .A(
+        \segway_math_inst/mult_29/ab[7][5] ), .B(
+        \segway_math_inst/mult_29/CARRYB[6][5] ), .CI(
+        \segway_math_inst/mult_29/SUMB[6][6] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[7][5] ), .S(
+        \segway_math_inst/mult_29/SUMB[7][5] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_7_1  ( .A(
+        \segway_math_inst/mult_29/ab[7][1] ), .B(
+        \segway_math_inst/mult_29/CARRYB[6][1] ), .CI(
+        \segway_math_inst/mult_29/SUMB[6][2] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[7][1] ), .S(
+        \segway_math_inst/mult_29/SUMB[7][1] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S1_7_0  ( .A(
+        \segway_math_inst/mult_29/ab[7][0] ), .B(
+        \segway_math_inst/mult_29/CARRYB[6][0] ), .CI(
+        \segway_math_inst/mult_29/SUMB[6][1] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[7][0] ) );
+  XNOR3X2_RVT U14 ( .A1(\segway_math_inst/mult_29/SUMB[2][6] ), .A2(
+        \segway_math_inst/mult_29/CARRYB[2][5] ), .A3(n163), .Y(
+        \segway_math_inst/mult_29/SUMB[3][5] ) );
+  NAND2X0_RVT U222 ( .A1(steer_pot[8]), .A2(n135), .Y(n134) );
+  NAND2X0_RVT U223 ( .A1(steer_pot[7]), .A2(n135), .Y(n137) );
+  NAND2X0_RVT U224 ( .A1(steer_pot[6]), .A2(n135), .Y(n139) );
+  NAND2X0_RVT U225 ( .A1(steer_pot[5]), .A2(n135), .Y(n141) );
+  NAND2X0_RVT U226 ( .A1(steer_pot[4]), .A2(n135), .Y(n143) );
+  NAND2X0_RVT U227 ( .A1(steer_pot[3]), .A2(n135), .Y(n145) );
+  NAND2X0_RVT U228 ( .A1(steer_pot[2]), .A2(n135), .Y(n147) );
+  AND2X1_RVT U229 ( .A1(\segway_math_inst/steer_difference [1]), .A2(n148), 
+        .Y(\segway_math_inst/mult_40/CARRYB[1][0] ) );
+  NAND2X0_RVT U230 ( .A1(steer_pot[1]), .A2(n135), .Y(n149) );
+  AND2X1_RVT U231 ( .A1(ss_tmr[7]), .A2(n150), .Y(
+        \segway_math_inst/mult_29/ab[7][9] ) );
+  AND2X1_RVT U232 ( .A1(ss_tmr[7]), .A2(net8511), .Y(
+        \segway_math_inst/mult_29/ab[7][8] ) );
+  AND2X1_RVT U233 ( .A1(ss_tmr[7]), .A2(n152), .Y(
+        \segway_math_inst/mult_29/ab[7][7] ) );
+  AND2X1_RVT U234 ( .A1(ss_tmr[7]), .A2(n153), .Y(
+        \segway_math_inst/mult_29/ab[7][6] ) );
+  AND2X1_RVT U235 ( .A1(ss_tmr[7]), .A2(n154), .Y(
+        \segway_math_inst/mult_29/ab[7][5] ) );
+  AND2X1_RVT U238 ( .A1(ss_tmr[7]), .A2(n157), .Y(
+        \segway_math_inst/mult_29/ab[7][1] ) );
+  AND2X1_RVT U239 ( .A1(ss_tmr[7]), .A2(n158), .Y(
+        \segway_math_inst/mult_29/ab[7][10] ) );
+  AND2X1_RVT U240 ( .A1(ss_tmr[7]), .A2(n159), .Y(
+        \segway_math_inst/mult_29/ab[7][0] ) );
+  AND2X1_RVT U241 ( .A1(ss_tmr[6]), .A2(n150), .Y(
+        \segway_math_inst/mult_29/ab[6][9] ) );
+  AND2X1_RVT U242 ( .A1(ss_tmr[6]), .A2(net8511), .Y(
+        \segway_math_inst/mult_29/ab[6][8] ) );
+  AND2X1_RVT U243 ( .A1(ss_tmr[6]), .A2(n152), .Y(
+        \segway_math_inst/mult_29/ab[6][7] ) );
+  AND2X1_RVT U244 ( .A1(ss_tmr[6]), .A2(n153), .Y(
+        \segway_math_inst/mult_29/ab[6][6] ) );
+  AND2X1_RVT U245 ( .A1(ss_tmr[6]), .A2(n154), .Y(
+        \segway_math_inst/mult_29/ab[6][5] ) );
+  AND2X1_RVT U249 ( .A1(ss_tmr[6]), .A2(n157), .Y(
+        \segway_math_inst/mult_29/ab[6][1] ) );
+  NOR2X0_RVT U250 ( .A1(net8491), .A2(ss_tmr[6]), .Y(
+        \segway_math_inst/mult_29/ab[6][11] ) );
+  AND2X1_RVT U251 ( .A1(ss_tmr[6]), .A2(n158), .Y(
+        \segway_math_inst/mult_29/ab[6][10] ) );
+  AND2X1_RVT U252 ( .A1(ss_tmr[6]), .A2(n159), .Y(
+        \segway_math_inst/mult_29/ab[6][0] ) );
+  AND2X1_RVT U253 ( .A1(ss_tmr[5]), .A2(n150), .Y(
+        \segway_math_inst/mult_29/ab[5][9] ) );
+  AND2X1_RVT U254 ( .A1(ss_tmr[5]), .A2(net8511), .Y(
+        \segway_math_inst/mult_29/ab[5][8] ) );
+  AND2X1_RVT U255 ( .A1(ss_tmr[5]), .A2(n152), .Y(
+        \segway_math_inst/mult_29/ab[5][7] ) );
+  AND2X1_RVT U256 ( .A1(ss_tmr[5]), .A2(n153), .Y(
+        \segway_math_inst/mult_29/ab[5][6] ) );
+  AND2X1_RVT U261 ( .A1(ss_tmr[5]), .A2(n157), .Y(
+        \segway_math_inst/mult_29/ab[5][1] ) );
+  NOR2X0_RVT U262 ( .A1(net8491), .A2(ss_tmr[5]), .Y(
+        \segway_math_inst/mult_29/ab[5][11] ) );
+  AND2X1_RVT U263 ( .A1(ss_tmr[5]), .A2(n158), .Y(
+        \segway_math_inst/mult_29/ab[5][10] ) );
+  AND2X1_RVT U264 ( .A1(ss_tmr[5]), .A2(n159), .Y(
+        \segway_math_inst/mult_29/ab[5][0] ) );
+  AND2X1_RVT U265 ( .A1(ss_tmr[4]), .A2(n150), .Y(
+        \segway_math_inst/mult_29/ab[4][9] ) );
+  AND2X1_RVT U266 ( .A1(ss_tmr[4]), .A2(net8511), .Y(
+        \segway_math_inst/mult_29/ab[4][8] ) );
+  AND2X1_RVT U269 ( .A1(ss_tmr[4]), .A2(n160), .Y(
+        \segway_math_inst/mult_29/ab[4][4] ) );
+  AND2X1_RVT U272 ( .A1(ss_tmr[4]), .A2(n157), .Y(
+        \segway_math_inst/mult_29/ab[4][1] ) );
+  AND2X1_RVT U274 ( .A1(ss_tmr[4]), .A2(n158), .Y(
+        \segway_math_inst/mult_29/ab[4][10] ) );
+  AND2X1_RVT U275 ( .A1(ss_tmr[4]), .A2(n159), .Y(
+        \segway_math_inst/mult_29/ab[4][0] ) );
+  AND2X1_RVT U276 ( .A1(ss_tmr[3]), .A2(n150), .Y(
+        \segway_math_inst/mult_29/ab[3][9] ) );
+  AND2X1_RVT U277 ( .A1(ss_tmr[3]), .A2(net8511), .Y(
+        \segway_math_inst/mult_29/ab[3][8] ) );
+  AND2X1_RVT U279 ( .A1(ss_tmr[3]), .A2(n153), .Y(
+        \segway_math_inst/mult_29/ab[3][6] ) );
+  AND2X1_RVT U283 ( .A1(ss_tmr[3]), .A2(n157), .Y(
+        \segway_math_inst/mult_29/ab[3][1] ) );
+  AND2X1_RVT U285 ( .A1(ss_tmr[3]), .A2(n158), .Y(
+        \segway_math_inst/mult_29/ab[3][10] ) );
+  AND2X1_RVT U286 ( .A1(ss_tmr[3]), .A2(n159), .Y(
+        \segway_math_inst/mult_29/ab[3][0] ) );
+  AND2X1_RVT U287 ( .A1(ss_tmr[2]), .A2(n150), .Y(
+        \segway_math_inst/mult_29/ab[2][9] ) );
+  AND2X1_RVT U289 ( .A1(ss_tmr[2]), .A2(n153), .Y(
+        \segway_math_inst/mult_29/ab[2][6] ) );
+  AND2X1_RVT U294 ( .A1(ss_tmr[2]), .A2(n157), .Y(
+        \segway_math_inst/mult_29/ab[2][1] ) );
+  AND2X1_RVT U296 ( .A1(ss_tmr[2]), .A2(n158), .Y(
+        \segway_math_inst/mult_29/ab[2][10] ) );
+  AND2X1_RVT U297 ( .A1(ss_tmr[2]), .A2(n159), .Y(
+        \segway_math_inst/mult_29/ab[2][0] ) );
+  NAND2X0_RVT U299 ( .A1(ss_tmr[1]), .A2(net8511), .Y(n168) );
+  NAND2X0_RVT U300 ( .A1(ss_tmr[1]), .A2(n152), .Y(n170) );
+  NAND2X0_RVT U305 ( .A1(net8810), .A2(n156), .Y(n180) );
+  NAND2X0_RVT U306 ( .A1(net8810), .A2(n158), .Y(n184) );
+  AND2X1_RVT U307 ( .A1(\segway_math_inst/mult_29/CARRYB[7][1] ), .A2(
+        \segway_math_inst/mult_29/SUMB[7][2] ), .Y(
+        \segway_math_inst/mult_29/CARRYB[8][1] ) );
+  OR2X1_RVT U312 ( .A1(\segway_math_inst/mult_29/CARRYB[2][5] ), .A2(n63), .Y(
+        n186) );
+  NAND2X0_RVT U313 ( .A1(ss_tmr[3]), .A2(n154), .Y(n163) );
+  AO22X1_RVT U314 ( .A1(n65), .A2(n166), .A3(n164), .A4(n187), .Y(
+        \segway_math_inst/mult_29/CARRYB[2][8] ) );
+  OR2X1_RVT U315 ( .A1(n166), .A2(n65), .Y(n187) );
+  NAND2X0_RVT U317 ( .A1(net8810), .A2(n150), .Y(n188) );
+  AND2X1_RVT U321 ( .A1(ss_tmr[0]), .A2(n158), .Y(n189) );
+  AND2X1_RVT U324 ( .A1(ss_tmr[0]), .A2(net8511), .Y(n169) );
+  AND2X1_RVT U340 ( .A1(n182), .A2(n181), .Y(
+        \segway_math_inst/mult_29/CARRYB[1][1] ) );
+  AND2X1_RVT U341 ( .A1(ss_tmr[0]), .A2(n156), .Y(n181) );
+  AND3X1_RVT U346 ( .A1(ss_tmr[0]), .A2(n159), .A3(n182), .Y(
+        \segway_math_inst/mult_29/CARRYB[1][0] ) );
+  AND2X1_RVT U347 ( .A1(ss_tmr[1]), .A2(n157), .Y(n182) );
+  NAND2X0_RVT U353 ( .A1(n202), .A2(n203), .Y(n197) );
+  AO22X1_RVT U354 ( .A1(n12), .A2(n204), .A3(n13), .A4(n205), .Y(n202) );
+  NAND3X0_RVT U355 ( .A1(n34), .A2(n30), .A3(n13), .Y(n195) );
+  NAND2X0_RVT U358 ( .A1(n209), .A2(n210), .Y(n207) );
+  NAND3X0_RVT U360 ( .A1(n33), .A2(n212), .A3(n13), .Y(n206) );
+  OA22X1_RVT U362 ( .A1(n213), .A2(n218), .A3(n201), .A4(n219), .Y(n217) );
+  NAND2X0_RVT U363 ( .A1(n220), .A2(n221), .Y(n218) );
+  NAND2X0_RVT U364 ( .A1(n39), .A2(n219), .Y(n216) );
+  NAND2X0_RVT U367 ( .A1(n225), .A2(n221), .Y(n223) );
+  NAND3X0_RVT U369 ( .A1(n45), .A2(n220), .A3(n13), .Y(n222) );
+  OA221X1_RVT U371 ( .A1(n201), .A2(n228), .A3(n49), .A4(n229), .A5(n196), .Y(
+        n227) );
+  NAND2X0_RVT U373 ( .A1(n232), .A2(n233), .Y(n230) );
+  NAND2X0_RVT U374 ( .A1(n49), .A2(n231), .Y(n228) );
+  AO21X1_RVT U376 ( .A1(net8686), .A2(n236), .A3(n14), .Y(n235) );
+  AO21X1_RVT U381 ( .A1(n13), .A2(n243), .A3(n14), .Y(n242) );
+  AO21X1_RVT U382 ( .A1(n12), .A2(n200), .A3(n13), .Y(n240) );
+  NAND2X0_RVT U384 ( .A1(n244), .A2(net8209), .Y(n196) );
+  NAND2X0_RVT U385 ( .A1(n201), .A2(n213), .Y(n238) );
+  OR2X1_RVT U388 ( .A1(n244), .A2(net8209), .Y(n246) );
+  AO222X1_RVT U389 ( .A1(n247), .A2(n248), .A3(net8686), .A4(n241), .A5(n249), 
+        .A6(n245), .Y(rght_spd[11]) );
+  AND2X1_RVT U390 ( .A1(n26), .A2(n250), .Y(n249) );
+  NAND2X0_RVT U392 ( .A1(n25), .A2(n18), .Y(n248) );
+  AO22X1_RVT U393 ( .A1(n252), .A2(n250), .A3(n18), .A4(n253), .Y(n244) );
+  AO22X1_RVT U394 ( .A1(n247), .A2(n25), .A3(n245), .A4(n26), .Y(n253) );
+  AO22X1_RVT U395 ( .A1(n247), .A2(n255), .A3(n245), .A4(n254), .Y(n252) );
+  NAND2X0_RVT U396 ( .A1(n243), .A2(n241), .Y(n254) );
+  AND2X1_RVT U397 ( .A1(n34), .A2(n203), .Y(n243) );
+  NAND2X0_RVT U398 ( .A1(n210), .A2(n212), .Y(n205) );
+  AO21X1_RVT U399 ( .A1(n220), .A2(n221), .A3(n256), .Y(n212) );
+  AO21X1_RVT U400 ( .A1(n232), .A2(n233), .A3(n214), .Y(n220) );
+  AND3X1_RVT U401 ( .A1(pwr_up), .A2(n251), .A3(n21), .Y(n245) );
+  OR2X1_RVT U402 ( .A1(n200), .A2(n241), .Y(n255) );
+  OR2X1_RVT U403 ( .A1(n204), .A2(n203), .Y(n200) );
+  NAND2X0_RVT U404 ( .A1(n33), .A2(n211), .Y(n204) );
+  NAND2X0_RVT U405 ( .A1(n219), .A2(n256), .Y(n211) );
+  NAND2X0_RVT U406 ( .A1(n45), .A2(n226), .Y(n219) );
+  NAND2X0_RVT U407 ( .A1(n231), .A2(n214), .Y(n226) );
+  NAND2X0_RVT U408 ( .A1(n53), .A2(n58), .Y(n231) );
+  NAND4X0_RVT U411 ( .A1(n250), .A2(n241), .A3(n260), .A4(n261), .Y(n259) );
+  AND4X1_RVT U412 ( .A1(n221), .A2(n210), .A3(n256), .A4(n203), .Y(n261) );
+  NAND2X0_RVT U413 ( .A1(n49), .A2(n262), .Y(n260) );
+  AND4X1_RVT U415 ( .A1(n45), .A2(n24), .A3(n18), .A4(n264), .Y(n263) );
+  NAND2X0_RVT U416 ( .A1(n262), .A2(n214), .Y(n264) );
+  AO22X1_RVT U417 ( .A1(\segway_math_inst/N43 ), .A2(en_steer), .A3(
+        \segway_math_inst/PID_cntrl_ext [13]), .A4(net8177), .Y(n214) );
+  NAND2X0_RVT U420 ( .A1(n237), .A2(n236), .Y(n267) );
+  AO21X1_RVT U421 ( .A1(n269), .A2(n268), .A3(n233), .Y(n265) );
+  AO22X1_RVT U422 ( .A1(\segway_math_inst/N42 ), .A2(net8175), .A3(
+        \segway_math_inst/PID_cntrl_ext [12]), .A4(net8179), .Y(n233) );
+  AO21X1_RVT U424 ( .A1(n237), .A2(n239), .A3(n236), .Y(n269) );
+  AO22X1_RVT U425 ( .A1(\segway_math_inst/N40 ), .A2(net8175), .A3(
+        \segway_math_inst/PID_cntrl_ext [10]), .A4(net8179), .Y(n236) );
+  AO22X1_RVT U426 ( .A1(\segway_math_inst/N39 ), .A2(net8175), .A3(
+        \segway_math_inst/mult_29/A1[7] ), .A4(net8179), .Y(n237) );
+  AO21X1_RVT U427 ( .A1(en_steer), .A2(n270), .A3(n271), .Y(n250) );
+  AO22X1_RVT U428 ( .A1(\segway_math_inst/N48 ), .A2(net8175), .A3(
+        \segway_math_inst/PID_cntrl_ext [18]), .A4(net8179), .Y(n241) );
+  AO22X1_RVT U429 ( .A1(\segway_math_inst/N44 ), .A2(net8175), .A3(
+        \segway_math_inst/PID_cntrl_ext [14]), .A4(net8179), .Y(n221) );
+  AO22X1_RVT U430 ( .A1(\segway_math_inst/N47 ), .A2(net8175), .A3(
+        \segway_math_inst/PID_cntrl_ext [17]), .A4(net8179), .Y(n203) );
+  AO22X1_RVT U431 ( .A1(\segway_math_inst/N46 ), .A2(net8175), .A3(
+        \segway_math_inst/PID_cntrl_ext [16]), .A4(net8179), .Y(n210) );
+  AO22X1_RVT U432 ( .A1(\segway_math_inst/N45 ), .A2(net8175), .A3(
+        \segway_math_inst/PID_cntrl_ext [15]), .A4(net8179), .Y(n256) );
+  AO21X1_RVT U433 ( .A1(\segway_math_inst/N50 ), .A2(net8175), .A3(n271), .Y(
+        n257) );
+  OA21X1_RVT U435 ( .A1(n274), .A2(steer_pot[10]), .A3(n275), .Y(
+        \segway_math_inst/steer_difference [10]) );
+  NAND2X0_RVT U438 ( .A1(n283), .A2(n284), .Y(n278) );
+  AO22X1_RVT U439 ( .A1(n4), .A2(n285), .A3(n5), .A4(n286), .Y(n283) );
+  NAND3X0_RVT U440 ( .A1(n36), .A2(n31), .A3(n5), .Y(n276) );
+  NAND2X0_RVT U443 ( .A1(n290), .A2(n291), .Y(n288) );
+  NAND3X0_RVT U445 ( .A1(n35), .A2(n293), .A3(n5), .Y(n287) );
+  NAND2X0_RVT U452 ( .A1(n306), .A2(n302), .Y(n304) );
+  NAND3X0_RVT U454 ( .A1(n46), .A2(n301), .A3(n5), .Y(n303) );
+  OA221X1_RVT U456 ( .A1(net8690), .A2(n309), .A3(n50), .A4(n310), .A5(n277), 
+        .Y(n308) );
+  NAND2X0_RVT U458 ( .A1(n313), .A2(n314), .Y(n311) );
+  NAND2X0_RVT U459 ( .A1(n50), .A2(n312), .Y(n309) );
+  AO21X1_RVT U461 ( .A1(n8), .A2(n317), .A3(n6), .Y(n316) );
+  AO21X1_RVT U466 ( .A1(n5), .A2(n323), .A3(n6), .Y(n322) );
+  AO21X1_RVT U467 ( .A1(n4), .A2(n281), .A3(n5), .Y(n320) );
+  NAND2X0_RVT U470 ( .A1(net8690), .A2(n294), .Y(n319) );
+  AO22X1_RVT U479 ( .A1(n327), .A2(n27), .A3(n28), .A4(n325), .Y(n334) );
+  AO22X1_RVT U480 ( .A1(n327), .A2(n336), .A3(n325), .A4(n335), .Y(n333) );
+  NAND2X0_RVT U481 ( .A1(n323), .A2(n321), .Y(n335) );
+  NAND2X0_RVT U483 ( .A1(n291), .A2(n293), .Y(n286) );
+  OR2X1_RVT U487 ( .A1(n281), .A2(n321), .Y(n336) );
+  OR2X1_RVT U488 ( .A1(n284), .A2(n285), .Y(n281) );
+  NAND2X0_RVT U489 ( .A1(n35), .A2(n292), .Y(n285) );
+  NAND2X0_RVT U490 ( .A1(n300), .A2(n337), .Y(n292) );
+  NAND2X0_RVT U492 ( .A1(n312), .A2(n295), .Y(n307) );
+  NAND2X0_RVT U493 ( .A1(n55), .A2(n59), .Y(n312) );
+  NAND2X0_RVT U499 ( .A1(n350), .A2(n351), .Y(n348) );
+  NAND2X0_RVT U501 ( .A1(n354), .A2(n355), .Y(n352) );
+  NAND2X0_RVT U503 ( .A1(n358), .A2(n359), .Y(n356) );
+  NAND2X0_RVT U506 ( .A1(n274), .A2(steer_pot[10]), .Y(n275) );
+  AND2X1_RVT U507 ( .A1(n132), .A2(n131), .Y(n274) );
+  NAND2X0_RVT U508 ( .A1(n135), .A2(n84), .Y(n131) );
+  AND2X1_RVT U509 ( .A1(steer_pot[8]), .A2(n133), .Y(n132) );
+  AND2X1_RVT U510 ( .A1(steer_pot[7]), .A2(n136), .Y(n133) );
+  AND2X1_RVT U511 ( .A1(steer_pot[6]), .A2(n138), .Y(n136) );
+  AND2X1_RVT U512 ( .A1(steer_pot[5]), .A2(n140), .Y(n138) );
+  AND2X1_RVT U513 ( .A1(steer_pot[4]), .A2(n142), .Y(n140) );
+  AND2X1_RVT U514 ( .A1(steer_pot[3]), .A2(n144), .Y(n142) );
+  AND2X1_RVT U515 ( .A1(steer_pot[2]), .A2(n146), .Y(n144) );
+  AND2X1_RVT U516 ( .A1(steer_pot[1]), .A2(n83), .Y(n146) );
+  NAND2X0_RVT U517 ( .A1(steer_pot[0]), .A2(n135), .Y(n148) );
+  AND2X1_RVT U518 ( .A1(n361), .A2(n362), .Y(n135) );
+  NAND3X0_RVT U519 ( .A1(steer_pot[11]), .A2(steer_pot[10]), .A3(steer_pot[9]), 
+        .Y(n362) );
+  OR3X1_RVT U520 ( .A1(steer_pot[11]), .A2(steer_pot[9]), .A3(steer_pot[10]), 
+        .Y(n361) );
+  NAND2X0_RVT U525 ( .A1(n365), .A2(n366), .Y(n363) );
+  NAND2X0_RVT U527 ( .A1(n369), .A2(n370), .Y(n367) );
+  NAND2X0_RVT U532 ( .A1(n377), .A2(n378), .Y(n375) );
+  AO21X1_RVT U540 ( .A1(n194), .A2(n82), .A3(n62), .Y(n387) );
+  OR2X1_RVT U541 ( .A1(n82), .A2(n194), .Y(\segway_math_inst/sub_49/carry [1])
+         );
+  NAND2X0_RVT U543 ( .A1(\segway_math_inst/mult_29/SUMB[7][1] ), .A2(
+        \segway_math_inst/mult_29/CARRYB[7][0] ), .Y(n388) );
+  OR2X1_RVT U547 ( .A1(n393), .A2(n394), .Y(n370) );
+  OA21X1_RVT U548 ( .A1(n364), .A2(n29), .A3(n366), .Y(n368) );
+  NAND2X0_RVT U549 ( .A1(n37), .A2(n395), .Y(n366) );
+  NAND2X0_RVT U550 ( .A1(n397), .A2(n396), .Y(n365) );
+  NAND2X0_RVT U551 ( .A1(n398), .A2(n399), .Y(n396) );
+  OA21X1_RVT U552 ( .A1(n357), .A2(n32), .A3(n359), .Y(n364) );
+  NAND2X0_RVT U553 ( .A1(n43), .A2(n399), .Y(n359) );
+  NAND2X0_RVT U554 ( .A1(n402), .A2(n401), .Y(n358) );
+  NAND2X0_RVT U555 ( .A1(n403), .A2(n404), .Y(n401) );
+  AND2X1_RVT U556 ( .A1(\segway_math_inst/mult_29/CARRYB[7][7] ), .A2(
+        \segway_math_inst/mult_29/SUMB[7][8] ), .Y(n398) );
+  OA21X1_RVT U557 ( .A1(n349), .A2(n38), .A3(n351), .Y(n357) );
+  NAND2X0_RVT U558 ( .A1(n47), .A2(n404), .Y(n351) );
+  NAND2X0_RVT U559 ( .A1(n406), .A2(n405), .Y(n350) );
+  NAND2X0_RVT U560 ( .A1(n407), .A2(n408), .Y(n405) );
+  AND2X1_RVT U561 ( .A1(\segway_math_inst/mult_29/CARRYB[7][6] ), .A2(
+        \segway_math_inst/mult_29/SUMB[7][7] ), .Y(n403) );
+  OA21X1_RVT U562 ( .A1(n353), .A2(n44), .A3(n355), .Y(n349) );
+  NAND2X0_RVT U563 ( .A1(n51), .A2(n408), .Y(n355) );
+  NAND2X0_RVT U564 ( .A1(n410), .A2(n409), .Y(n354) );
+  NAND2X0_RVT U565 ( .A1(n57), .A2(n411), .Y(n409) );
+  AND2X1_RVT U566 ( .A1(\segway_math_inst/mult_29/CARRYB[7][5] ), .A2(
+        \segway_math_inst/mult_29/SUMB[7][6] ), .Y(n407) );
+  OA21X1_RVT U567 ( .A1(n48), .A2(n376), .A3(n378), .Y(n353) );
+  AOI21X1_RVT U569 ( .A1(n381), .A2(n383), .A3(n56), .Y(n376) );
+  OA21X1_RVT U575 ( .A1(n418), .A2(\segway_math_inst/mult_29/SUMB[7][5] ), 
+        .A3(n412), .Y(n413) );
+  NAND2X0_RVT U576 ( .A1(\segway_math_inst/mult_29/SUMB[7][5] ), .A2(n418), 
+        .Y(n412) );
+  NAND2X0_RVT U584 ( .A1(n422), .A2(n393), .Y(n369) );
+  NAND2X0_RVT U585 ( .A1(n400), .A2(n395), .Y(n393) );
+  AND2X1_RVT U586 ( .A1(\segway_math_inst/mult_29/SUMB[7][9] ), .A2(
+        \segway_math_inst/mult_29/CARRYB[7][8] ), .Y(n400) );
+  OA22X1_RVT U587 ( .A1(n394), .A2(n423), .A3(n22), .A4(n424), .Y(n391) );
+  NAND2X0_RVT U588 ( .A1(\segway_math_inst/mult_29/CARRYB[7][9] ), .A2(
+        \segway_math_inst/mult_29/SUMB[7][10] ), .Y(n423) );
+  NAND2X0_RVT U589 ( .A1(n525), .A2(n118), .Y(n424) );
+  AND3X1_RVT U592 ( .A1(\segway_math_inst/mult_29/CARRYB[7][0] ), .A2(n389), 
+        .A3(\segway_math_inst/mult_29/SUMB[7][1] ), .Y(n390) );
+  AO21X1_RVT U597 ( .A1(n567), .A2(n428), .A3(n70), .Y(\PID_inst/n69 ) );
+  AO21X1_RVT U598 ( .A1(n429), .A2(ss_tmr[6]), .A3(ss_tmr[7]), .Y(n428) );
+  AO21X1_RVT U599 ( .A1(n566), .A2(n430), .A3(n70), .Y(\PID_inst/n68 ) );
+  AND2X1_RVT U600 ( .A1(n431), .A2(ss_tmr[5]), .Y(n429) );
+  AO21X1_RVT U601 ( .A1(n566), .A2(n432), .A3(n70), .Y(\PID_inst/n67 ) );
+  AND2X1_RVT U602 ( .A1(n433), .A2(ss_tmr[4]), .Y(n431) );
+  AO21X1_RVT U603 ( .A1(n566), .A2(n434), .A3(n70), .Y(\PID_inst/n66 ) );
+  AND2X1_RVT U604 ( .A1(n435), .A2(ss_tmr[3]), .Y(n433) );
+  AO21X1_RVT U605 ( .A1(n566), .A2(n436), .A3(n70), .Y(\PID_inst/n65 ) );
+  AND2X1_RVT U606 ( .A1(n437), .A2(ss_tmr[2]), .Y(n435) );
+  AO21X1_RVT U607 ( .A1(n567), .A2(n438), .A3(n70), .Y(\PID_inst/n64 ) );
+  AND2X1_RVT U608 ( .A1(n439), .A2(ss_tmr[1]), .Y(n437) );
+  AO21X1_RVT U609 ( .A1(n566), .A2(n440), .A3(n70), .Y(\PID_inst/n63 ) );
+  NOR2X0_RVT U610 ( .A1(n441), .A2(n117), .Y(n439) );
+  AO21X1_RVT U611 ( .A1(n566), .A2(n442), .A3(n70), .Y(\PID_inst/n62 ) );
+  NAND3X0_RVT U612 ( .A1(n116), .A2(n115), .A3(n102), .Y(n441) );
+  AO21X1_RVT U613 ( .A1(n443), .A2(n116), .A3(n444), .Y(\PID_inst/n61 ) );
+  AND4X1_RVT U614 ( .A1(\PID_inst/n11 ), .A2(n568), .A3(n102), .A4(n115), .Y(
+        n444) );
+  AO21X1_RVT U615 ( .A1(\PID_inst/n12 ), .A2(n567), .A3(n445), .Y(n443) );
+  AO22X1_RVT U616 ( .A1(n445), .A2(n115), .A3(n446), .A4(\PID_inst/n12 ), .Y(
+        \PID_inst/n60 ) );
+  AND2X1_RVT U617 ( .A1(n566), .A2(n102), .Y(n446) );
+  AO21X1_RVT U618 ( .A1(n567), .A2(n447), .A3(n70), .Y(n445) );
+  NAND3X0_RVT U619 ( .A1(n114), .A2(n113), .A3(n103), .Y(n447) );
+  AO21X1_RVT U620 ( .A1(n448), .A2(n114), .A3(n449), .Y(\PID_inst/n59 ) );
+  AND4X1_RVT U621 ( .A1(\PID_inst/n13 ), .A2(n567), .A3(n103), .A4(n113), .Y(
+        n449) );
+  AO21X1_RVT U622 ( .A1(\PID_inst/n14 ), .A2(n567), .A3(n450), .Y(n448) );
+  AO22X1_RVT U623 ( .A1(n450), .A2(n113), .A3(n451), .A4(\PID_inst/n14 ), .Y(
+        \PID_inst/n58 ) );
+  AND2X1_RVT U624 ( .A1(n566), .A2(n103), .Y(n451) );
+  AO21X1_RVT U625 ( .A1(n567), .A2(n452), .A3(n70), .Y(n450) );
+  NAND3X0_RVT U626 ( .A1(n112), .A2(n111), .A3(n104), .Y(n452) );
+  AO21X1_RVT U627 ( .A1(n453), .A2(n112), .A3(n454), .Y(\PID_inst/n57 ) );
+  AND4X1_RVT U628 ( .A1(\PID_inst/n15 ), .A2(n567), .A3(n104), .A4(n111), .Y(
+        n454) );
+  AO21X1_RVT U629 ( .A1(\PID_inst/n25 ), .A2(n567), .A3(n455), .Y(n453) );
+  AO22X1_RVT U630 ( .A1(n455), .A2(n111), .A3(n456), .A4(\PID_inst/n25 ), .Y(
+        \PID_inst/n56 ) );
+  AND2X1_RVT U631 ( .A1(n566), .A2(n104), .Y(n456) );
+  AO21X1_RVT U632 ( .A1(n567), .A2(n457), .A3(n70), .Y(n455) );
+  NAND3X0_RVT U633 ( .A1(n109), .A2(n110), .A3(n105), .Y(n457) );
+  AO21X1_RVT U634 ( .A1(n458), .A2(n110), .A3(n459), .Y(\PID_inst/n55 ) );
+  AND4X1_RVT U635 ( .A1(\PID_inst/n21 ), .A2(n568), .A3(n105), .A4(n109), .Y(
+        n459) );
+  AO21X1_RVT U636 ( .A1(\PID_inst/n20 ), .A2(n567), .A3(n460), .Y(n458) );
+  AO22X1_RVT U637 ( .A1(n460), .A2(n109), .A3(n461), .A4(\PID_inst/n20 ), .Y(
+        \PID_inst/n54 ) );
+  AND2X1_RVT U638 ( .A1(n566), .A2(n105), .Y(n461) );
+  AO21X1_RVT U639 ( .A1(n567), .A2(n462), .A3(n70), .Y(n460) );
+  NAND3X0_RVT U640 ( .A1(n107), .A2(n108), .A3(\PID_inst/cnt[8] ), .Y(n462) );
+  AO21X1_RVT U641 ( .A1(n463), .A2(n108), .A3(n464), .Y(\PID_inst/n53 ) );
+  AND4X1_RVT U642 ( .A1(\PID_inst/n19 ), .A2(n568), .A3(\PID_inst/cnt[8] ), 
+        .A4(n107), .Y(n464) );
+  AO21X1_RVT U643 ( .A1(\PID_inst/n16 ), .A2(n567), .A3(n465), .Y(n463) );
+  AO22X1_RVT U644 ( .A1(n465), .A2(n107), .A3(n466), .A4(\PID_inst/n16 ), .Y(
+        \PID_inst/n52 ) );
+  AND2X1_RVT U645 ( .A1(n566), .A2(\PID_inst/cnt[8] ), .Y(n466) );
+  AO21X1_RVT U646 ( .A1(n566), .A2(n106), .A3(n70), .Y(n465) );
+  AO22X1_RVT U647 ( .A1(n70), .A2(\PID_inst/cnt[8] ), .A3(n566), .A4(n106), 
+        .Y(\PID_inst/n51 ) );
+  AND2X1_RVT U648 ( .A1(pwr_up), .A2(n467), .Y(n427) );
+  NAND4X0_RVT U649 ( .A1(ss_tmr[4]), .A2(ss_tmr[5]), .A3(n468), .A4(n469), .Y(
+        n467) );
+  AND4X1_RVT U650 ( .A1(ss_tmr[1]), .A2(ss_tmr[0]), .A3(ss_tmr[2]), .A4(
+        ss_tmr[3]), .Y(n469) );
+  AND3X1_RVT U651 ( .A1(pwr_up), .A2(ss_tmr[7]), .A3(ss_tmr[6]), .Y(n468) );
+  AO22X1_RVT U652 ( .A1(\PID_inst/integrator_plus_ptch [9]), .A2(n470), .A3(
+        n471), .A4(\PID_inst/integrator [9]), .Y(\PID_inst/mux2_out [9]) );
+  AO22X1_RVT U653 ( .A1(\PID_inst/integrator_plus_ptch [8]), .A2(n470), .A3(
+        n471), .A4(\PID_inst/integrator [8]), .Y(\PID_inst/mux2_out [8]) );
+  AO22X1_RVT U654 ( .A1(\PID_inst/integrator_plus_ptch [7]), .A2(n470), .A3(
+        n471), .A4(\PID_inst/integrator [7]), .Y(\PID_inst/mux2_out [7]) );
+  AO22X1_RVT U655 ( .A1(\PID_inst/integrator_plus_ptch [6]), .A2(n470), .A3(
+        n471), .A4(\PID_inst/integrator [6]), .Y(\PID_inst/mux2_out [6]) );
+  AO22X1_RVT U656 ( .A1(\PID_inst/integrator_plus_ptch [5]), .A2(n470), .A3(
+        n471), .A4(\PID_inst/integrator [5]), .Y(\PID_inst/mux2_out [5]) );
+  AO22X1_RVT U657 ( .A1(\PID_inst/integrator_plus_ptch [4]), .A2(n470), .A3(
+        n471), .A4(\PID_inst/integrator [4]), .Y(\PID_inst/mux2_out [4]) );
+  AO22X1_RVT U658 ( .A1(\PID_inst/integrator_plus_ptch [3]), .A2(n470), .A3(
+        n471), .A4(\PID_inst/integrator [3]), .Y(\PID_inst/mux2_out [3]) );
+  AO22X1_RVT U659 ( .A1(\PID_inst/integrator_plus_ptch [2]), .A2(n470), .A3(
+        n471), .A4(\PID_inst/integrator [2]), .Y(\PID_inst/mux2_out [2]) );
+  AO22X1_RVT U660 ( .A1(\PID_inst/integrator_plus_ptch [1]), .A2(n470), .A3(
+        n471), .A4(\PID_inst/integrator [1]), .Y(\PID_inst/mux2_out [1]) );
+  AO22X1_RVT U661 ( .A1(n470), .A2(\PID_inst/integrator_plus_ptch [17]), .A3(
+        n471), .A4(\PID_inst/I_term [14]), .Y(\PID_inst/mux2_out [17]) );
+  AO22X1_RVT U662 ( .A1(\PID_inst/integrator_plus_ptch [16]), .A2(n470), .A3(
+        n471), .A4(n120), .Y(\PID_inst/mux2_out [16]) );
+  AO22X1_RVT U664 ( .A1(\PID_inst/integrator_plus_ptch [14]), .A2(n470), .A3(
+        n471), .A4(\PID_inst/integrator [14]), .Y(\PID_inst/mux2_out [14]) );
+  AO22X1_RVT U665 ( .A1(\PID_inst/integrator_plus_ptch [13]), .A2(n470), .A3(
+        n471), .A4(\PID_inst/integrator [13]), .Y(\PID_inst/mux2_out [13]) );
+  AO22X1_RVT U666 ( .A1(\PID_inst/integrator_plus_ptch [12]), .A2(n470), .A3(
+        n471), .A4(\PID_inst/integrator [12]), .Y(\PID_inst/mux2_out [12]) );
+  AO22X1_RVT U667 ( .A1(\PID_inst/integrator_plus_ptch [11]), .A2(n470), .A3(
+        n471), .A4(\PID_inst/integrator [11]), .Y(\PID_inst/mux2_out [11]) );
+  AO22X1_RVT U668 ( .A1(\PID_inst/integrator_plus_ptch [10]), .A2(n470), .A3(
+        n471), .A4(\PID_inst/integrator [10]), .Y(\PID_inst/mux2_out [10]) );
+  AO22X1_RVT U669 ( .A1(n472), .A2(n86), .A3(n473), .A4(n522), .Y(
+        \PID_inst/mux2_out [0]) );
+  AND2X1_RVT U670 ( .A1(n470), .A2(n474), .Y(n473) );
+  AO21X1_RVT U671 ( .A1(n470), .A2(n67), .A3(n471), .Y(n472) );
+  NAND2X0_RVT U674 ( .A1(n476), .A2(n477), .Y(n475) );
+  NAND2X0_RVT U694 ( .A1(\PID_inst/mult_51/CARRYB[8][0] ), .A2(
+        \PID_inst/ptch_err_sat[6] ), .Y(n493) );
+  OR3X1_RVT U699 ( .A1(ptch[14]), .A2(ptch[9]), .A3(ptch[13]), .Y(n496) );
+  AND3X1_RVT U702 ( .A1(ptch[11]), .A2(ptch[10]), .A3(ptch[12]), .Y(n498) );
+  AO21X1_RVT U713 ( .A1(n480), .A2(\PID_inst/integrator [13]), .A3(n481), .Y(
+        \PID_inst/I_term [12]) );
+  AO21X1_RVT U715 ( .A1(n480), .A2(\PID_inst/integrator [11]), .A3(n481), .Y(
+        \PID_inst/I_term [10]) );
+  FADDX1_RVT \segway_math_inst/sub_49/U2_10  ( .A(
+        \segway_math_inst/PID_cntrl_ext [18]), .B(n524), .CI(
+        \segway_math_inst/sub_49/carry [10]), .CO(
+        \segway_math_inst/sub_49/carry [11]), .S(\segway_math_inst/N48 ) );
+  XOR3X1_RVT \PID_inst/add_64/U1_17  ( .A1(\PID_inst/I_term [14]), .A2(net8221), .A3(\PID_inst/add_64/carry [17]), .Y(\PID_inst/integrator_plus_ptch [17]) );
+  DFFARX1_RVT \PID_inst/cnt_reg[8]  ( .D(\PID_inst/n51 ), .CLK(clk), .RSTB(
+        n572), .Q(\PID_inst/cnt[8] ), .QN(n106) );
+  DFFARX1_RVT \PID_inst/cnt_reg[19]  ( .D(\PID_inst/n62 ), .CLK(clk), .RSTB(
+        n572), .Q(ss_tmr[0]), .QN(n117) );
+  DFFARX1_RVT \PID_inst/cnt_reg[20]  ( .D(\PID_inst/n63 ), .CLK(clk), .RSTB(
+        n571), .Q(ss_tmr[1]), .QN(net8823) );
+  DFFARX1_RVT \PID_inst/cnt_reg[21]  ( .D(\PID_inst/n64 ), .CLK(clk), .RSTB(
+        n571), .Q(ss_tmr[2]) );
+  DFFARX1_RVT \PID_inst/cnt_reg[22]  ( .D(\PID_inst/n65 ), .CLK(clk), .RSTB(
+        n571), .Q(ss_tmr[3]) );
+  DFFARX1_RVT \PID_inst/cnt_reg[23]  ( .D(\PID_inst/n66 ), .CLK(clk), .RSTB(
+        n571), .Q(ss_tmr[4]) );
+  DFFARX1_RVT \PID_inst/cnt_reg[24]  ( .D(\PID_inst/n67 ), .CLK(clk), .RSTB(
+        n571), .Q(ss_tmr[5]) );
+  DFFARX1_RVT \PID_inst/cnt_reg[26]  ( .D(\PID_inst/n69 ), .CLK(clk), .RSTB(
+        n570), .Q(ss_tmr[7]), .QN(n118) );
+  DFFARX1_RVT \PID_inst/cnt_reg[25]  ( .D(\PID_inst/n68 ), .CLK(clk), .RSTB(
+        n571), .Q(ss_tmr[6]) );
+  DFFARX1_RVT \PID_inst/integrator_reg[17]  ( .D(\PID_inst/mux2_out [17]), 
+        .CLK(clk), .RSTB(n572), .Q(\PID_inst/I_term [14]), .QN(n521) );
+  DFFARX1_RVT \PID_inst/integrator_reg[16]  ( .D(\PID_inst/mux2_out [16]), 
+        .CLK(clk), .RSTB(n570), .Q(n120), .QN(net8611) );
+  DFFARX1_RVT \PID_inst/integrator_reg[14]  ( .D(\PID_inst/mux2_out [14]), 
+        .CLK(clk), .RSTB(n571), .Q(\PID_inst/integrator [14]) );
+  DFFARX1_RVT \PID_inst/integrator_reg[13]  ( .D(\PID_inst/mux2_out [13]), 
+        .CLK(clk), .RSTB(n571), .Q(\PID_inst/integrator [13]) );
+  DFFARX1_RVT \PID_inst/integrator_reg[12]  ( .D(\PID_inst/mux2_out [12]), 
+        .CLK(clk), .RSTB(n571), .Q(\PID_inst/integrator [12]) );
+  DFFARX1_RVT \PID_inst/integrator_reg[11]  ( .D(\PID_inst/mux2_out [11]), 
+        .CLK(clk), .RSTB(n571), .Q(\PID_inst/integrator [11]) );
+  DFFARX1_RVT \PID_inst/integrator_reg[10]  ( .D(\PID_inst/mux2_out [10]), 
+        .CLK(clk), .RSTB(n571), .Q(\PID_inst/integrator [10]) );
+  DFFARX1_RVT \PID_inst/integrator_reg[9]  ( .D(\PID_inst/mux2_out [9]), .CLK(
+        clk), .RSTB(n570), .Q(\PID_inst/integrator [9]) );
+  DFFARX1_RVT \PID_inst/integrator_reg[8]  ( .D(\PID_inst/mux2_out [8]), .CLK(
+        clk), .RSTB(n570), .Q(\PID_inst/integrator [8]) );
+  DFFARX1_RVT \PID_inst/integrator_reg[7]  ( .D(\PID_inst/mux2_out [7]), .CLK(
+        clk), .RSTB(n570), .Q(\PID_inst/integrator [7]) );
+  DFFARX1_RVT \PID_inst/integrator_reg[6]  ( .D(\PID_inst/mux2_out [6]), .CLK(
+        clk), .RSTB(n570), .Q(\PID_inst/integrator [6]) );
+  DFFARX1_RVT \PID_inst/integrator_reg[5]  ( .D(\PID_inst/mux2_out [5]), .CLK(
+        clk), .RSTB(n570), .Q(\PID_inst/integrator [5]) );
+  DFFARX1_RVT \PID_inst/integrator_reg[4]  ( .D(\PID_inst/mux2_out [4]), .CLK(
+        clk), .RSTB(n570), .Q(\PID_inst/integrator [4]) );
+  DFFARX1_RVT \PID_inst/integrator_reg[3]  ( .D(\PID_inst/mux2_out [3]), .CLK(
+        clk), .RSTB(n570), .Q(\PID_inst/integrator [3]) );
+  DFFARX1_RVT \PID_inst/integrator_reg[2]  ( .D(\PID_inst/mux2_out [2]), .CLK(
+        clk), .RSTB(n570), .Q(\PID_inst/integrator [2]) );
+  DFFARX1_RVT \PID_inst/integrator_reg[1]  ( .D(\PID_inst/mux2_out [1]), .CLK(
+        clk), .RSTB(n570), .Q(\PID_inst/integrator [1]) );
+  DFFARX1_RVT \PID_inst/integrator_reg[15]  ( .D(\PID_inst/mux2_out [15]), 
+        .CLK(clk), .RSTB(n570), .Q(n119), .QN(net8612) );
+  AND2X1_RVT U546 ( .A1(\segway_math_inst/PID_cntrl_ext [19]), .A2(net8179), 
+        .Y(n271) );
+  AO22X1_RVT U544 ( .A1(\segway_math_inst/N27 ), .A2(en_steer), .A3(
+        \segway_math_inst/PID_cntrl_ext [10]), .A4(net8177), .Y(n317) );
+  OR2X1_RVT U537 ( .A1(n313), .A2(n384), .Y(n386) );
+  AO22X1_RVT U539 ( .A1(n194), .A2(net8179), .A3(en_steer), .A4(n387), .Y(n239) );
+  AO22X1_RVT U542 ( .A1(\segway_math_inst/N26 ), .A2(en_steer), .A3(
+        \segway_math_inst/mult_29/A1[7] ), .A4(net8177), .Y(n318) );
+  NAND2X0_RVT U538 ( .A1(n318), .A2(n239), .Y(n385) );
+  AND2X1_RVT U495 ( .A1(pwr_up), .A2(n332), .Y(n338) );
+  NAND2X0_RVT U533 ( .A1(n379), .A2(n339), .Y(n374) );
+  AO222X1_RVT U536 ( .A1(n59), .A2(n20), .A3(n384), .A4(n385), .A5(n386), .A6(
+        n339), .Y(n373) );
+  AO21X1_RVT U530 ( .A1(n373), .A2(n374), .A3(n295), .Y(n371) );
+  AO221X1_RVT U528 ( .A1(n371), .A2(n339), .A3(n50), .A4(n20), .A5(n372), .Y(
+        n340) );
+  AND4X1_RVT U497 ( .A1(n344), .A2(n345), .A3(n346), .A4(n347), .Y(n343) );
+  AO21X1_RVT U523 ( .A1(n321), .A2(n284), .A3(n20), .Y(n341) );
+  NAND2X0_RVT U477 ( .A1(pwr_up), .A2(n9), .Y(n280) );
+  AO21X1_RVT U504 ( .A1(n360), .A2(net8175), .A3(n271), .Y(n330) );
+  NAND2X0_RVT U522 ( .A1(n20), .A2(n321), .Y(n331) );
+  AND2X1_RVT U482 ( .A1(n36), .A2(n284), .Y(n323) );
+  AND4X1_RVT U475 ( .A1(n325), .A2(n323), .A3(n19), .A4(n330), .Y(n329) );
+  NAND2X0_RVT U476 ( .A1(n27), .A2(n10), .Y(n328) );
+  AND2X1_RVT U486 ( .A1(n338), .A2(n20), .Y(n325) );
+  AO22X1_RVT U478 ( .A1(n333), .A2(n330), .A3(n10), .A4(n334), .Y(n324) );
+  OR2X1_RVT U473 ( .A1(n324), .A2(net8496), .Y(n326) );
+  NAND2X0_RVT U469 ( .A1(n324), .A2(net8496), .Y(n277) );
+  AND2X1_RVT U494 ( .A1(n338), .A2(n339), .Y(n327) );
+  AO21X1_RVT U485 ( .A1(n313), .A2(n314), .A3(n295), .Y(n301) );
+  NAND2X0_RVT U448 ( .A1(n301), .A2(n302), .Y(n299) );
+  OA22X1_RVT U447 ( .A1(n294), .A2(n299), .A3(n282), .A4(n300), .Y(n298) );
+  NAND2X0_RVT U491 ( .A1(n46), .A2(n307), .Y(n300) );
+  NAND2X0_RVT U449 ( .A1(n41), .A2(n300), .Y(n297) );
+  AO21X1_RVT U484 ( .A1(n301), .A2(n302), .A3(n337), .Y(n293) );
+  NAND4X0_RVT U365 ( .A1(n222), .A2(n196), .A3(n223), .A4(n224), .Y(
+        rght_spd[6]) );
+  NAND4X0_RVT U356 ( .A1(n206), .A2(n196), .A3(n207), .A4(n208), .Y(
+        rght_spd[8]) );
+  AO221X1_RVT U361 ( .A1(net8686), .A2(n214), .A3(n40), .A4(n13), .A5(n215), 
+        .Y(rght_spd[7]) );
+  NOR3X0_RVT U221 ( .A1(rght_spd[7]), .A2(rght_spd[8]), .A3(rght_spd[6]), .Y(
+        n129) );
+  AO221X1_RVT U377 ( .A1(net8686), .A2(n237), .A3(n58), .A4(n238), .A5(n14), 
+        .Y(rght_spd[3]) );
+  AO221X1_RVT U378 ( .A1(net8686), .A2(n239), .A3(n238), .A4(n236), .A5(n14), 
+        .Y(rght_spd[2]) );
+  AO21X1_RVT U379 ( .A1(n238), .A2(n237), .A3(n14), .Y(rght_spd[1]) );
+  AO21X1_RVT U383 ( .A1(n238), .A2(n239), .A3(n14), .Y(rght_spd[0]) );
+  NOR4X1_RVT U2 ( .A1(rght_spd[0]), .A2(rght_spd[1]), .A3(rght_spd[2]), .A4(
+        rght_spd[3]), .Y(n130) );
+  OA221X1_RVT U370 ( .A1(n199), .A2(n58), .A3(n220), .A4(n213), .A5(n227), .Y(
+        n128) );
+  AO221X1_RVT U375 ( .A1(n13), .A2(n234), .A3(n52), .A4(n12), .A5(n235), .Y(
+        rght_spd[4]) );
+  AO221X1_RVT U380 ( .A1(n240), .A2(n241), .A3(net8686), .A4(n210), .A5(n242), 
+        .Y(rght_spd[10]) );
+  AO221X1_RVT U462 ( .A1(n8), .A2(n318), .A3(n59), .A4(n319), .A5(n6), .Y(
+        lft_spd[3]) );
+  AO221X1_RVT U463 ( .A1(n8), .A2(n239), .A3(n319), .A4(n317), .A5(n6), .Y(
+        lft_spd[2]) );
+  AO21X1_RVT U464 ( .A1(n319), .A2(n318), .A3(n6), .Y(lft_spd[1]) );
+  AO21X1_RVT U468 ( .A1(n319), .A2(n239), .A3(n6), .Y(lft_spd[0]) );
+  NOR4X1_RVT U1 ( .A1(lft_spd[0]), .A2(lft_spd[1]), .A3(lft_spd[2]), .A4(
+        lft_spd[3]), .Y(n126) );
+  AO221X1_RVT U460 ( .A1(n5), .A2(n315), .A3(n54), .A4(n4), .A5(n316), .Y(
+        lft_spd[4]) );
+  OA221X1_RVT U455 ( .A1(n531), .A2(n59), .A3(n301), .A4(n294), .A5(n308), .Y(
+        n124) );
+  NAND4X0_RVT U450 ( .A1(n303), .A2(n277), .A3(n304), .A4(n305), .Y(lft_spd[6]) );
+  AO221X1_RVT U446 ( .A1(n8), .A2(n295), .A3(n42), .A4(n5), .A5(n296), .Y(
+        lft_spd[7]) );
+  NAND4X0_RVT U441 ( .A1(n287), .A2(n277), .A3(n288), .A4(n289), .Y(lft_spd[8]) );
+  NOR3X0_RVT U218 ( .A1(lft_spd[8]), .A2(lft_spd[7]), .A3(lft_spd[6]), .Y(n125) );
+  NAND4X0_RVT U217 ( .A1(n125), .A2(n124), .A3(n3), .A4(n126), .Y(n123) );
+  NAND4X0_RVT U436 ( .A1(n276), .A2(n277), .A3(n278), .A4(n279), .Y(lft_spd[9]) );
+  AO221X1_RVT U465 ( .A1(n320), .A2(n321), .A3(n8), .A4(n291), .A5(n322), .Y(
+        lft_spd[10]) );
+  NAND2X0_RVT U215 ( .A1(n121), .A2(n122), .Y(too_fast) );
+  OR2X1_RVT U309 ( .A1(\segway_math_inst/mult_29/CARRYB[3][7] ), .A2(n526), 
+        .Y(n185) );
+  AO22X1_RVT U308 ( .A1(n526), .A2(\segway_math_inst/mult_29/CARRYB[3][7] ), 
+        .A3(\segway_math_inst/mult_29/SUMB[3][8] ), .A4(n185), .Y(
+        \segway_math_inst/mult_29/CARRYB[4][7] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_5_6  ( .A(
+        \segway_math_inst/mult_29/ab[5][6] ), .B(
+        \segway_math_inst/mult_29/CARRYB[4][6] ), .CI(
+        \segway_math_inst/mult_29/SUMB[4][7] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[5][6] ), .S(
+        \segway_math_inst/mult_29/SUMB[5][6] ) );
+  AND2X1_RVT U288 ( .A1(ss_tmr[2]), .A2(n152), .Y(
+        \segway_math_inst/mult_29/ab[2][7] ) );
+  AND2X1_RVT U278 ( .A1(ss_tmr[3]), .A2(n152), .Y(
+        \segway_math_inst/mult_29/ab[3][7] ) );
+  AND2X1_RVT U267 ( .A1(ss_tmr[4]), .A2(n153), .Y(
+        \segway_math_inst/mult_29/ab[4][6] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_4_6  ( .A(
+        \segway_math_inst/mult_29/ab[4][6] ), .B(
+        \segway_math_inst/mult_29/CARRYB[3][6] ), .CI(
+        \segway_math_inst/mult_29/SUMB[3][7] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[4][6] ), .S(
+        \segway_math_inst/mult_29/SUMB[4][6] ) );
+  AND2X1_RVT U257 ( .A1(ss_tmr[5]), .A2(n154), .Y(
+        \segway_math_inst/mult_29/ab[5][5] ) );
+  OR2X1_RVT U578 ( .A1(\segway_math_inst/mult_29/CARRYB[6][4] ), .A2(n555), 
+        .Y(n419) );
+  AO21X1_RVT U574 ( .A1(n413), .A2(\segway_math_inst/mult_29/CARRYB[8][3] ), 
+        .A3(n417), .Y(n377) );
+  NAND3X0_RVT U568 ( .A1(\segway_math_inst/mult_29/CARRYB[8][3] ), .A2(n411), 
+        .A3(n413), .Y(n378) );
+  AO22X1_RVT U572 ( .A1(n554), .A2(\segway_math_inst/mult_29/A1[9] ), .A3(n415), .A4(\segway_math_inst/mult_29/A2[9] ), .Y(n381) );
+  OR2X1_RVT U571 ( .A1(n414), .A2(\segway_math_inst/mult_29/A2[10] ), .Y(n383)
+         );
+  NAND2X0_RVT U570 ( .A1(\segway_math_inst/mult_29/A2[10] ), .A2(n414), .Y(
+        n382) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_6_5  ( .A(
+        \segway_math_inst/mult_29/ab[6][5] ), .B(
+        \segway_math_inst/mult_29/CARRYB[5][5] ), .CI(
+        \segway_math_inst/mult_29/SUMB[5][6] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[6][5] ), .S(
+        \segway_math_inst/mult_29/SUMB[6][5] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_5_5  ( .A(
+        \segway_math_inst/mult_29/ab[5][5] ), .B(
+        \segway_math_inst/mult_29/CARRYB[4][5] ), .CI(
+        \segway_math_inst/mult_29/SUMB[4][6] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[5][5] ), .S(
+        \segway_math_inst/mult_29/SUMB[5][5] ) );
+  AND2X1_RVT U246 ( .A1(ss_tmr[6]), .A2(n160), .Y(
+        \segway_math_inst/mult_29/ab[6][4] ) );
+  AND2X1_RVT U236 ( .A1(ss_tmr[7]), .A2(n155), .Y(
+        \segway_math_inst/mult_29/ab[7][3] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_7_3  ( .A(
+        \segway_math_inst/mult_29/ab[7][3] ), .B(
+        \segway_math_inst/mult_29/CARRYB[6][3] ), .CI(
+        \segway_math_inst/mult_29/SUMB[6][4] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[7][3] ), .S(
+        \segway_math_inst/mult_29/SUMB[7][3] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_3_6  ( .A(
+        \segway_math_inst/mult_29/ab[3][6] ), .B(
+        \segway_math_inst/mult_29/CARRYB[2][6] ), .CI(
+        \segway_math_inst/mult_29/SUMB[2][7] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[3][6] ), .S(
+        \segway_math_inst/mult_29/SUMB[3][6] ) );
+  AND2X1_RVT U268 ( .A1(ss_tmr[4]), .A2(n154), .Y(
+        \segway_math_inst/mult_29/ab[4][5] ) );
+  AO22X1_RVT U311 ( .A1(n63), .A2(\segway_math_inst/mult_29/CARRYB[2][5] ), 
+        .A3(\segway_math_inst/mult_29/SUMB[2][6] ), .A4(n186), .Y(
+        \segway_math_inst/mult_29/CARRYB[3][5] ) );
+  AND2X1_RVT U258 ( .A1(ss_tmr[5]), .A2(n160), .Y(
+        \segway_math_inst/mult_29/ab[5][4] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_5_4  ( .A(
+        \segway_math_inst/mult_29/ab[5][4] ), .B(
+        \segway_math_inst/mult_29/CARRYB[4][4] ), .CI(
+        \segway_math_inst/mult_29/SUMB[4][5] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[5][4] ), .S(
+        \segway_math_inst/mult_29/SUMB[5][4] ) );
+  AND2X1_RVT U247 ( .A1(ss_tmr[6]), .A2(n155), .Y(
+        \segway_math_inst/mult_29/ab[6][3] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_6_3  ( .A(
+        \segway_math_inst/mult_29/ab[6][3] ), .B(
+        \segway_math_inst/mult_29/CARRYB[5][3] ), .CI(
+        \segway_math_inst/mult_29/SUMB[5][4] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[6][3] ), .S(
+        \segway_math_inst/mult_29/SUMB[6][3] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_4_4  ( .A(
+        \segway_math_inst/mult_29/ab[4][4] ), .B(
+        \segway_math_inst/mult_29/CARRYB[3][4] ), .CI(
+        \segway_math_inst/mult_29/SUMB[3][5] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[4][4] ), .S(
+        \segway_math_inst/mult_29/SUMB[4][4] ) );
+  AND2X1_RVT U259 ( .A1(ss_tmr[5]), .A2(n155), .Y(
+        \segway_math_inst/mult_29/ab[5][3] ) );
+  NAND2X0_RVT U301 ( .A1(net8810), .A2(n153), .Y(n172) );
+  AND2X1_RVT U327 ( .A1(ss_tmr[0]), .A2(n152), .Y(n171) );
+  AND3X1_RVT U329 ( .A1(net8810), .A2(n154), .A3(n173), .Y(
+        \segway_math_inst/mult_29/CARRYB[1][5] ) );
+  AND2X1_RVT U290 ( .A1(ss_tmr[2]), .A2(n154), .Y(
+        \segway_math_inst/mult_29/ab[2][5] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_2_5  ( .A(
+        \segway_math_inst/mult_29/ab[2][5] ), .B(
+        \segway_math_inst/mult_29/CARRYB[1][5] ), .CI(
+        \segway_math_inst/mult_29/SUMB[1][6] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[2][5] ), .S(
+        \segway_math_inst/mult_29/SUMB[2][5] ) );
+  AND2X1_RVT U280 ( .A1(ss_tmr[3]), .A2(n160), .Y(
+        \segway_math_inst/mult_29/ab[3][4] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_3_4  ( .A(
+        \segway_math_inst/mult_29/ab[3][4] ), .B(
+        \segway_math_inst/mult_29/CARRYB[2][4] ), .CI(
+        \segway_math_inst/mult_29/SUMB[2][5] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[3][4] ), .S(
+        \segway_math_inst/mult_29/SUMB[3][4] ) );
+  AND2X1_RVT U270 ( .A1(ss_tmr[4]), .A2(n155), .Y(
+        \segway_math_inst/mult_29/ab[4][3] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_4_3  ( .A(
+        \segway_math_inst/mult_29/ab[4][3] ), .B(
+        \segway_math_inst/mult_29/CARRYB[3][3] ), .CI(
+        \segway_math_inst/mult_29/SUMB[3][4] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[4][3] ), .S(
+        \segway_math_inst/mult_29/SUMB[4][3] ) );
+  NAND2X0_RVT U302 ( .A1(ss_tmr[1]), .A2(n154), .Y(n174) );
+  AND2X1_RVT U330 ( .A1(ss_tmr[0]), .A2(n153), .Y(n173) );
+  AND3X1_RVT U332 ( .A1(net8810), .A2(n160), .A3(n175), .Y(
+        \segway_math_inst/mult_29/CARRYB[1][4] ) );
+  AND2X1_RVT U291 ( .A1(ss_tmr[2]), .A2(n160), .Y(
+        \segway_math_inst/mult_29/ab[2][4] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_2_4  ( .A(
+        \segway_math_inst/mult_29/ab[2][4] ), .B(
+        \segway_math_inst/mult_29/CARRYB[1][4] ), .CI(
+        \segway_math_inst/mult_29/SUMB[1][5] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[2][4] ), .S(
+        \segway_math_inst/mult_29/SUMB[2][4] ) );
+  AND2X1_RVT U281 ( .A1(ss_tmr[3]), .A2(n155), .Y(
+        \segway_math_inst/mult_29/ab[3][3] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_3_3  ( .A(
+        \segway_math_inst/mult_29/ab[3][3] ), .B(
+        \segway_math_inst/mult_29/CARRYB[2][3] ), .CI(
+        \segway_math_inst/mult_29/SUMB[2][4] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[3][3] ), .S(
+        \segway_math_inst/mult_29/SUMB[3][3] ) );
+  NAND2X0_RVT U303 ( .A1(ss_tmr[1]), .A2(n160), .Y(n176) );
+  AND2X1_RVT U333 ( .A1(ss_tmr[0]), .A2(n154), .Y(n175) );
+  AND3X1_RVT U335 ( .A1(ss_tmr[1]), .A2(n155), .A3(n177), .Y(
+        \segway_math_inst/mult_29/CARRYB[1][3] ) );
+  AND2X1_RVT U292 ( .A1(ss_tmr[2]), .A2(n155), .Y(
+        \segway_math_inst/mult_29/ab[2][3] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_2_3  ( .A(
+        \segway_math_inst/mult_29/ab[2][3] ), .B(
+        \segway_math_inst/mult_29/CARRYB[1][3] ), .CI(
+        \segway_math_inst/mult_29/SUMB[1][4] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[2][3] ), .S(
+        \segway_math_inst/mult_29/SUMB[2][3] ) );
+  NAND2X0_RVT U304 ( .A1(ss_tmr[1]), .A2(n155), .Y(n178) );
+  AND2X1_RVT U336 ( .A1(ss_tmr[0]), .A2(n160), .Y(n177) );
+  AND2X1_RVT U338 ( .A1(ss_tmr[0]), .A2(n155), .Y(n179) );
+  AND3X1_RVT U337 ( .A1(net8810), .A2(n156), .A3(n179), .Y(
+        \segway_math_inst/mult_29/CARRYB[1][2] ) );
+  AND2X1_RVT U293 ( .A1(ss_tmr[2]), .A2(n156), .Y(
+        \segway_math_inst/mult_29/ab[2][2] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_2_2  ( .A(
+        \segway_math_inst/mult_29/ab[2][2] ), .B(
+        \segway_math_inst/mult_29/CARRYB[1][2] ), .CI(
+        \segway_math_inst/mult_29/SUMB[1][3] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[2][2] ), .S(
+        \segway_math_inst/mult_29/SUMB[2][2] ) );
+  AND2X1_RVT U282 ( .A1(ss_tmr[3]), .A2(n156), .Y(
+        \segway_math_inst/mult_29/ab[3][2] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_3_2  ( .A(
+        \segway_math_inst/mult_29/ab[3][2] ), .B(
+        \segway_math_inst/mult_29/CARRYB[2][2] ), .CI(
+        \segway_math_inst/mult_29/SUMB[2][3] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[3][2] ), .S(
+        \segway_math_inst/mult_29/SUMB[3][2] ) );
+  AND2X1_RVT U271 ( .A1(ss_tmr[4]), .A2(n156), .Y(
+        \segway_math_inst/mult_29/ab[4][2] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_4_2  ( .A(
+        \segway_math_inst/mult_29/ab[4][2] ), .B(
+        \segway_math_inst/mult_29/CARRYB[3][2] ), .CI(
+        \segway_math_inst/mult_29/SUMB[3][3] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[4][2] ), .S(
+        \segway_math_inst/mult_29/SUMB[4][2] ) );
+  AND2X1_RVT U260 ( .A1(ss_tmr[5]), .A2(n156), .Y(
+        \segway_math_inst/mult_29/ab[5][2] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_5_2  ( .A(
+        \segway_math_inst/mult_29/ab[5][2] ), .B(
+        \segway_math_inst/mult_29/CARRYB[4][2] ), .CI(
+        \segway_math_inst/mult_29/SUMB[4][3] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[5][2] ), .S(
+        \segway_math_inst/mult_29/SUMB[5][2] ) );
+  AND2X1_RVT U248 ( .A1(ss_tmr[6]), .A2(n156), .Y(
+        \segway_math_inst/mult_29/ab[6][2] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_6_2  ( .A(
+        \segway_math_inst/mult_29/ab[6][2] ), .B(
+        \segway_math_inst/mult_29/CARRYB[5][2] ), .CI(
+        \segway_math_inst/mult_29/SUMB[5][3] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[6][2] ), .S(
+        \segway_math_inst/mult_29/SUMB[6][2] ) );
+  AND2X1_RVT U237 ( .A1(ss_tmr[7]), .A2(n156), .Y(
+        \segway_math_inst/mult_29/ab[7][2] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_7_2  ( .A(
+        \segway_math_inst/mult_29/ab[7][2] ), .B(
+        \segway_math_inst/mult_29/CARRYB[6][2] ), .CI(
+        \segway_math_inst/mult_29/SUMB[6][3] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[7][2] ), .S(
+        \segway_math_inst/mult_29/SUMB[7][2] ) );
+  FADDX1_RVT \segway_math_inst/sub_49/U2_3  ( .A(n79), .B(
+        \segway_math_inst/PID_cntrl_ext[11] ), .CI(
+        \segway_math_inst/sub_49/carry [3]), .CO(
+        \segway_math_inst/sub_49/carry [4]), .S(\segway_math_inst/N41 ) );
+  AO22X1_RVT U423 ( .A1(\segway_math_inst/N41 ), .A2(net8175), .A3(
+        \segway_math_inst/PID_cntrl_ext[11] ), .A4(net8179), .Y(n232) );
+  FADDX1_RVT \segway_math_inst/mult_29/S14_11_0  ( .A(n525), .B(
+        \segway_math_inst/mult_29/CARRYB[8][2] ), .CI(
+        \segway_math_inst/mult_29/SUMB[8][3] ), .CO(
+        \segway_math_inst/mult_29/A2[10] ), .S(
+        \segway_math_inst/mult_29/A1[9] ) );
+  AO22X1_RVT U590 ( .A1(\segway_math_inst/N28 ), .A2(en_steer), .A3(
+        \segway_math_inst/PID_cntrl_ext[11] ), .A4(net8177), .Y(n313) );
+  AO22X1_RVT U534 ( .A1(\segway_math_inst/N29 ), .A2(en_steer), .A3(
+        \segway_math_inst/PID_cntrl_ext [12]), .A4(net8177), .Y(n314) );
+  AO22X1_RVT U531 ( .A1(\segway_math_inst/N30 ), .A2(en_steer), .A3(
+        \segway_math_inst/PID_cntrl_ext [13]), .A4(net8177), .Y(n295) );
+  AO22X1_RVT U500 ( .A1(\segway_math_inst/N31 ), .A2(en_steer), .A3(
+        \segway_math_inst/PID_cntrl_ext [14]), .A4(net8177), .Y(n302) );
+  AO22X1_RVT U498 ( .A1(\segway_math_inst/N32 ), .A2(en_steer), .A3(
+        \segway_math_inst/PID_cntrl_ext [15]), .A4(net8177), .Y(n337) );
+  AO22X1_RVT U502 ( .A1(\segway_math_inst/N33 ), .A2(en_steer), .A3(
+        \segway_math_inst/PID_cntrl_ext [16]), .A4(net8177), .Y(n291) );
+  AO22X1_RVT U524 ( .A1(\segway_math_inst/N34 ), .A2(en_steer), .A3(
+        \segway_math_inst/PID_cntrl_ext [17]), .A4(net8177), .Y(n284) );
+  AO22X1_RVT U526 ( .A1(\segway_math_inst/N35 ), .A2(en_steer), .A3(
+        \segway_math_inst/PID_cntrl_ext [18]), .A4(net8177), .Y(n321) );
+  FADDX1_RVT \segway_math_inst/mult_40/S1_6_0  ( .A(
+        \segway_math_inst/steer_difference [6]), .B(
+        \segway_math_inst/mult_40/CARRYB[5][0] ), .CI(
+        \segway_math_inst/steer_difference [5]), .CO(
+        \segway_math_inst/mult_40/CARRYB[6][0] ), .S(
+        \segway_math_inst/steer_offset[2] ) );
+  FADDX1_RVT \segway_math_inst/mult_40/S1_4_0  ( .A(
+        \segway_math_inst/steer_difference [4]), .B(
+        \segway_math_inst/mult_40/CARRYB[3][0] ), .CI(
+        \segway_math_inst/steer_difference [3]), .CO(
+        \segway_math_inst/mult_40/CARRYB[4][0] ), .S(
+        \segway_math_inst/steer_offset[0] ) );
+  AND2X1_RVT U350 ( .A1(\segway_math_inst/steer_offset[0] ), .A2(n194), .Y(
+        \segway_math_inst/add_45/carry[1] ) );
+  FADDX1_RVT \segway_math_inst/mult_40/S1_5_0  ( .A(
+        \segway_math_inst/steer_difference [5]), .B(
+        \segway_math_inst/mult_40/CARRYB[4][0] ), .CI(
+        \segway_math_inst/steer_difference [4]), .CO(
+        \segway_math_inst/mult_40/CARRYB[5][0] ), .S(
+        \segway_math_inst/steer_offset[1] ) );
+  XNOR2X2_RVT U52 ( .A1(n388), .A2(n389), .Y(\segway_math_inst/mult_29/A1[7] )
+         );
+  FADDX1_RVT \segway_math_inst/add_45/U1_1  ( .A(
+        \segway_math_inst/mult_29/A1[7] ), .B(
+        \segway_math_inst/steer_offset[1] ), .CI(
+        \segway_math_inst/add_45/carry[1] ), .CO(
+        \segway_math_inst/add_45/carry[2] ), .S(\segway_math_inst/N26 ) );
+  FADDX1_RVT \segway_math_inst/add_45/U1_2  ( .A(
+        \segway_math_inst/add_45/carry[2] ), .B(
+        \segway_math_inst/steer_offset[2] ), .CI(
+        \segway_math_inst/PID_cntrl_ext [10]), .CO(
+        \segway_math_inst/add_45/carry[3] ), .S(\segway_math_inst/N27 ) );
+  FADDX1_RVT \segway_math_inst/mult_40/S1_7_0  ( .A(
+        \segway_math_inst/steer_difference [7]), .B(
+        \segway_math_inst/mult_40/CARRYB[6][0] ), .CI(
+        \segway_math_inst/steer_difference [6]), .CO(
+        \segway_math_inst/mult_40/CARRYB[7][0] ), .S(
+        \segway_math_inst/steer_offset[3] ) );
+  FADDX1_RVT \segway_math_inst/add_45/U1_3  ( .A(
+        \segway_math_inst/PID_cntrl_ext[11] ), .B(
+        \segway_math_inst/steer_offset[3] ), .CI(
+        \segway_math_inst/add_45/carry[3] ), .CO(
+        \segway_math_inst/add_45/carry[4] ), .S(\segway_math_inst/N28 ) );
+  FADDX1_RVT \segway_math_inst/mult_40/S1_8_0  ( .A(
+        \segway_math_inst/steer_difference [8]), .B(
+        \segway_math_inst/mult_40/CARRYB[7][0] ), .CI(
+        \segway_math_inst/steer_difference [7]), .CO(
+        \segway_math_inst/mult_40/CARRYB[8][0] ), .S(
+        \segway_math_inst/steer_offset[4] ) );
+  FADDX1_RVT \segway_math_inst/add_45/U1_4  ( .A(
+        \segway_math_inst/PID_cntrl_ext [12]), .B(
+        \segway_math_inst/steer_offset[4] ), .CI(
+        \segway_math_inst/add_45/carry[4] ), .CO(
+        \segway_math_inst/add_45/carry[5] ), .S(\segway_math_inst/N29 ) );
+  FADDX1_RVT \segway_math_inst/mult_40/S1_9_0  ( .A(
+        \segway_math_inst/steer_difference [9]), .B(
+        \segway_math_inst/mult_40/CARRYB[8][0] ), .CI(
+        \segway_math_inst/steer_difference [8]), .CO(
+        \segway_math_inst/mult_40/CARRYB[9][0] ), .S(
+        \segway_math_inst/steer_offset[5] ) );
+  XOR2X2_RVT U48 ( .A1(n376), .A2(n375), .Y(
+        \segway_math_inst/PID_cntrl_ext [13]) );
+  FADDX1_RVT \segway_math_inst/add_45/U1_5  ( .A(
+        \segway_math_inst/PID_cntrl_ext [13]), .B(
+        \segway_math_inst/steer_offset[5] ), .CI(
+        \segway_math_inst/add_45/carry[5] ), .CO(
+        \segway_math_inst/add_45/carry[6] ), .S(\segway_math_inst/N30 ) );
+  FADDX1_RVT \segway_math_inst/mult_40/S1_10_0  ( .A(
+        \segway_math_inst/steer_difference [10]), .B(
+        \segway_math_inst/mult_40/CARRYB[9][0] ), .CI(
+        \segway_math_inst/steer_difference [9]), .CO(
+        \segway_math_inst/mult_40/CARRYB[10][0] ), .S(
+        \segway_math_inst/steer_offset[6] ) );
+  XOR2X2_RVT U40 ( .A1(n352), .A2(n353), .Y(
+        \segway_math_inst/PID_cntrl_ext [14]) );
+  FADDX1_RVT \segway_math_inst/add_45/U1_6  ( .A(
+        \segway_math_inst/PID_cntrl_ext [14]), .B(
+        \segway_math_inst/steer_offset[6] ), .CI(
+        \segway_math_inst/add_45/carry[6] ), .CO(
+        \segway_math_inst/add_45/carry[7] ), .S(\segway_math_inst/N31 ) );
+  FADDX1_RVT \segway_math_inst/add_45/U1_7  ( .A(
+        \segway_math_inst/PID_cntrl_ext [15]), .B(n74), .CI(
+        \segway_math_inst/add_45/carry[7] ), .CO(
+        \segway_math_inst/add_45/carry[8] ), .S(\segway_math_inst/N32 ) );
+  AO22X1_RVT U434 ( .A1(n273), .A2(n73), .A3(
+        \segway_math_inst/steer_difference [10]), .A4(
+        \segway_math_inst/mult_40/CARRYB[10][0] ), .Y(\segway_math_inst/n40 )
+         );
+  FADDX1_RVT \segway_math_inst/add_45/U1_8  ( .A(
+        \segway_math_inst/PID_cntrl_ext [16]), .B(\segway_math_inst/n40 ), 
+        .CI(\segway_math_inst/add_45/carry[8] ), .CO(
+        \segway_math_inst/add_45/carry[9] ), .S(\segway_math_inst/N33 ) );
+  XOR2X2_RVT U46 ( .A1(n363), .A2(n364), .Y(
+        \segway_math_inst/PID_cntrl_ext [17]) );
+  FADDX1_RVT \segway_math_inst/add_45/U1_9  ( .A(
+        \segway_math_inst/PID_cntrl_ext [17]), .B(n73), .CI(
+        \segway_math_inst/add_45/carry[9] ), .CO(
+        \segway_math_inst/add_45/carry[10] ), .S(\segway_math_inst/N34 ) );
+  AO21X1_RVT U545 ( .A1(\segway_math_inst/N37 ), .A2(net8175), .A3(n271), .Y(
+        n339) );
+  FADDX1_RVT \segway_math_inst/add_45/U1_10  ( .A(
+        \segway_math_inst/PID_cntrl_ext [18]), .B(n73), .CI(
+        \segway_math_inst/add_45/carry[10] ), .CO(
+        \segway_math_inst/add_45/carry[11] ), .S(\segway_math_inst/N35 ) );
+  NAND4X0_RVT U583 ( .A1(\PID_inst/PID_sum[14] ), .A2(\PID_inst/PID_sum[13] ), 
+        .A3(\PID_inst/PID_sum[12] ), .A4(\PID_inst/PID_sum[11] ), .Y(n421) );
+  AND2X1_RVT U690 ( .A1(net8221), .A2(n482), .Y(n492) );
+  AOI21X1_RVT U692 ( .A1(n494), .A2(n493), .A3(n488), .Y(n491) );
+  OA21X1_RVT U688 ( .A1(n491), .A2(n492), .A3(n483), .Y(\PID_inst/P_term[10] )
+         );
+  NOR2X0_RVT U693 ( .A1(n493), .A2(n494), .Y(n488) );
+  FADDX1_RVT \PID_inst/add_1_root_add_0_root_add_108_2/U1_10  ( .A(
+        \PID_inst/I_term [10]), .B(\PID_inst/D_term[12] ), .CI(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[10] ), .CO(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry [11]), .S(
+        \PID_inst/N67 ) );
+  FADDX1_RVT \PID_inst/add_0_root_add_0_root_add_108_2/U1_11  ( .A(
+        \PID_inst/N68 ), .B(\PID_inst/P_term[11] ), .CI(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[11] ), .CO(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[12] ), .S(
+        \PID_inst/PID_sum[11] ) );
+  NAND2X0_RVT U696 ( .A1(net8221), .A2(\PID_inst/ptch_err_sat[7] ), .Y(n486)
+         );
+  NAND2X0_RVT U684 ( .A1(net8221), .A2(\PID_inst/ptch_err_sat[8] ), .Y(n485)
+         );
+  NAND2X0_RVT U686 ( .A1(n488), .A2(n490), .Y(n484) );
+  NAND3X0_RVT U689 ( .A1(net8221), .A2(n482), .A3(n491), .Y(n483) );
+  NAND4X0_RVT U683 ( .A1(n483), .A2(n484), .A3(n485), .A4(n486), .Y(
+        \PID_inst/P_term[12] ) );
+  FADDX1_RVT \PID_inst/add_0_root_add_0_root_add_108_2/U1_12  ( .A(
+        \PID_inst/N69 ), .B(\PID_inst/P_term[12] ), .CI(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[12] ), .CO(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[13] ), .S(
+        \PID_inst/PID_sum[12] ) );
+  FADDX1_RVT \PID_inst/add_0_root_add_0_root_add_108_2/U1_13  ( .A(
+        \PID_inst/N70 ), .B(net8221), .CI(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[13] ), .CO(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[14] ), .S(
+        \PID_inst/PID_sum[13] ) );
+  FADDX1_RVT \PID_inst/add_1_root_add_0_root_add_108_2/U1_12  ( .A(
+        \PID_inst/I_term [12]), .B(\PID_inst/D_term[12] ), .CI(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry [12]), .CO(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[13] ), .S(
+        \PID_inst/N69 ) );
+  FADDX1_RVT \PID_inst/add_1_root_add_0_root_add_108_2/U1_14  ( .A(
+        \PID_inst/I_term [14]), .B(\PID_inst/D_term[12] ), .CI(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[14] ), .CO(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[15] ), .S(
+        \PID_inst/N71 ) );
+  XOR3X2_RVT \PID_inst/add_1_root_add_0_root_add_108_2/U1_15  ( .A1(
+        \PID_inst/I_term [14]), .A2(\PID_inst/D_term[12] ), .A3(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[15] ), .Y(
+        \PID_inst/N72 ) );
+  XOR3X2_RVT \PID_inst/add_0_root_add_0_root_add_108_2/U1_15  ( .A1(
+        \PID_inst/N72 ), .A2(net8221), .A3(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[15] ), .Y(
+        \PID_inst/n96 ) );
+  AND2X1_RVT U319 ( .A1(ss_tmr[0]), .A2(n150), .Y(n167) );
+  FADDX1_RVT \segway_math_inst/mult_29/S2_3_7  ( .A(
+        \segway_math_inst/mult_29/ab[3][7] ), .B(
+        \segway_math_inst/mult_29/CARRYB[2][7] ), .CI(
+        \segway_math_inst/mult_29/SUMB[2][8] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[3][7] ), .S(
+        \segway_math_inst/mult_29/SUMB[3][7] ) );
+  XNOR2X2_RVT U25 ( .A1(n188), .A2(n189), .Y(n166) );
+  NAND3X0_RVT U318 ( .A1(net8810), .A2(n167), .A3(net8511), .Y(n165) );
+  AND2X1_RVT U316 ( .A1(ss_tmr[2]), .A2(net8511), .Y(n164) );
+  XNOR3X2_RVT U15 ( .A1(n164), .A2(n165), .A3(n166), .Y(
+        \segway_math_inst/mult_29/SUMB[2][8] ) );
+  AO21X1_RVT U680 ( .A1(n480), .A2(\PID_inst/integrator [1]), .A3(n481), .Y(
+        n479) );
+  FADDX1_RVT \PID_inst/add_0_root_add_0_root_add_108_2/U1_10  ( .A(
+        \PID_inst/N67 ), .B(\PID_inst/P_term[10] ), .CI(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[10] ), .CO(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[11] ), .S(
+        \PID_inst/PID_sum[10] ) );
+  AND2X1_RVT U677 ( .A1(n193), .A2(n474), .Y(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[1] ) );
+  FADDX1_RVT \PID_inst/add_0_root_add_0_root_add_108_2/U1_1  ( .A(
+        \PID_inst/ptch_err_sat[1] ), .B(\PID_inst/N58 ), .CI(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[1] ), .CO(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[2] ), .S(
+        \PID_inst/PID_sum[1] ) );
+  FADDX1_RVT \PID_inst/add_0_root_add_0_root_add_108_2/U1_2  ( .A(
+        \PID_inst/N59 ), .B(\PID_inst/ptch_err_sat[2] ), .CI(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[2] ), .CO(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[3] ), .S(
+        \PID_inst/PID_sum[2] ) );
+  FADDX1_RVT \PID_inst/add_0_root_add_0_root_add_108_2/U1_3  ( .A(
+        \PID_inst/N60 ), .B(\PID_inst/P_term[3] ), .CI(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[3] ), .CO(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[4] ), .S(
+        \PID_inst/PID_sum[3] ) );
+  FADDX1_RVT \PID_inst/add_0_root_add_0_root_add_108_2/U1_4  ( .A(
+        \PID_inst/N61 ), .B(\PID_inst/P_term[4] ), .CI(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[4] ), .CO(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[5] ), .S(
+        \PID_inst/PID_sum[4] ) );
+  FADDX1_RVT \PID_inst/add_0_root_add_0_root_add_108_2/U1_5  ( .A(
+        \PID_inst/N62 ), .B(\PID_inst/P_term[5] ), .CI(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[5] ), .CO(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[6] ), .S(
+        \PID_inst/PID_sum[5] ) );
+  FADDX1_RVT \PID_inst/add_0_root_add_0_root_add_108_2/U1_6  ( .A(
+        \PID_inst/N63 ), .B(\PID_inst/P_term[6] ), .CI(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[6] ), .CO(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[7] ), .S(
+        \PID_inst/PID_sum[6] ) );
+  FADDX1_RVT \PID_inst/add_0_root_add_0_root_add_108_2/U1_7  ( .A(
+        \PID_inst/N64 ), .B(\PID_inst/P_term[7] ), .CI(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[7] ), .CO(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[8] ), .S(
+        \PID_inst/PID_sum[7] ) );
+  AO21X1_RVT U682 ( .A1(ptch[0]), .A2(n425), .A3(n426), .Y(n474) );
+  AND2X1_RVT U675 ( .A1(\PID_inst/ptch_err_sat[3] ), .A2(n474), .Y(
+        \PID_inst/mult_51/CARRYB[3][0] ) );
+  AO21X1_RVT U596 ( .A1(ptch[1]), .A2(n425), .A3(n426), .Y(
+        \PID_inst/ptch_err_sat[1] ) );
+  FADDX1_RVT \PID_inst/mult_51/S1_4_0  ( .A(\PID_inst/ptch_err_sat[4] ), .B(
+        \PID_inst/ptch_err_sat[1] ), .CI(\PID_inst/mult_51/CARRYB[3][0] ), 
+        .CO(\PID_inst/mult_51/CARRYB[4][0] ), .S(\PID_inst/P_term[4] ) );
+  FADDX1_RVT \PID_inst/mult_51/S1_5_0  ( .A(\PID_inst/ptch_err_sat[5] ), .B(
+        \PID_inst/ptch_err_sat[2] ), .CI(\PID_inst/mult_51/CARRYB[4][0] ), 
+        .CO(\PID_inst/mult_51/CARRYB[5][0] ), .S(\PID_inst/P_term[5] ) );
+  FADDX1_RVT \PID_inst/mult_51/S1_6_0  ( .A(\PID_inst/ptch_err_sat[6] ), .B(
+        \PID_inst/ptch_err_sat[3] ), .CI(\PID_inst/mult_51/CARRYB[5][0] ), 
+        .CO(\PID_inst/mult_51/CARRYB[6][0] ), .S(\PID_inst/P_term[6] ) );
+  FADDX1_RVT \PID_inst/mult_51/S1_7_0  ( .A(\PID_inst/ptch_err_sat[7] ), .B(
+        \PID_inst/mult_51/CARRYB[6][0] ), .CI(\PID_inst/ptch_err_sat[4] ), 
+        .CO(\PID_inst/mult_51/CARRYB[7][0] ), .S(\PID_inst/P_term[7] ) );
+  FADDX1_RVT \PID_inst/mult_51/S1_8_0  ( .A(\PID_inst/ptch_err_sat[8] ), .B(
+        \PID_inst/mult_51/CARRYB[7][0] ), .CI(\PID_inst/ptch_err_sat[5] ), 
+        .CO(\PID_inst/mult_51/CARRYB[8][0] ), .S(\PID_inst/P_term[8] ) );
+  FADDX1_RVT \PID_inst/add_0_root_add_0_root_add_108_2/U1_8  ( .A(
+        \PID_inst/N65 ), .B(\PID_inst/P_term[8] ), .CI(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[8] ), .CO(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[9] ), .S(
+        \PID_inst/PID_sum[8] ) );
+  NAND2X0_RVT U679 ( .A1(ptch_rt[6]), .A2(n479), .Y(n478) );
+  FADDX1_RVT \PID_inst/add_1_root_add_0_root_add_108_2/U1_1  ( .A(
+        \PID_inst/I_term[1] ), .B(\PID_inst/D_term[1] ), .CI(n69), .CO(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[2] ), .S(
+        \PID_inst/N58 ) );
+  OR2X1_RVT U722 ( .A1(ptch_rt[7]), .A2(ptch_rt[6]), .Y(n506) );
+  FADDX1_RVT \PID_inst/add_1_root_add_0_root_add_108_2/U1_2  ( .A(
+        \PID_inst/I_term[2] ), .B(\PID_inst/D_term[2] ), .CI(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[2] ), .CO(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[3] ), .S(
+        \PID_inst/N59 ) );
+  AO21X1_RVT U709 ( .A1(n480), .A2(\PID_inst/integrator [4]), .A3(n481), .Y(
+        \PID_inst/I_term[3] ) );
+  FADDX1_RVT \PID_inst/add_1_root_add_0_root_add_108_2/U1_3  ( .A(
+        \PID_inst/I_term[3] ), .B(\PID_inst/D_term[3] ), .CI(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[3] ), .CO(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[4] ), .S(
+        \PID_inst/N60 ) );
+  OR3X1_RVT U727 ( .A1(ptch_rt[7]), .A2(ptch_rt[8]), .A3(ptch_rt[6]), .Y(n505)
+         );
+  OR2X1_RVT U721 ( .A1(n505), .A2(ptch_rt[9]), .Y(n504) );
+  AO21X1_RVT U708 ( .A1(n480), .A2(\PID_inst/integrator [5]), .A3(n481), .Y(
+        \PID_inst/I_term[4] ) );
+  FADDX1_RVT \PID_inst/add_1_root_add_0_root_add_108_2/U1_4  ( .A(
+        \PID_inst/I_term[4] ), .B(\PID_inst/D_term[4] ), .CI(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[4] ), .CO(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[5] ), .S(
+        \PID_inst/N61 ) );
+  AO21X1_RVT U707 ( .A1(n480), .A2(\PID_inst/integrator [6]), .A3(n481), .Y(
+        \PID_inst/I_term[5] ) );
+  FADDX1_RVT \PID_inst/add_1_root_add_0_root_add_108_2/U1_5  ( .A(
+        \PID_inst/I_term[5] ), .B(\PID_inst/D_term[5] ), .CI(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[5] ), .CO(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[6] ), .S(
+        \PID_inst/N62 ) );
+  OR3X1_RVT U726 ( .A1(ptch_rt[10]), .A2(ptch_rt[9]), .A3(n505), .Y(n503) );
+  OR2X1_RVT U720 ( .A1(n503), .A2(ptch_rt[11]), .Y(n502) );
+  AO21X1_RVT U706 ( .A1(n480), .A2(\PID_inst/integrator [7]), .A3(n481), .Y(
+        \PID_inst/I_term[6] ) );
+  FADDX1_RVT \PID_inst/add_1_root_add_0_root_add_108_2/U1_6  ( .A(
+        \PID_inst/I_term[6] ), .B(\PID_inst/D_term[6] ), .CI(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[6] ), .CO(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[7] ), .S(
+        \PID_inst/N63 ) );
+  AO21X1_RVT U705 ( .A1(n480), .A2(\PID_inst/integrator [8]), .A3(n481), .Y(
+        \PID_inst/I_term[7] ) );
+  FADDX1_RVT \PID_inst/add_1_root_add_0_root_add_108_2/U1_7  ( .A(
+        \PID_inst/I_term[7] ), .B(\PID_inst/D_term[7] ), .CI(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[7] ), .CO(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[8] ), .S(
+        \PID_inst/N64 ) );
+  OR3X1_RVT U725 ( .A1(ptch_rt[11]), .A2(ptch_rt[12]), .A3(n503), .Y(n501) );
+  OR2X1_RVT U719 ( .A1(n501), .A2(ptch_rt[13]), .Y(n500) );
+  AO21X1_RVT U704 ( .A1(n480), .A2(\PID_inst/integrator [9]), .A3(n481), .Y(
+        \PID_inst/I_term[8] ) );
+  FADDX1_RVT \PID_inst/add_1_root_add_0_root_add_108_2/U1_8  ( .A(
+        \PID_inst/I_term[8] ), .B(\PID_inst/D_term[8] ), .CI(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[8] ), .CO(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[9] ), .S(
+        \PID_inst/N65 ) );
+  NOR3X0_RVT U724 ( .A1(ptch_rt[13]), .A2(ptch_rt[14]), .A3(n501), .Y(n499) );
+  AO21X1_RVT U718 ( .A1(ptch_rt[15]), .A2(n499), .A3(\PID_inst/D_term[12] ), 
+        .Y(\PID_inst/D_term[9] ) );
+  AO21X1_RVT U703 ( .A1(n480), .A2(\PID_inst/integrator [10]), .A3(n481), .Y(
+        \PID_inst/I_term[9] ) );
+  FADDX1_RVT \PID_inst/add_1_root_add_0_root_add_108_2/U1_9  ( .A(
+        \PID_inst/I_term[9] ), .B(\PID_inst/D_term[9] ), .CI(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[9] ), .CO(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[10] ), .S(
+        \PID_inst/N66 ) );
+  FADDX1_RVT \PID_inst/add_0_root_add_0_root_add_108_2/U1_9  ( .A(
+        \PID_inst/N66 ), .B(\PID_inst/P_term[9] ), .CI(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[9] ), .CO(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[10] ), .S(
+        \PID_inst/PID_sum[9] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S14_10  ( .A(1'b0), .B(
+        \segway_math_inst/mult_29/CARRYB[8][1] ), .CI(
+        \segway_math_inst/mult_29/SUMB[8][2] ), .CO(
+        \segway_math_inst/mult_29/A2[9] ), .S(\segway_math_inst/mult_29/A1[8] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S4_3  ( .A(1'b0), .B(
+        \segway_math_inst/mult_29/CARRYB[7][3] ), .CI(
+        \segway_math_inst/mult_29/SUMB[7][4] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[8][3] ), .S(
+        \segway_math_inst/mult_29/SUMB[8][3] ) );
+  FADDX1_RVT \segway_math_inst/mult_29/S4_2  ( .A(1'b0), .B(
+        \segway_math_inst/mult_29/CARRYB[7][2] ), .CI(
+        \segway_math_inst/mult_29/SUMB[7][3] ), .CO(
+        \segway_math_inst/mult_29/CARRYB[8][2] ), .S(
+        \segway_math_inst/mult_29/SUMB[8][2] ) );
+  INVX1_RVT U728 ( .A(net8491), .Y(n525) );
+  NBUFFX2_RVT U729 ( .A(n66), .Y(net8491) );
+  AND2X4_RVT U730 ( .A1(ss_tmr[4]), .A2(n152), .Y(n526) );
+  AND2X1_RVT U731 ( .A1(n39), .A2(n33), .Y(n527) );
+  AND3X1_RVT U732 ( .A1(n341), .A2(n342), .A3(n343), .Y(n528) );
+  AND2X4_RVT U733 ( .A1(net8209), .A2(rght_spd[10]), .Y(n529) );
+  AND2X1_RVT U734 ( .A1(n11), .A2(n128), .Y(n530) );
+  NAND2X0_RVT U735 ( .A1(pwr_up), .A2(n9), .Y(n531) );
+  IBUFFX2_RVT U736 ( .A(n332), .Y(n9) );
+  OAI21X2_RVT U737 ( .A1(net8611), .A2(net8612), .A3(\PID_inst/I_term [14]), 
+        .Y(n480) );
+  OA21X2_RVT U738 ( .A1(n119), .A2(n120), .A3(n521), .Y(n481) );
+  NOR2X4_RVT U739 ( .A1(n499), .A2(ptch_rt[15]), .Y(\PID_inst/D_term[12] ) );
+  XOR2X1_RVT U740 ( .A1(n500), .A2(ptch_rt[14]), .Y(\PID_inst/D_term[8] ) );
+  XOR2X1_RVT U741 ( .A1(n501), .A2(ptch_rt[13]), .Y(\PID_inst/D_term[7] ) );
+  XOR2X1_RVT U742 ( .A1(n502), .A2(ptch_rt[12]), .Y(\PID_inst/D_term[6] ) );
+  XOR2X1_RVT U743 ( .A1(n503), .A2(ptch_rt[11]), .Y(\PID_inst/D_term[5] ) );
+  XOR2X1_RVT U744 ( .A1(n504), .A2(ptch_rt[10]), .Y(\PID_inst/D_term[4] ) );
+  XOR2X1_RVT U745 ( .A1(n505), .A2(ptch_rt[9]), .Y(\PID_inst/D_term[3] ) );
+  AO21X2_RVT U746 ( .A1(n480), .A2(\PID_inst/integrator [3]), .A3(n481), .Y(
+        \PID_inst/I_term[2] ) );
+  XOR2X1_RVT U747 ( .A1(n506), .A2(ptch_rt[8]), .Y(\PID_inst/D_term[2] ) );
+  AO21X2_RVT U748 ( .A1(n480), .A2(\PID_inst/integrator [2]), .A3(n481), .Y(
+        \PID_inst/I_term[1] ) );
+  XOR2X1_RVT U749 ( .A1(ptch_rt[7]), .A2(ptch_rt[6]), .Y(\PID_inst/D_term[1] )
+         );
+  INVX0_RVT U750 ( .A(n478), .Y(n69) );
+  XNOR2X1_RVT U751 ( .A1(net8601), .A2(n482), .Y(\PID_inst/P_term[9] ) );
+  INVX1_RVT U752 ( .A(\PID_inst/P_term[14] ), .Y(net8601) );
+  AND2X1_RVT U753 ( .A1(net8894), .A2(n493), .Y(n482) );
+  AO21X1_RVT U754 ( .A1(ptch[8]), .A2(n425), .A3(n426), .Y(
+        \PID_inst/ptch_err_sat[8] ) );
+  AO21X2_RVT U755 ( .A1(ptch[7]), .A2(net8603), .A3(net8623), .Y(
+        \PID_inst/ptch_err_sat[7] ) );
+  AO21X2_RVT U756 ( .A1(ptch[6]), .A2(n425), .A3(n426), .Y(
+        \PID_inst/ptch_err_sat[6] ) );
+  AO21X2_RVT U757 ( .A1(ptch[3]), .A2(net8603), .A3(net8623), .Y(
+        \PID_inst/ptch_err_sat[3] ) );
+  AO21X2_RVT U758 ( .A1(ptch[5]), .A2(net8603), .A3(net8623), .Y(
+        \PID_inst/ptch_err_sat[5] ) );
+  AO21X1_RVT U759 ( .A1(ptch[2]), .A2(n425), .A3(n426), .Y(
+        \PID_inst/ptch_err_sat[2] ) );
+  AO21X2_RVT U760 ( .A1(ptch[4]), .A2(net8603), .A3(net8623), .Y(
+        \PID_inst/ptch_err_sat[4] ) );
+  XNOR2X1_RVT U761 ( .A1(n67), .A2(\PID_inst/ptch_err_sat[3] ), .Y(
+        \PID_inst/P_term[3] ) );
+  INVX1_RVT U762 ( .A(n474), .Y(n67) );
+  OA21X1_RVT U763 ( .A1(net8622), .A2(ptch_rt[6]), .A3(n478), .Y(n193) );
+  AO21X2_RVT U764 ( .A1(\PID_inst/PID_sum[9] ), .A2(n190), .A3(n191), .Y(n150)
+         );
+  AO21X2_RVT U765 ( .A1(\PID_inst/PID_sum[8] ), .A2(n190), .A3(net8487), .Y(
+        net8511) );
+  AO21X2_RVT U766 ( .A1(\PID_inst/PID_sum[7] ), .A2(n190), .A3(net8488), .Y(
+        n152) );
+  AO21X2_RVT U767 ( .A1(\PID_inst/PID_sum[6] ), .A2(n190), .A3(net8487), .Y(
+        n153) );
+  AO21X2_RVT U768 ( .A1(\PID_inst/PID_sum[5] ), .A2(n190), .A3(net8488), .Y(
+        n154) );
+  AO21X1_RVT U769 ( .A1(\PID_inst/PID_sum[4] ), .A2(n190), .A3(net8487), .Y(
+        n160) );
+  AO21X2_RVT U770 ( .A1(\PID_inst/PID_sum[3] ), .A2(n190), .A3(net8488), .Y(
+        n155) );
+  AO21X1_RVT U771 ( .A1(\PID_inst/PID_sum[2] ), .A2(n190), .A3(net8487), .Y(
+        n156) );
+  AO21X2_RVT U772 ( .A1(\PID_inst/PID_sum[1] ), .A2(n190), .A3(net8488), .Y(
+        n157) );
+  INVX1_RVT U773 ( .A(net8823), .Y(net8810) );
+  INVX0_RVT U774 ( .A(n165), .Y(n65) );
+  XNOR2X1_RVT U775 ( .A1(n167), .A2(n168), .Y(
+        \segway_math_inst/mult_29/SUMB[1][8] ) );
+  NAND2X4_RVT U776 ( .A1(\PID_inst/n96 ), .A2(n421), .Y(n190) );
+  AND2X1_RVT U777 ( .A1(n420), .A2(n66), .Y(n191) );
+  OR4X1_RVT U778 ( .A1(\PID_inst/PID_sum[11] ), .A2(\PID_inst/PID_sum[12] ), 
+        .A3(\PID_inst/PID_sum[13] ), .A4(\PID_inst/PID_sum[14] ), .Y(n420) );
+  INVX1_RVT U779 ( .A(\PID_inst/n96 ), .Y(n66) );
+  AO21X2_RVT U780 ( .A1(\PID_inst/PID_sum[10] ), .A2(n190), .A3(n191), .Y(n158) );
+  NAND3X0_RVT U781 ( .A1(n538), .A2(n537), .A3(n536), .Y(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[14] ) );
+  NAND2X0_RVT U782 ( .A1(\PID_inst/I_term[13] ), .A2(\PID_inst/D_term[12] ), 
+        .Y(n538) );
+  AO21X2_RVT U783 ( .A1(n480), .A2(\PID_inst/integrator [14]), .A3(n481), .Y(
+        \PID_inst/I_term[13] ) );
+  NAND2X0_RVT U784 ( .A1(\PID_inst/I_term[13] ), .A2(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[13] ), .Y(n537) );
+  NAND2X0_RVT U785 ( .A1(\PID_inst/D_term[12] ), .A2(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry[13] ), .Y(n536) );
+  NBUFFX8_RVT U786 ( .A(\PID_inst/P_term[14] ), .Y(net8221) );
+  NAND3X0_RVT U787 ( .A1(n535), .A2(n533), .A3(n534), .Y(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[15] ) );
+  NAND2X0_RVT U788 ( .A1(net8221), .A2(\PID_inst/N71 ), .Y(n535) );
+  NAND2X0_RVT U789 ( .A1(\PID_inst/N71 ), .A2(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[14] ), .Y(n533) );
+  NAND2X0_RVT U790 ( .A1(net8221), .A2(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[14] ), .Y(n534) );
+  XOR3X1_RVT U791 ( .A1(\PID_inst/D_term[12] ), .A2(\PID_inst/I_term[13] ), 
+        .A3(\PID_inst/add_1_root_add_0_root_add_108_2/carry[13] ), .Y(
+        \PID_inst/N70 ) );
+  XOR3X2_RVT U792 ( .A1(\PID_inst/D_term[12] ), .A2(\PID_inst/I_term [11]), 
+        .A3(\PID_inst/add_1_root_add_0_root_add_108_2/carry [11]), .Y(
+        \PID_inst/N68 ) );
+  AO21X2_RVT U793 ( .A1(n480), .A2(\PID_inst/integrator [12]), .A3(n481), .Y(
+        \PID_inst/I_term [11]) );
+  XOR2X1_RVT U794 ( .A1(n483), .A2(n532), .Y(\PID_inst/P_term[11] ) );
+  OAI21X1_RVT U795 ( .A1(n488), .A2(n489), .A3(n484), .Y(n532) );
+  XNOR2X1_RVT U796 ( .A1(n490), .A2(n486), .Y(n489) );
+  XNOR2X1_RVT U797 ( .A1(\PID_inst/ptch_err_sat[8] ), .A2(net8601), .Y(n490)
+         );
+  XOR3X2_RVT U798 ( .A1(\PID_inst/N71 ), .A2(net8221), .A3(
+        \PID_inst/add_0_root_add_0_root_add_108_2/carry[14] ), .Y(
+        \PID_inst/PID_sum[14] ) );
+  XOR3X1_RVT U799 ( .A1(net8670), .A2(n524), .A3(
+        \segway_math_inst/add_45/carry[12] ), .Y(\segway_math_inst/N37 ) );
+  INVX1_RVT U800 ( .A(\segway_math_inst/PID_cntrl_ext [19]), .Y(net8670) );
+  NAND2X2_RVT U801 ( .A1(n275), .A2(n75), .Y(n524) );
+  NAND3X0_RVT U802 ( .A1(n539), .A2(n540), .A3(n541), .Y(
+        \segway_math_inst/add_45/carry[12] ) );
+  NAND2X0_RVT U803 ( .A1(\segway_math_inst/PID_cntrl_ext [19]), .A2(
+        \segway_math_inst/add_45/carry[11] ), .Y(n539) );
+  XOR3X2_RVT U804 ( .A1(n525), .A2(n391), .A3(net8406), .Y(
+        \segway_math_inst/PID_cntrl_ext [19]) );
+  NAND2X0_RVT U805 ( .A1(n73), .A2(\segway_math_inst/add_45/carry[11] ), .Y(
+        n540) );
+  INVX1_RVT U806 ( .A(n524), .Y(n73) );
+  NAND2X0_RVT U807 ( .A1(n73), .A2(\segway_math_inst/PID_cntrl_ext [19]), .Y(
+        n541) );
+  XOR2X1_RVT U808 ( .A1(n367), .A2(n368), .Y(
+        \segway_math_inst/PID_cntrl_ext [18]) );
+  XOR2X1_RVT U809 ( .A1(n356), .A2(n357), .Y(
+        \segway_math_inst/PID_cntrl_ext [16]) );
+  XOR2X1_RVT U810 ( .A1(n348), .A2(n349), .Y(
+        \segway_math_inst/PID_cntrl_ext [15]) );
+  INVX1_RVT U811 ( .A(n523), .Y(n74) );
+  XOR2X1_RVT U812 ( .A1(n273), .A2(n524), .Y(n523) );
+  XOR2X2_RVT U813 ( .A1(n381), .A2(net8457), .Y(
+        \segway_math_inst/PID_cntrl_ext [12]) );
+  XOR3X2_RVT U814 ( .A1(\segway_math_inst/mult_29/A2[9] ), .A2(
+        \segway_math_inst/mult_29/A1[9] ), .A3(n554), .Y(
+        \segway_math_inst/PID_cntrl_ext[11] ) );
+  XOR2X1_RVT U815 ( .A1(\segway_math_inst/mult_29/CARRYB[7][0] ), .A2(
+        \segway_math_inst/mult_29/SUMB[7][1] ), .Y(n194) );
+  XOR2X1_RVT U816 ( .A1(n390), .A2(\segway_math_inst/mult_29/A1[8] ), .Y(
+        \segway_math_inst/PID_cntrl_ext [10]) );
+  XOR2X1_RVT U817 ( .A1(\segway_math_inst/add_45/carry[11] ), .A2(n272), .Y(
+        n360) );
+  AND2X1_RVT U818 ( .A1(\segway_math_inst/mult_29/A1[8] ), .A2(n390), .Y(n554)
+         );
+  XNOR2X1_RVT U819 ( .A1(n177), .A2(n178), .Y(
+        \segway_math_inst/mult_29/SUMB[1][3] ) );
+  XNOR2X1_RVT U820 ( .A1(n175), .A2(n176), .Y(
+        \segway_math_inst/mult_29/SUMB[1][4] ) );
+  XNOR2X1_RVT U821 ( .A1(n173), .A2(n174), .Y(
+        \segway_math_inst/mult_29/SUMB[1][5] ) );
+  XNOR2X1_RVT U822 ( .A1(n171), .A2(n172), .Y(
+        \segway_math_inst/mult_29/SUMB[1][6] ) );
+  XOR3X1_RVT U823 ( .A1(\segway_math_inst/mult_29/CARRYB[4][3] ), .A2(
+        \segway_math_inst/mult_29/ab[5][3] ), .A3(
+        \segway_math_inst/mult_29/SUMB[4][4] ), .Y(
+        \segway_math_inst/mult_29/SUMB[5][3] ) );
+  NAND3X0_RVT U824 ( .A1(n547), .A2(n546), .A3(n545), .Y(
+        \segway_math_inst/mult_29/CARRYB[5][3] ) );
+  NAND2X0_RVT U825 ( .A1(\segway_math_inst/mult_29/ab[5][3] ), .A2(
+        \segway_math_inst/mult_29/CARRYB[4][3] ), .Y(n547) );
+  NAND2X0_RVT U826 ( .A1(\segway_math_inst/mult_29/ab[5][3] ), .A2(
+        \segway_math_inst/mult_29/SUMB[4][4] ), .Y(n546) );
+  NAND2X0_RVT U827 ( .A1(\segway_math_inst/mult_29/CARRYB[4][3] ), .A2(
+        \segway_math_inst/mult_29/SUMB[4][4] ), .Y(n545) );
+  XOR3X2_RVT U828 ( .A1(\segway_math_inst/mult_29/CARRYB[3][5] ), .A2(
+        \segway_math_inst/mult_29/ab[4][5] ), .A3(
+        \segway_math_inst/mult_29/SUMB[3][6] ), .Y(
+        \segway_math_inst/mult_29/SUMB[4][5] ) );
+  XOR3X2_RVT U829 ( .A1(\segway_math_inst/mult_29/CARRYB[5][4] ), .A2(
+        \segway_math_inst/mult_29/ab[6][4] ), .A3(
+        \segway_math_inst/mult_29/SUMB[5][5] ), .Y(
+        \segway_math_inst/mult_29/SUMB[6][4] ) );
+  XOR3X2_RVT U830 ( .A1(\segway_math_inst/mult_29/SUMB[6][5] ), .A2(
+        \segway_math_inst/mult_29/CARRYB[6][4] ), .A3(n555), .Y(
+        \segway_math_inst/mult_29/SUMB[7][4] ) );
+  NAND3X0_RVT U831 ( .A1(n544), .A2(n543), .A3(n542), .Y(
+        \segway_math_inst/mult_29/CARRYB[6][4] ) );
+  AND2X1_RVT U832 ( .A1(ss_tmr[7]), .A2(n160), .Y(n555) );
+  OR2X1_RVT U833 ( .A1(\segway_math_inst/mult_29/A1[9] ), .A2(n554), .Y(n415)
+         );
+  XOR2X1_RVT U834 ( .A1(n413), .A2(\segway_math_inst/mult_29/CARRYB[8][3] ), 
+        .Y(n414) );
+  NAND2X0_RVT U835 ( .A1(\segway_math_inst/mult_29/ab[6][4] ), .A2(
+        \segway_math_inst/mult_29/CARRYB[5][4] ), .Y(n544) );
+  NAND2X0_RVT U836 ( .A1(\segway_math_inst/mult_29/ab[6][4] ), .A2(
+        \segway_math_inst/mult_29/SUMB[5][5] ), .Y(n543) );
+  NAND2X0_RVT U837 ( .A1(\segway_math_inst/mult_29/CARRYB[5][4] ), .A2(
+        \segway_math_inst/mult_29/SUMB[5][5] ), .Y(n542) );
+  AO22X1_RVT U838 ( .A1(\segway_math_inst/mult_29/CARRYB[6][4] ), .A2(n555), 
+        .A3(\segway_math_inst/mult_29/SUMB[6][5] ), .A4(n419), .Y(n418) );
+  NAND3X0_RVT U839 ( .A1(n550), .A2(n549), .A3(n548), .Y(
+        \segway_math_inst/mult_29/CARRYB[4][5] ) );
+  NAND2X0_RVT U840 ( .A1(\segway_math_inst/mult_29/ab[4][5] ), .A2(
+        \segway_math_inst/mult_29/CARRYB[3][5] ), .Y(n550) );
+  NAND2X0_RVT U841 ( .A1(\segway_math_inst/mult_29/ab[4][5] ), .A2(
+        \segway_math_inst/mult_29/SUMB[3][6] ), .Y(n549) );
+  NAND2X0_RVT U842 ( .A1(\segway_math_inst/mult_29/CARRYB[3][5] ), .A2(
+        \segway_math_inst/mult_29/SUMB[3][6] ), .Y(n548) );
+  NAND3X0_RVT U843 ( .A1(n553), .A2(n552), .A3(n551), .Y(
+        \segway_math_inst/mult_29/CARRYB[2][7] ) );
+  NAND2X0_RVT U844 ( .A1(\segway_math_inst/mult_29/ab[2][7] ), .A2(
+        \segway_math_inst/mult_29/CARRYB[1][7] ), .Y(n553) );
+  AND3X1_RVT U845 ( .A1(ss_tmr[1]), .A2(n152), .A3(n169), .Y(
+        \segway_math_inst/mult_29/CARRYB[1][7] ) );
+  NAND2X0_RVT U846 ( .A1(\segway_math_inst/mult_29/ab[2][7] ), .A2(
+        \segway_math_inst/mult_29/SUMB[1][8] ), .Y(n552) );
+  NAND2X0_RVT U847 ( .A1(\segway_math_inst/mult_29/CARRYB[1][7] ), .A2(
+        \segway_math_inst/mult_29/SUMB[1][8] ), .Y(n551) );
+  XOR3X2_RVT U848 ( .A1(\segway_math_inst/mult_29/SUMB[3][8] ), .A2(
+        \segway_math_inst/mult_29/CARRYB[3][7] ), .A3(n526), .Y(
+        \segway_math_inst/mult_29/SUMB[4][7] ) );
+  NAND3X0_RVT U849 ( .A1(n558), .A2(lft_spd[9]), .A3(n123), .Y(n122) );
+  INVX1_RVT U850 ( .A(n557), .Y(n558) );
+  NAND2X0_RVT U851 ( .A1(net8496), .A2(lft_spd[10]), .Y(n557) );
+  AOI221X2_RVT U852 ( .A1(n8), .A2(n321), .A3(n327), .A4(n328), .A5(n329), .Y(
+        net8496) );
+  INVX0_RVT U853 ( .A(lft_spd[4]), .Y(n3) );
+  NAND3X0_RVT U854 ( .A1(n529), .A2(rght_spd[9]), .A3(n127), .Y(n121) );
+  INVX0_RVT U855 ( .A(rght_spd[11]), .Y(net8209) );
+  NAND4X0_RVT U856 ( .A1(n195), .A2(n196), .A3(n197), .A4(n198), .Y(
+        rght_spd[9]) );
+  NAND3X0_RVT U857 ( .A1(n530), .A2(n130), .A3(n129), .Y(n127) );
+  INVX0_RVT U858 ( .A(rght_spd[4]), .Y(n11) );
+  INVX1_RVT U859 ( .A(n280), .Y(n8) );
+  INVX1_RVT U860 ( .A(n293), .Y(n42) );
+  INVX0_RVT U861 ( .A(n294), .Y(n5) );
+  OAI221X1_RVT U862 ( .A1(net8689), .A2(n297), .A3(n41), .A4(n298), .A5(n277), 
+        .Y(n296) );
+  NAND2X0_RVT U863 ( .A1(net8546), .A2(n327), .Y(net8689) );
+  INVX1_RVT U864 ( .A(n337), .Y(n41) );
+  NAND2X4_RVT U865 ( .A1(n326), .A2(n325), .Y(n294) );
+  NAND2X0_RVT U866 ( .A1(net8546), .A2(n327), .Y(n282) );
+  OR2X2_RVT U867 ( .A1(n324), .A2(net8496), .Y(net8546) );
+  INVX1_RVT U868 ( .A(n336), .Y(n27) );
+  INVX0_RVT U869 ( .A(n330), .Y(n10) );
+  INVX0_RVT U870 ( .A(n331), .Y(n19) );
+  NAND2X0_RVT U871 ( .A1(n528), .A2(n340), .Y(n332) );
+  INVX1_RVT U872 ( .A(n339), .Y(n20) );
+  OA21X2_RVT U873 ( .A1(n31), .A2(n339), .A3(n331), .Y(n342) );
+  INVX1_RVT U874 ( .A(n284), .Y(n31) );
+  XNOR2X1_RVT U875 ( .A1(n20), .A2(n10), .Y(n344) );
+  XNOR2X1_RVT U876 ( .A1(n20), .A2(n35), .Y(n345) );
+  INVX1_RVT U877 ( .A(n291), .Y(n35) );
+  XNOR2X1_RVT U878 ( .A1(n20), .A2(n46), .Y(n346) );
+  INVX1_RVT U879 ( .A(n302), .Y(n46) );
+  XNOR2X1_RVT U880 ( .A1(n20), .A2(n41), .Y(n347) );
+  INVX1_RVT U881 ( .A(n295), .Y(n50) );
+  AND3X1_RVT U882 ( .A1(n55), .A2(n374), .A3(n373), .Y(n372) );
+  INVX1_RVT U883 ( .A(n314), .Y(n55) );
+  INVX1_RVT U884 ( .A(n313), .Y(n59) );
+  XOR2X2_RVT U885 ( .A1(n339), .A2(n556), .Y(n384) );
+  INVX1_RVT U886 ( .A(n317), .Y(n556) );
+  INVX1_RVT U887 ( .A(net8177), .Y(net8175) );
+  NAND2X0_RVT U888 ( .A1(\PID_inst/D_term[12] ), .A2(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry [11]), .Y(n559) );
+  NAND2X0_RVT U889 ( .A1(\PID_inst/I_term [11]), .A2(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry [11]), .Y(n560) );
+  NAND2X0_RVT U890 ( .A1(\PID_inst/I_term [11]), .A2(\PID_inst/D_term[12] ), 
+        .Y(n561) );
+  NAND3X0_RVT U891 ( .A1(n561), .A2(n560), .A3(n559), .Y(
+        \PID_inst/add_1_root_add_0_root_add_108_2/carry [12]) );
+  OR2X1_RVT U892 ( .A1(\PID_inst/mult_51/CARRYB[8][0] ), .A2(
+        \PID_inst/ptch_err_sat[6] ), .Y(net8894) );
+  OAI22X1_RVT U893 ( .A1(n307), .A2(net8689), .A3(n301), .A4(n294), .Y(n306)
+         );
+  OAI22X2_RVT U894 ( .A1(n292), .A2(net8690), .A3(n293), .A4(n294), .Y(n290)
+         );
+  OR2X2_RVT U895 ( .A1(net8601), .A2(n562), .Y(net8603) );
+  OAI22X2_RVT U896 ( .A1(n211), .A2(n201), .A3(n212), .A4(n213), .Y(n209) );
+  OAI22X2_RVT U897 ( .A1(n226), .A2(n201), .A3(n220), .A4(n213), .Y(n225) );
+  NAND2X2_RVT U898 ( .A1(n245), .A2(n246), .Y(n213) );
+  OA21X1_RVT U899 ( .A1(n23), .A2(n368), .A3(n370), .Y(net8406) );
+  INVX1_RVT U900 ( .A(\segway_math_inst/mult_29/CARRYB[7][10] ), .Y(n22) );
+  INVX0_RVT U901 ( .A(net8686), .Y(n199) );
+  XNOR2X1_RVT U902 ( .A1(n183), .A2(n184), .Y(
+        \segway_math_inst/mult_29/SUMB[1][10] ) );
+  XNOR2X1_RVT U903 ( .A1(n169), .A2(n170), .Y(
+        \segway_math_inst/mult_29/SUMB[1][7] ) );
+  INVX1_RVT U904 ( .A(n412), .Y(n57) );
+  XOR2X1_RVT U905 ( .A1(\segway_math_inst/mult_29/CARRYB[7][1] ), .A2(
+        \segway_math_inst/mult_29/SUMB[7][2] ), .Y(n389) );
+  XOR3X1_RVT U906 ( .A1(net8670), .A2(n73), .A3(
+        \segway_math_inst/sub_49/carry [12]), .Y(\segway_math_inst/N50 ) );
+  INVX0_RVT U907 ( .A(net8690), .Y(n4) );
+  AND2X1_RVT U908 ( .A1(n474), .A2(n86), .Y(\PID_inst/add_64/carry [1]) );
+  OA22X1_RVT U909 ( .A1(n39), .A2(n199), .A3(n200), .A4(n201), .Y(n198) );
+  AO22X1_RVT U910 ( .A1(\PID_inst/integrator_plus_ptch [15]), .A2(n470), .A3(
+        n471), .A4(n119), .Y(\PID_inst/mux2_out [15]) );
+  AO22X1_RVT U911 ( .A1(n21), .A2(n258), .A3(n259), .A4(n257), .Y(n251) );
+  NAND3X0_RVT U912 ( .A1(n527), .A2(n30), .A3(n263), .Y(n258) );
+  AND2X1_RVT U913 ( .A1(n495), .A2(net8601), .Y(net8623) );
+  AND2X1_RVT U914 ( .A1(n495), .A2(net8601), .Y(n426) );
+  AO21X1_RVT U915 ( .A1(n267), .A2(n268), .A3(n53), .Y(n266) );
+  XOR2X1_RVT U916 ( .A1(n257), .A2(n232), .Y(n268) );
+  NAND2X0_RVT U917 ( .A1(net8546), .A2(n327), .Y(net8690) );
+  NOR2X2_RVT U918 ( .A1(n251), .A2(net8391), .Y(net8686) );
+  AND3X2_RVT U919 ( .A1(ss_tmr[1]), .A2(n158), .A3(n183), .Y(
+        \segway_math_inst/mult_29/CARRYB[1][10] ) );
+  OA22X2_RVT U920 ( .A1(n213), .A2(n230), .A3(n201), .A4(n231), .Y(n229) );
+  IBUFFX2_RVT U921 ( .A(n201), .Y(n12) );
+  OA22X2_RVT U922 ( .A1(n45), .A2(n199), .A3(n204), .A4(n201), .Y(n208) );
+  OA22X2_RVT U923 ( .A1(n53), .A2(n199), .A3(n201), .A4(n219), .Y(n224) );
+  XOR3X2_RVT U924 ( .A1(\segway_math_inst/mult_29/CARRYB[1][7] ), .A2(
+        \segway_math_inst/mult_29/ab[2][7] ), .A3(
+        \segway_math_inst/mult_29/SUMB[1][8] ), .Y(
+        \segway_math_inst/mult_29/SUMB[2][7] ) );
+  AO21X1_RVT U925 ( .A1(n480), .A2(\PID_inst/integrator [1]), .A3(n481), .Y(
+        net8622) );
+  AND3X1_RVT U926 ( .A1(net8810), .A2(n153), .A3(n171), .Y(
+        \segway_math_inst/mult_29/CARRYB[1][6] ) );
+  OR2X2_RVT U927 ( .A1(net8601), .A2(n562), .Y(n425) );
+  AND4X1_RVT U928 ( .A1(n498), .A2(ptch[13]), .A3(ptch[9]), .A4(ptch[14]), .Y(
+        n562) );
+  XOR3X2_RVT U929 ( .A1(\segway_math_inst/mult_29/CARRYB[1][6] ), .A2(
+        \segway_math_inst/mult_29/ab[2][6] ), .A3(
+        \segway_math_inst/mult_29/SUMB[1][7] ), .Y(
+        \segway_math_inst/mult_29/SUMB[2][6] ) );
+  NAND2X0_RVT U930 ( .A1(\segway_math_inst/mult_29/CARRYB[1][6] ), .A2(
+        \segway_math_inst/mult_29/SUMB[1][7] ), .Y(n563) );
+  NAND2X0_RVT U931 ( .A1(\segway_math_inst/mult_29/ab[2][6] ), .A2(
+        \segway_math_inst/mult_29/SUMB[1][7] ), .Y(n564) );
+  NAND2X0_RVT U932 ( .A1(\segway_math_inst/mult_29/ab[2][6] ), .A2(
+        \segway_math_inst/mult_29/CARRYB[1][6] ), .Y(n565) );
+  NAND3X0_RVT U933 ( .A1(n565), .A2(n564), .A3(n563), .Y(
+        \segway_math_inst/mult_29/CARRYB[2][6] ) );
+  IBUFFX2_RVT U934 ( .A(net8496), .Y(lft_spd[11]) );
+  OA22X2_RVT U935 ( .A1(n46), .A2(n531), .A3(n285), .A4(net8689), .Y(n289) );
+  OA22X2_RVT U936 ( .A1(n294), .A2(n311), .A3(net8690), .A4(n312), .Y(n310) );
+  OA22X2_RVT U937 ( .A1(n55), .A2(n531), .A3(net8689), .A4(n300), .Y(n305) );
+  OA22X2_RVT U938 ( .A1(n41), .A2(n531), .A3(n281), .A4(net8689), .Y(n279) );
+  AND2X4_RVT U939 ( .A1(n525), .A2(n117), .Y(n183) );
+  NOR2X4_RVT U940 ( .A1(n66), .A2(ss_tmr[3]), .Y(
+        \segway_math_inst/mult_29/ab[3][11] ) );
+  NOR2X4_RVT U941 ( .A1(n66), .A2(ss_tmr[2]), .Y(
+        \segway_math_inst/mult_29/ab[2][11] ) );
+  NOR2X4_RVT U942 ( .A1(n66), .A2(net8810), .Y(
+        \segway_math_inst/mult_29/ab[1][11] ) );
+  NOR2X4_RVT U943 ( .A1(n66), .A2(ss_tmr[4]), .Y(
+        \segway_math_inst/mult_29/ab[4][11] ) );
+  AND2X1_RVT U944 ( .A1(n420), .A2(n66), .Y(net8487) );
+  AND2X1_RVT U945 ( .A1(n420), .A2(n66), .Y(net8488) );
+  INVX0_RVT U946 ( .A(n163), .Y(n63) );
+  INVX1_RVT U947 ( .A(pwr_up), .Y(net8391) );
+  INVX1_RVT U948 ( .A(en_steer), .Y(net8179) );
+  INVX1_RVT U949 ( .A(en_steer), .Y(net8177) );
+  INVX1_RVT U950 ( .A(n277), .Y(n6) );
+  INVX1_RVT U951 ( .A(n354), .Y(n44) );
+  INVX1_RVT U952 ( .A(n350), .Y(n38) );
+  INVX1_RVT U953 ( .A(n196), .Y(n14) );
+  INVX1_RVT U954 ( .A(n358), .Y(n32) );
+  INVX1_RVT U955 ( .A(n365), .Y(n29) );
+  INVX1_RVT U956 ( .A(n250), .Y(n18) );
+  INVX1_RVT U957 ( .A(n255), .Y(n25) );
+  INVX1_RVT U958 ( .A(n254), .Y(n26) );
+  INVX1_RVT U959 ( .A(n205), .Y(n34) );
+  INVX1_RVT U960 ( .A(n286), .Y(n36) );
+  INVX1_RVT U961 ( .A(n369), .Y(n23) );
+  AND2X1_RVT U962 ( .A1(n382), .A2(n383), .Y(net8457) );
+  INVX1_RVT U963 ( .A(\segway_math_inst/n40 ), .Y(n72) );
+  INVX1_RVT U964 ( .A(\segway_math_inst/steer_offset[6] ), .Y(n76) );
+  INVX1_RVT U965 ( .A(\segway_math_inst/steer_offset[5] ), .Y(n77) );
+  INVX1_RVT U966 ( .A(\segway_math_inst/steer_offset[4] ), .Y(n78) );
+  INVX1_RVT U967 ( .A(n241), .Y(n24) );
+  INVX1_RVT U968 ( .A(n212), .Y(n40) );
+  INVX1_RVT U969 ( .A(\segway_math_inst/steer_offset[3] ), .Y(n79) );
+  INVX0_RVT U970 ( .A(n382), .Y(n56) );
+  INVX1_RVT U971 ( .A(\segway_math_inst/steer_offset[2] ), .Y(n80) );
+  INVX1_RVT U972 ( .A(n213), .Y(n13) );
+  INVX1_RVT U973 ( .A(n377), .Y(n48) );
+  INVX1_RVT U974 ( .A(n335), .Y(n28) );
+  INVX1_RVT U975 ( .A(\segway_math_inst/steer_offset[1] ), .Y(n81) );
+  INVX1_RVT U976 ( .A(n234), .Y(n52) );
+  XNOR2X1_RVT U977 ( .A1(n53), .A2(n232), .Y(n234) );
+  INVX0_RVT U978 ( .A(n257), .Y(n21) );
+  INVX1_RVT U979 ( .A(n315), .Y(n54) );
+  XNOR2X1_RVT U980 ( .A1(n55), .A2(n313), .Y(n315) );
+  INVX0_RVT U981 ( .A(n128), .Y(rght_spd[5]) );
+  INVX0_RVT U982 ( .A(n124), .Y(lft_spd[5]) );
+  INVX1_RVT U983 ( .A(n409), .Y(n51) );
+  XNOR2X1_RVT U984 ( .A1(n407), .A2(n408), .Y(n410) );
+  INVX1_RVT U985 ( .A(n203), .Y(n30) );
+  INVX1_RVT U986 ( .A(n405), .Y(n47) );
+  XNOR2X1_RVT U987 ( .A1(n403), .A2(n404), .Y(n406) );
+  INVX1_RVT U988 ( .A(n210), .Y(n33) );
+  INVX1_RVT U989 ( .A(n401), .Y(n43) );
+  XNOR2X1_RVT U990 ( .A1(n398), .A2(n399), .Y(n402) );
+  INVX1_RVT U991 ( .A(n221), .Y(n45) );
+  INVX1_RVT U992 ( .A(n256), .Y(n39) );
+  INVX1_RVT U993 ( .A(n233), .Y(n53) );
+  INVX1_RVT U994 ( .A(n396), .Y(n37) );
+  XNOR2X1_RVT U995 ( .A1(n400), .A2(n395), .Y(n397) );
+  OAI21X1_RVT U996 ( .A1(n313), .A2(n318), .A3(n314), .Y(n379) );
+  INVX1_RVT U997 ( .A(n214), .Y(n49) );
+  INVX1_RVT U998 ( .A(n232), .Y(n58) );
+  XNOR2X1_RVT U999 ( .A1(n394), .A2(n423), .Y(n422) );
+  INVX1_RVT U1000 ( .A(\segway_math_inst/steer_offset[0] ), .Y(n82) );
+  INVX1_RVT U1001 ( .A(n457), .Y(n104) );
+  INVX1_RVT U1002 ( .A(n452), .Y(n103) );
+  INVX1_RVT U1003 ( .A(n447), .Y(n102) );
+  XNOR2X1_RVT U1004 ( .A1(\segway_math_inst/PID_cntrl_ext [19]), .A2(n524), 
+        .Y(n272) );
+  XNOR2X1_RVT U1005 ( .A1(n412), .A2(n411), .Y(n417) );
+  XOR2X1_RVT U1006 ( .A1(\segway_math_inst/mult_29/CARRYB[7][5] ), .A2(
+        \segway_math_inst/mult_29/SUMB[7][6] ), .Y(n411) );
+  XOR2X1_RVT U1007 ( .A1(n181), .A2(n182), .Y(
+        \segway_math_inst/mult_29/SUMB[1][1] ) );
+  AO21X1_RVT U1008 ( .A1(n192), .A2(n190), .A3(net8487), .Y(n159) );
+  XNOR2X1_RVT U1009 ( .A1(n67), .A2(n193), .Y(n192) );
+  XOR2X1_RVT U1010 ( .A1(\segway_math_inst/mult_29/CARRYB[7][6] ), .A2(
+        \segway_math_inst/mult_29/SUMB[7][7] ), .Y(n408) );
+  OAI21X1_RVT U1011 ( .A1(\PID_inst/ptch_err_sat[7] ), .A2(net8221), .A3(n486), 
+        .Y(n494) );
+  XOR2X1_RVT U1012 ( .A1(\segway_math_inst/mult_29/CARRYB[7][7] ), .A2(
+        \segway_math_inst/mult_29/SUMB[7][8] ), .Y(n404) );
+  XOR2X1_RVT U1013 ( .A1(\segway_math_inst/mult_29/CARRYB[7][8] ), .A2(
+        \segway_math_inst/mult_29/SUMB[7][9] ), .Y(n399) );
+  XOR2X1_RVT U1014 ( .A1(\segway_math_inst/mult_29/CARRYB[7][9] ), .A2(
+        \segway_math_inst/mult_29/SUMB[7][10] ), .Y(n395) );
+  XOR2X1_RVT U1015 ( .A1(n424), .A2(\segway_math_inst/mult_29/CARRYB[7][10] ), 
+        .Y(n394) );
+  INVX0_RVT U1016 ( .A(\segway_math_inst/sub_49/carry [1]), .Y(n62) );
+  XNOR2X1_RVT U1017 ( .A1(n144), .A2(n145), .Y(
+        \segway_math_inst/steer_difference [3]) );
+  XOR2X1_RVT U1018 ( .A1(\segway_math_inst/steer_difference [10]), .A2(
+        \segway_math_inst/mult_40/CARRYB[10][0] ), .Y(n273) );
+  INVX1_RVT U1019 ( .A(n148), .Y(n83) );
+  XOR2X1_RVT U1020 ( .A1(n131), .A2(n132), .Y(
+        \segway_math_inst/steer_difference [9]) );
+  INVX1_RVT U1021 ( .A(n462), .Y(n105) );
+  NBUFFX2_RVT U1022 ( .A(n569), .Y(n567) );
+  NBUFFX2_RVT U1023 ( .A(n569), .Y(n566) );
+  NBUFFX2_RVT U1024 ( .A(n569), .Y(n568) );
+  INVX1_RVT U1025 ( .A(n467), .Y(n70) );
+  AND3X1_RVT U1026 ( .A1(net8810), .A2(n150), .A3(n189), .Y(
+        \segway_math_inst/mult_29/CARRYB[1][9] ) );
+  AND3X1_RVT U1027 ( .A1(n251), .A2(n257), .A3(pwr_up), .Y(n247) );
+  XNOR2X1_RVT U1028 ( .A1(n179), .A2(n180), .Y(
+        \segway_math_inst/mult_29/SUMB[1][2] ) );
+  XNOR2X1_RVT U1029 ( .A1(n146), .A2(n147), .Y(
+        \segway_math_inst/steer_difference [2]) );
+  XNOR2X1_RVT U1030 ( .A1(n149), .A2(n83), .Y(
+        \segway_math_inst/steer_difference [1]) );
+  XNOR2X1_RVT U1031 ( .A1(n142), .A2(n143), .Y(
+        \segway_math_inst/steer_difference [4]) );
+  XNOR2X1_RVT U1032 ( .A1(n140), .A2(n141), .Y(
+        \segway_math_inst/steer_difference [5]) );
+  XNOR2X1_RVT U1033 ( .A1(n138), .A2(n139), .Y(
+        \segway_math_inst/steer_difference [6]) );
+  XNOR2X1_RVT U1034 ( .A1(n136), .A2(n137), .Y(
+        \segway_math_inst/steer_difference [7]) );
+  XNOR2X1_RVT U1035 ( .A1(n133), .A2(n134), .Y(
+        \segway_math_inst/steer_difference [8]) );
+  INVX1_RVT U1036 ( .A(steer_pot[11]), .Y(n75) );
+  INVX1_RVT U1037 ( .A(steer_pot[9]), .Y(n84) );
+  INVX1_RVT U1038 ( .A(rider_off), .Y(n71) );
+  XNOR2X1_RVT U1039 ( .A1(\PID_inst/integrator_plus_ptch [17]), .A2(n521), .Y(
+        n476) );
+  XOR2X1_RVT U1040 ( .A1(ss_tmr[6]), .A2(n429), .Y(n430) );
+  XOR2X1_RVT U1041 ( .A1(ss_tmr[5]), .A2(n431), .Y(n432) );
+  XOR2X1_RVT U1042 ( .A1(ss_tmr[4]), .A2(n433), .Y(n434) );
+  XOR2X1_RVT U1043 ( .A1(ss_tmr[3]), .A2(n435), .Y(n436) );
+  XOR2X1_RVT U1044 ( .A1(ss_tmr[2]), .A2(n437), .Y(n438) );
+  XOR2X1_RVT U1045 ( .A1(net8810), .A2(n439), .Y(n440) );
+  XNOR2X1_RVT U1046 ( .A1(ss_tmr[0]), .A2(n441), .Y(n442) );
+  NBUFFX2_RVT U1047 ( .A(n427), .Y(n569) );
+  NBUFFX2_RVT U1048 ( .A(rst_n), .Y(n572) );
+  NBUFFX2_RVT U1049 ( .A(rst_n), .Y(n570) );
+  NBUFFX2_RVT U1050 ( .A(rst_n), .Y(n571) );
+  XNOR2X1_RVT U1051 ( .A1(n272), .A2(\segway_math_inst/sub_49/carry [11]), .Y(
+        n270) );
+  OAI221X1_RVT U1052 ( .A1(n201), .A2(n216), .A3(n39), .A4(n217), .A5(n196), 
+        .Y(n215) );
+  OR4X1_RVT U1053 ( .A1(ptch[11]), .A2(ptch[12]), .A3(ptch[10]), .A4(n496), 
+        .Y(n495) );
+  AO22X1_RVT U1054 ( .A1(n265), .A2(n21), .A3(n266), .A4(n257), .Y(n262) );
+  XNOR2X1_RVT U1055 ( .A1(net8601), .A2(n521), .Y(n477) );
+  AND3X2_RVT U1056 ( .A1(n475), .A2(n71), .A3(vld), .Y(n470) );
+  AOI21X2_RVT U1057 ( .A1(vld), .A2(n475), .A3(rider_off), .Y(n471) );
+  NAND2X4_RVT U1058 ( .A1(n246), .A2(n247), .Y(n201) );
+endmodule
+
