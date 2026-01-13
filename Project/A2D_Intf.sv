@@ -1,3 +1,36 @@
+
+
+
+
+/*clk,rst_n in 50MHz clock and active low asynch reset
+nxt in Initiates A2D conversion on next measurand
+lft_ld[11:0] out Result of last conversion on channel 0 (left load cell)
+rght_ld[11:0] out Result of last conversion on channel 4 (right load cell)
+steer_pot[11:0] Result of last conversion on channel 5 (steering potentiometer)
+batt[11:0] out Result of last conversion on channel 5 (battery voltage)
+SPI Interface Out/
+in
+SS_n, SCLK, MOSI, MISO of a SPI interface. Comes from copy
+of SPI_mnrch embedded into this unit.
+*/
+/* 
+A2D_intf: Interface to external A/D converter via SPI_mnrch
+
+clk, rst_n     : 50 MHz clock, active-low async reset
+nxt            : request to perform next conversion in round-robin
+
+lft_ld[11:0]   : last conversion on channel 0 (left load cell)
+rght_ld[11:0]  : last conversion on channel 4 (right load cell)
+steer_pot[11:0]: last conversion on channel 5 (steering potentiometer)
+batt[11:0]     : last conversion on channel 6 (battery voltage)
+
+SPI interface:
+  MISO         : from A/D
+  SCLK, MOSI,
+  SS_n         : driven by embedded SPI_mnrch
+*/
+
+
 module A2D_intf(
     input logic clk,
     input logic rst_n,
@@ -79,22 +112,18 @@ convert the next channel in the sequence.*/
         case(channel_sel)
             2'b00: begin
                 //channel 0
-                channel = channel_0;
                 wt_data = {2'b00, channel_0, 11'h000};
             end
             2'b01: begin
                 //channel 4
-                channel = channel_4;
                 wt_data = {2'b00, channel_4, 11'h000};
             end
             2'b10: begin
                 //channel 5
-                channel = channel_5;
                 wt_data = {2'b00, channel_5, 11'h000};
             end
             2'b11: begin
                 //channel 6
-                channel = channel_6;
                 wt_data = {2'b00, channel_6, 11'h000};
            end
         endcase
@@ -112,28 +141,28 @@ convert the next channel in the sequence.*/
     always_ff @(posedge clk or negedge rst_n) begin
         if(!rst_n)
             lft_ld <= 12'd0;
-        else if((channel == channel_0) & update)
+        else if((channel_sel == 2'b00) & update)
             lft_ld <= rd_data[11:0];
     end
 
     always_ff @(posedge clk or negedge rst_n) begin
         if(!rst_n)
             rght_ld <= 12'd0;
-        else if((channel == channel_4) & update)
+        else if((channel_sel == 2'b01) & update)
             rght_ld <= rd_data[11:0];
     end
 
     always_ff @(posedge clk or negedge rst_n) begin
         if(!rst_n)
             steer_pot <= 12'd0;
-        else if((channel == channel_5) & update)
+        else if((channel_sel == 2'b10) & update)
             steer_pot <= rd_data[11:0];
     end
 
     always_ff @(posedge clk or negedge rst_n) begin
         if(!rst_n)
             batt <= 12'd0;
-        else if((channel == channel_6) & update)
+        else if((channel_sel == 2'b11) & update) 
             batt <= rd_data[11:0];       
     end
 
