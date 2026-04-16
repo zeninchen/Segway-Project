@@ -1,4 +1,5 @@
 # ECE 551: Digital System Design & Synthesis
+![Segway balancing and driving](./Project/segway.gif)
 
 🚨 **Looking for my Self-Balancing "Segway" Controller?** 🚨
 
